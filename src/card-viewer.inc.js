@@ -10,7 +10,7 @@ function kzViewerUpdate(){
   if(zoom){zoom.textContent='Illustration entière';zoom.removeAttribute('aria-pressed');}
   if($('kzViewerStatus'))$('kzViewerStatus').textContent=(kzViewerBack?'Verso':'Recto')+' · '+(kzViewerZoom?'Agrandissement activé':'Taille normale');
 }
-openDetail=function(card){
+openCardViewer=function(card){
   if(!card)return;
   if(!$('detailBackdrop').classList.contains('open'))kzViewerReturn=document.activeElement;
   state.activeCharacter=card;kzViewerBack=false;kzViewerZoom=false;
@@ -35,6 +35,20 @@ openDetail=function(card){
   $('cardViewer').addEventListener('click',event=>{if(event.target.closest('a,button'))return;event.preventDefault();event.stopPropagation();kzViewerBack=!kzViewerBack;kzViewerUpdate();});
   $('viewerClose').focus({preventScroll:true});
 };
+openDetail=function(card,source){
+  if(!card)return;
+  const tab=document.body.dataset.tab||'';
+  const origin=source||(
+    tab==='col'||tab==='collection'?'collection':
+    tab==='market'?'market':
+    tab==='boosts'||tab==='booster'?'booster':
+    tab==='universes'||tab==='universe'?'universes':
+    tab==='home'||tab==='lobby'?'home':'wiki'
+  );
+  state.activeCharacter=card;
+  if($('detailBackdrop')?.classList.contains('open'))closeBackdrop('detailBackdrop');
+  openCharacterProfile(card,origin);
+};
 const kzViewerPriorClose=closeBackdrop;
 closeBackdrop=function(id){const restore=id==='detailBackdrop'&&$('detailBackdrop')?.classList.contains('open');kzViewerPriorClose(id);if($('kyaraProfileOverlay')?.classList.contains('open'))document.body.style.overflow='hidden';if(restore&&kzViewerReturn?.isConnected){kzViewerReturn.focus({preventScroll:true});kzViewerReturn=null;}};
 document.addEventListener('keydown',event=>{
@@ -52,13 +66,10 @@ openCharacterProfile=function(card,source='wiki',options={}){
   kzOriginalProfileOpen(card,source,options);
   const root=$('kyaraProfileOverlay');if(!root)return;
   root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Fiche de '+card.name);
-  root.querySelectorAll('[data-kz-profile-inspect]').forEach(node=>node.remove());
-  const button=document.createElement('button');button.type='button';button.className='soft-btn kz-profile-enlarge';button.textContent='Examiner la carte';button.dataset.kzProfileInspect=String(card.id);
-  root.querySelector('.cp-hero-inner > div')?.append(button);
 };
 const kzOriginalProfileHide=cpHideProfile;
 cpHideProfile=function(){const open=$('kyaraProfileOverlay')?.classList.contains('open');kzOriginalProfileHide();if(open&&kzProfileReturn?.isConnected){kzProfileReturn.focus({preventScroll:true});kzProfileReturn=null;}};
-document.addEventListener('click',event=>{const button=event.target.closest('[data-kz-profile-inspect]');if(!button)return;const card=LOCAL_CARDS.find(row=>String(row.id)===button.dataset.kzProfileInspect);if(card)openDetail(card);});
+document.addEventListener('click',event=>{const button=event.target.closest('[data-kz-profile-inspect]');if(!button)return;const card=LOCAL_CARDS.find(row=>String(row.id)===button.dataset.kzProfileInspect);if(card)openCardViewer(card);});
 document.addEventListener('keydown',event=>{
   const root=$('kyaraProfileOverlay');if(!root?.classList.contains('open')||$('detailBackdrop')?.classList.contains('open'))return;
   if(event.key==='Tab'){const nodes=kzViewerFocusable(root),first=nodes[0],last=nodes.at(-1);if(!first)return;if(event.shiftKey&&(document.activeElement===first||!root.contains(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!root.contains(document.activeElement))){event.preventDefault();first.focus();}}
