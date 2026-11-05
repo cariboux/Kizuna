@@ -2890,8 +2890,10 @@ function bindCriticalUI(){
     if(flip){e.preventDefault();e.stopImmediatePropagation();collectionToggleCard(flip.dataset.colFlip,flip);return;}
     const full=target.closest('#collection [data-col-open]');
     if(full){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>x.id===full.dataset.colOpen);if(card)openDetail(card);return;}
+    const profile=target.closest('#collection [data-kz-open-profile]');
+    if(profile){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>String(x.id)===String(profile.dataset.kzOpenProfile));if(card)openCharacterProfile(card,'collection');return;}
     const collectionCard=target.closest('#collection [data-colcard]');
-    if(collectionCard&&!target.closest('a')){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>x.id===collectionCard.dataset.colcard);if(card)openDetail(card);return;}
+    if(collectionCard&&!target.closest('a')){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>x.id===collectionCard.dataset.colcard);if(card)openCardViewer(card);return;}
   },true);
 }
 bindCriticalUI();
