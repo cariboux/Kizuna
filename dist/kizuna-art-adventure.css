@@ -322,3 +322,15 @@ body.kz-art #kzAdventurePage .ka-missing-strip button>span{position:absolute;rig
  body.kz-art #kzAdventurePage .ka-destination:hover,body.kz-art #kzAdventurePage .ka-destination:hover>img{transform:none}
 }
 html[data-kz-motion="reduced"] body.kz-art #kzAdventurePage *,html[data-kz-motion="reduced"] body.kz-art #kzAdventurePage *:before,html[data-kz-motion="reduced"] body.kz-art #kzAdventurePage *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+/* In-place constellation switcher. The atlas stays mounted while its selected data changes. */
+body.kz-art #kzAdventurePage .ka-detail-heading{align-items:flex-end;gap:18px;margin:0 0 18px;flex-wrap:wrap}
+body.kz-art #kzAdventurePage .ka-constellation-switcher{display:flex;flex:1 1 360px;flex-direction:column;gap:7px;max-width:560px;min-width:0;margin:0;color:#c5dbe0}
+body.kz-art #kzAdventurePage .ka-constellation-switcher>span{font-size:9px;font-weight:800;letter-spacing:.16em;color:#a8d9df}
+body.kz-art #kzAdventurePage #kaConstellationSelect{width:100%;min-height:48px;padding:11px 42px 11px 14px;border:1px solid #83bdc477;border-radius:3px 13px 3px 13px;background:linear-gradient(145deg,#143044,#0c1d2b);color:#f2f0db;font:600 13px Manrope,sans-serif;box-shadow:inset 0 1px #ffffff18,0 8px 22px #0003}
+body.kz-art #kzAdventurePage #kaConstellationSelect:focus-visible{outline:3px solid #a5eee0;outline-offset:3px}
+body.kz-art #kzAdventurePage .ka-constellation-universe{padding:0 0 13px;color:#d9c78c;font:700 10px Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:700px){
+ body.kz-art #kzAdventurePage .ka-detail-heading{align-items:stretch;gap:10px}
+ body.kz-art #kzAdventurePage .ka-constellation-switcher{flex-basis:100%;max-width:none}
+ body.kz-art #kzAdventurePage .ka-constellation-universe{padding:0 0 5px}
+}

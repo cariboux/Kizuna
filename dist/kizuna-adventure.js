@@ -18,6 +18,14 @@
  const owned=()=>new Set(R.copies(game()).map(row=>String(row.id)));
  const claims=()=>Object.values(state.claims||{});
  const currentKey=()=>account().user?.id||'guest';
+ function mergeDefinitions(rows){
+  const merged=new Map((window.KizunaAdventureSeed||[]).map(row=>[String(row.id),clone(row)]));
+  for(const row of Array.isArray(rows)?rows:[]){
+   if(!row||typeof row.id!=='string'||!row.id)continue;
+   merged.set(row.id,clone(row));
+  }
+  return [...merged.values()];
+ }
  const ready=()=>!loading&&!busy&&!account().loading&&(currentKey()==='guest'||loaded&&owner===currentKey());
  const notice=text=>window.KizunaGame?.notify(text);
  function friendly(err){const message=String(err?.message||err||'');return ({FEATURE_DISABLED:'Cette activité est temporairement désactivée.',CARD_NOT_ELIGIBLE:'Cette carte n’est pas éligible à un nouvel Éveil actuellement.',FRAGMENTS_DISABLED:'Les fragments ne sont pas activés.',INSUFFICIENT_FRAGMENTS:'Tu n’as pas assez de fragments d’Éveil.',VARIANT_UNAVAILABLE:'Cette illustration n’est plus disponible.',REQUIREMENTS_NOT_MET:'Les prérequis ne sont pas encore réunis dans ta collection synchronisée.',REVISION_CONFLICT:'Une autre session a modifié ta progression. Actualise avant de réessayer.',ADMIN_REQUIRED:'Cette action est réservée aux administrateurs.',OWNED_CARD_REQUIRED:'Une carte choisie n’est plus disponible. Actualise la sélection.',EVENT_INACTIVE:'Cet événement n’est pas actif actuellement.',DEFINITION_UNAVAILABLE:'Ce défi n’est plus disponible.',INVALID_AWAKENING_LEVEL:'Ce niveau d’Éveil n’est plus disponible. Actualise la progression.',STYLE_LOCKED:'Ce style doit d’abord être débloqué.',TITLE_LOCKED:'Ce titre n’a pas encore été obtenu.'})[message]||message.slice(0,240)||'La demande n’a pas abouti. Réessaie.';}
@@ -41,10 +49,10 @@
     const raw=localStorage.getItem(guestKey);if(raw){const value=JSON.parse(raw);if(!value||typeof value!=='object'||!value.claims||!value.awakened||!value.visits||!value.sanctuary)throw Error('La progression locale n’a pas pu être lue. Elle a été conservée sans modification.');state=value;}
     definitions=clone(window.KizunaAdventureSeed);revision=0;clockOffset=0;
     const config=window.KIZUNA_CONFIG;
-    if(config?.supabaseUrl&&config?.supabaseKey){try{const rows=await publicRead('kizuna_adventure_definitions','select=*&order=title.asc&limit=500');if(token!==epoch)return;definitions=rows;}catch{/* Guest keeps the bundled canonical challenges when offline. */}}
+    if(config?.supabaseUrl&&config?.supabaseKey){try{const rows=await publicRead('kizuna_adventure_definitions','select=*&order=title.asc&limit=500');if(token!==epoch)return;definitions=mergeDefinitions(rows);}catch{/* Guest keeps the bundled canonical challenges when offline. */}}
    }else{
     const result=await window.KizunaAccount.adventureRequest('get');if(token!==epoch||key!==currentKey())return;
-    state=result.state;revision=result.revision;definitions=result.definitions;window.KizunaStudio?.accept(result.design);clockOffset=Number(result.server_now)-Date.now();
+    state=result.state;revision=result.revision;definitions=mergeDefinitions(result.definitions);window.KizunaStudio?.accept(result.design);clockOffset=Number(result.server_now)-Date.now();
    }
    loaded=true;
   }catch(err){if(token===epoch)error=friendly(err);}
@@ -55,7 +63,7 @@
   try{
    const result=key==='guest'?guestAction(action,payload):await window.KizunaAccount.adventureRequest(action,payload);
    if(token!==epoch||key!==currentKey())return false;
-   state=result.state;revision=result.revision;window.KizunaStudio?.accept(result.design);if(result.definitions)definitions=result.definitions;if(result.server_now)clockOffset=Number(result.server_now)-Date.now();
+   state=result.state;revision=result.revision;window.KizunaStudio?.accept(result.design);if(result.definitions)definitions=mergeDefinitions(result.definitions);if(result.server_now)clockOffset=Number(result.server_now)-Date.now();
    window.dispatchEvent(new CustomEvent('kizuna:adventure-change'));
    if(action==='claim'&&!result.replayed&&!result.result?.replayed){const fresh=Object.entries(state.claims||{}).find(([id,claim])=>!beforeClaims.has(id)&&claim.id===payload.id);if(fresh)celebrateReward(fresh[1],token,key);}
    return true;
@@ -70,11 +78,22 @@
   rewardTimer=setTimeout(()=>{if(token===epoch&&key===currentKey())clearReward();},4500);
  }
  async function publicRead(table,queryString){const config=window.KIZUNA_CONFIG;if(!config?.supabaseUrl||!config?.supabaseKey)throw Error('Le service communautaire n’est pas configuré.');const response=await fetch(config.supabaseUrl+'/rest/v1/'+table+'?'+queryString,{headers:{apikey:config.supabaseKey},credentials:'omit',cache:'no-store'});if(!response.ok)throw Error('Le service communautaire est momentanément indisponible.');const result=await response.json();if(!Array.isArray(result))throw Error('Réponse communautaire invalide.');return result;}
+ function writeAdventureHash(){
+  const target=location.pathname+location.search+'#adventure/'+view+(selection?'/'+encodeURIComponent(selection):'');
+  if(location.pathname+location.search+location.hash!==target)history.replaceState(null,'',target);
+ }
+ function selectConstellation(id){
+  const chosen=definitions.find(row=>row.kind==='constellation'&&row.enabled!==false&&String(row.id)===String(id));
+  if(!chosen)return false;
+  selection=chosen.id;zoom=1;pan={x:0,y:0};writeAdventureHash();render();
+  $('kaConstellationSelect')?.focus({preventScroll:true});
+  return true;
+ }
  function navigate(next,id=''){
   view=Object.hasOwn(names,next)?next:'constellations';selection=String(id||'');filter='';query='';missionFilter='all';zoom=1;pan={x:0,y:0};
   // Switching an adventure view must not re-enter the global route and scroll to the top.
   if(document.body.dataset.tab!=='adventure')window.KizunaGame?.showTab('adventure',{scroll:false});
-  history.replaceState(null,'',location.pathname+location.search+'#adventure/'+view+(selection?'/'+encodeURIComponent(selection):''));render();load();
+  writeAdventureHash();render();load();
   $('kaAdventureTitle')?.focus({preventScroll:true});window.dispatchEvent(new CustomEvent('kizuna:adventure-view-change',{detail:{view,selection}}));if(view==='journey'&&selection&&loaded&&ready())visit(selection);
  }
  function route(){const match=location.hash.match(/^#adventure(?:\/([^/]+))?(?:\/(.+))?$/);if(!match)return;let id='';try{id=decodeURIComponent(match[2]||'');}catch{}navigate(match[1]||'constellations',id);}
@@ -106,12 +125,14 @@
   renderStatus();decorate();
  }
  function renderConstellations(root){
-  const all=definitions.filter(d=>d.kind==='constellation'&&d.enabled!==false),d=all.find(d=>d.id===selection),have=owned(),catalogue=new Map(game().cards.map(c=>[String(c.id),c])),lookup=id=>catalogue.get(String(id));
-  if(!all.length){root.innerHTML='<div class="kd-empty kd-empty-sky"><span aria-hidden="true">✧</span><h2>Le ciel attend ses premiers liens.</h2><p>Aucune constellation n’est disponible pour le moment. Retrouve tes personnages dans la collection.</p>'+button('Ouvrir la collection','data-ka-collection')+'</div>';return;}
+  const all=definitions.filter(d=>d.kind==='constellation'&&d.enabled!==false),d=all.find(d=>String(d.id)===String(selection))||all[0],have=owned(),catalogue=new Map(game().cards.map(c=>[String(c.id),c])),lookup=id=>catalogue.get(String(id));
+  if(!all.length){root.innerHTML='<div class="kd-empty kd-empty-sky"><span aria-hidden="true">✧</span><h2>Aucune constellation publiée pour le moment.</h2><p>Les constellations intégrées sont conservées comme base de secours. Actualise cette page pour réessayer le chargement.</p>'+button('Actualiser','id="kaRefresh"')+'</div>';return;}
+  if(selection!==d.id){selection=d.id;writeAdventureHash();}
   if(d){
    const ids=d.requirements.card_ids||[],p=status(d),positions=ids.map((_,i)=>({x:450+Math.cos((i/ids.length*2-.5)*Math.PI)*255,y:260+Math.sin((i/ids.length*2-.5)*Math.PI)*170}));
    const edges=Array.isArray(d.requirements.edges)?d.requirements.edges:ids.slice(1).map((_,i)=>[i,i+1,'Lien']);
-   root.innerHTML='<div class="ka-detail-heading">'+button('← Toutes les constellations','data-ka-back="constellations"')+'<span>'+esc(d.universe)+'</span></div><div class="ka-constellation-layout"><section class="kac-chart"><div class="kac-chart-caption"><span class="ka-kicker">CARTE DES LIENS</span><strong>'+format(p.value)+' <small>/ '+format(p.goal)+' personnages réunis</small></strong></div><div class="ka-map-controls" role="group" aria-label="Déplacer la constellation">'+[['−','out'],['+','in'],['←','left'],['↑','up'],['↓','down'],['→','right'],['Recentrer','reset']].map(([label,action])=>button(label,'data-ka-map="'+action+'" aria-label="'+({out:'Réduire',in:'Agrandir',left:'Déplacer à gauche',right:'Déplacer à droite',up:'Déplacer vers le haut',down:'Déplacer vers le bas',reset:'Recentrer'}[action])+'"')).join('')+'</div><div class="ka-star-map" tabindex="0" aria-label="Constellation interactive. Utilise les boutons pour zoomer et déplacer."><div id="kaMapCanvas" class="ka-map-canvas"><div class="kac-chart-center" aria-hidden="true"><i>絆</i><span>'+Math.round(p.ratio*100)+' %</span></div><svg viewBox="0 0 900 520" preserveAspectRatio="none" aria-hidden="true">'+edges.filter(e=>positions[e[0]]&&positions[e[1]]).map(e=>'<line class="'+(have.has(ids[e[0]])&&have.has(ids[e[1]])?'is-lit':'')+'" x1="'+positions[e[0]].x+'" y1="'+positions[e[0]].y+'" x2="'+positions[e[1]].x+'" y2="'+positions[e[1]].y+'"/>').join('')+'</svg>'+ids.map((id,i)=>{const c=lookup(id);return '<button class="ka-star-node '+(have.has(id)?'is-lit':'is-locked')+'" style="left:'+positions[i].x/9+'%;top:'+positions[i].y/5.2+'%" data-ka-inspect="'+esc(id)+'" aria-label="'+esc(c?.name||'Personnage')+' · '+(have.has(id)?'Possédé':'À obtenir')+'"><span class="kac-node-portrait">'+picture(c)+'</span><strong>'+esc(c?.name||'Carte indisponible')+'</strong><small>'+(have.has(id)?'Lien éveillé':'À obtenir')+'</small></button>';}).join('')+'</div></div><p class="kac-chart-note">Sélectionne un personnage pour découvrir sa carte.</p></section><aside class="ka-story"><span class="kac-story-seal" aria-hidden="true">✧</span><span class="ka-kicker">CONSTELLATION KIZUNA</span><h2>'+esc(d.title)+'</h2><p>'+esc(d.description)+'</p>'+meter(p.value,p.goal)+'<p class="kac-story-state">'+(p.claimed?'Titre ajouté à ta collection':p.complete?'Tous les liens sont réunis':'Réunis les personnages pour compléter ce lien')+'</p><div class="kac-constellation-reward"><i aria-hidden="true">♔</i><span><small>'+esc(rewardNames[d.reward_kind]||'Récompense')+'</small><strong>'+esc(d.reward_label)+'</strong></span></div>'+claimButton(d,p)+'<details class="kac-relations"><summary>Les liens de cette histoire</summary><ul>'+edges.filter(e=>ids[e[0]]&&ids[e[1]]).map(e=>'<li>'+esc(lookup(ids[e[0]])?.name)+' <span>— '+esc(e[2])+' —</span> '+esc(lookup(ids[e[1]])?.name)+'</li>').join('')+'</ul>'+(safeLink(d.source_url)?'<a href="'+esc(d.source_url)+'" target="_blank" rel="noopener noreferrer">Référence de l’histoire ↗</a>':'')+'</details><p class="ka-note">Tes cartes restent dans ta collection.</p></aside></div>';
+   const constellationOptions=all.map(item=>'<option value="'+esc(item.id)+'"'+(item.id===d.id?' selected':'')+'>'+esc(item.universe+' · '+item.title)+'</option>').join('');
+   root.innerHTML='<div class="ka-detail-heading"><label class="ka-constellation-switcher" for="kaConstellationSelect"><span>CHOISIR UNE CONSTELLATION</span><select id="kaConstellationSelect" aria-label="Choisir une constellation">'+constellationOptions+'</select></label><span class="ka-constellation-universe">'+esc(d.universe)+'</span></div><div class="ka-constellation-layout"><section class="kac-chart"><div class="kac-chart-caption"><span class="ka-kicker">CARTE DES LIENS</span><strong>'+format(p.value)+' <small>/ '+format(p.goal)+' personnages réunis</small></strong></div><div class="ka-map-controls" role="group" aria-label="Déplacer la constellation">'+[['−','out'],['+','in'],['←','left'],['↑','up'],['↓','down'],['→','right'],['Recentrer','reset']].map(([label,action])=>button(label,'data-ka-map="'+action+'" aria-label="'+({out:'Réduire',in:'Agrandir',left:'Déplacer à gauche',right:'Déplacer à droite',up:'Déplacer vers le haut',down:'Déplacer vers le bas',reset:'Recentrer'}[action])+'"')).join('')+'</div><div class="ka-star-map" tabindex="0" aria-label="Constellation interactive. Utilise les boutons pour zoomer et déplacer."><div id="kaMapCanvas" class="ka-map-canvas"><div class="kac-chart-center" aria-hidden="true"><i>絆</i><span>'+Math.round(p.ratio*100)+' %</span></div><svg viewBox="0 0 900 520" preserveAspectRatio="none" aria-hidden="true">'+edges.filter(e=>positions[e[0]]&&positions[e[1]]).map(e=>'<line class="'+(have.has(ids[e[0]])&&have.has(ids[e[1]])?'is-lit':'')+'" x1="'+positions[e[0]].x+'" y1="'+positions[e[0]].y+'" x2="'+positions[e[1]].x+'" y2="'+positions[e[1]].y+'"/>').join('')+'</svg>'+ids.map((id,i)=>{const c=lookup(id);return '<button class="ka-star-node '+(have.has(id)?'is-lit':'is-locked')+'" style="left:'+positions[i].x/9+'%;top:'+positions[i].y/5.2+'%" data-ka-inspect="'+esc(id)+'" aria-label="'+esc(c?.name||'Personnage')+' · '+(have.has(id)?'Possédé':'À obtenir')+'"><span class="kac-node-portrait">'+picture(c)+'</span><strong>'+esc(c?.name||'Carte indisponible')+'</strong><small>'+(have.has(id)?'Lien éveillé':'À obtenir')+'</small></button>';}).join('')+'</div></div><p class="kac-chart-note">Sélectionne un personnage pour découvrir sa carte.</p></section><aside class="ka-story"><span class="kac-story-seal" aria-hidden="true">✧</span><span class="ka-kicker">CONSTELLATION KIZUNA</span><h2>'+esc(d.title)+'</h2><p>'+esc(d.description)+'</p>'+meter(p.value,p.goal)+'<p class="kac-story-state">'+(p.claimed?'Titre ajouté à ta collection':p.complete?'Tous les liens sont réunis':'Réunis les personnages pour compléter ce lien')+'</p><div class="kac-constellation-reward"><i aria-hidden="true">♔</i><span><small>'+esc(rewardNames[d.reward_kind]||'Récompense')+'</small><strong>'+esc(d.reward_label)+'</strong></span></div>'+claimButton(d,p)+'<details class="kac-relations"><summary>Les liens de cette histoire</summary><ul>'+edges.filter(e=>ids[e[0]]&&ids[e[1]]).map(e=>'<li>'+esc(lookup(ids[e[0]])?.name)+' <span>— '+esc(e[2])+' —</span> '+esc(lookup(ids[e[1]])?.name)+'</li>').join('')+'</ul>'+(safeLink(d.source_url)?'<a href="'+esc(d.source_url)+'" target="_blank" rel="noopener noreferrer">Référence de l’histoire ↗</a>':'')+'</details><p class="ka-note">Tes cartes restent dans ta collection.</p></aside></div>';
    mapTransform();return;
   }
   const universes=[...new Set(all.map(d=>d.universe))].sort((a,b)=>a.localeCompare(b,'fr')),complete=all.filter(d=>status(d).complete).length,claimed=all.filter(d=>status(d).claimed).length;
@@ -173,7 +194,7 @@
   document.addEventListener('click',async event=>{
    const b=event.target.closest('button');if(!b||b.disabled)return;const d=b.dataset;
    if(d.kaCollection!==undefined)window.KizunaGame.showTab('col');else if(d.kaView)navigate(d.kaView);else if(d.kaJump)navigate(d.kaJump,d.kaId);else if(d.kaBack)navigate(d.kaBack);
-   else if(d.kaSelect){selection=d.kaSelect;zoom=1;pan={x:0,y:0};render();history.replaceState(null,'',location.pathname+location.search+'#adventure/'+view+'/'+encodeURIComponent(selection));if(view==='journey')visit(selection);}
+   else if(d.kaSelect){selectConstellation(d.kaSelect);}
    else if(d.kaMissionFilter){missionFilter=d.kaMissionFilter;render();document.querySelector('[data-ka-mission-filter="'+missionFilter+'"]')?.focus({preventScroll:true});}
    else if(b.id==='kaRefresh')load(true);
    else if(d.kaClaim)mutate('claim',{id:d.kaClaim});
@@ -189,7 +210,7 @@
    else if(d.kaMakePrivate!==undefined)mutate('private');
    else if(d.kaDirectoryRefresh!==undefined)directory();else if(d.kaDirectoryMore!==undefined)directory(false);else if(d.kaPublic)openPublic(d.kaPublic);else if(d.kaCloseDialog!==undefined)$('kaPreviewDialog').close();
   });
-  document.addEventListener('change',e=>{if(e.target.id==='kaConstellationUniverse'){filter=e.target.value;render();$('kaConstellationUniverse')?.focus({preventScroll:true});}});
+  document.addEventListener('change',e=>{if(e.target.id==='kaConstellationSelect'){selectConstellation(e.target.value);return;}if(e.target.id==='kaConstellationUniverse'){filter=e.target.value;render();$('kaConstellationUniverse')?.focus({preventScroll:true});}});
   document.addEventListener('input',e=>{if(['kaUniverseSearch','kaAwakeningSearch'].includes(e.target.id)){query=e.target.value;const id=e.target.id,position=e.target.selectionStart;render();$(id).focus({preventScroll:true});if(position!==null)try{$(id).setSelectionRange(position,position);}catch{/* Search inputs may not expose a selection range. */}}});
   document.addEventListener('submit',e=>{if(e.target.id!=='kaSanctuaryForm')return;e.preventDefault();try{const settings=sanctuaryForm();mutate('sanctuary',{settings,revision});}catch(err){notice(friendly(err));}});
   window.addEventListener('hashchange',route);
@@ -198,6 +219,6 @@
   document.addEventListener('kizuna:account-change',()=>{const key=currentKey();if(key!==owner||account().loading){epoch++;clearReward();state=R.empty();revision=0;loaded=false;busy=false;loading=false;owner=key;if($('kaAdventureContent'))$('kaAdventureContent').innerHTML='';$('kaPreviewDialog')?.open&&$('kaPreviewDialog').close();if($('kaPreviewDialog'))$('kaPreviewDialog').querySelector('[data-ka-dialog-content]').innerHTML='';decorate();if(document.body.dataset.tab==='adventure'){render();if(!account().loading)load();}else if(!account().loading&&account().user)load();}else if(!loaded&&!loading&&!account().loading&&(document.body.dataset.tab==='adventure'||account().user))load();});
   route();if(account().user&&!account().loading)load();else if(!account().user&&localStorage.getItem(guestKey))load();
  }
- window.KizunaAdventure=Object.freeze({navigate,perform:mutate,refresh:()=>load(true),getSnapshot:()=>({state:clone(state),revision,definitions:clone(definitions),loaded,owner}),adminSaved:result=>{state=result.state;revision=result.revision;definitions=result.definitions;render();},getRules:()=>R});
+ window.KizunaAdventure=Object.freeze({navigate,perform:mutate,refresh:()=>load(true),getSnapshot:()=>({state:clone(state),revision,definitions:clone(definitions),loaded,owner}),adminSaved:result=>{state=result.state;revision=result.revision;definitions=mergeDefinitions(result.definitions);render();},getRules:()=>R});
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
 })();

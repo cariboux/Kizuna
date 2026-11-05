@@ -48,8 +48,8 @@
       node.dataset.rfIcon='arrow';node.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>';
     });
     document.querySelectorAll('button:not([data-ui-kind])').forEach(node=>{
-      if(node.matches('.tcard,.fcard,.kpack,.rb-stage-pack,.kg-hero-pack,.ka-companion-card,.knx-node,.knx-branch-label,.ka-star-node,.ka-constellation-tile,.ka-destination,[data-colcard],[data-wiki]')||node.closest('.kza-navigation'))return;
-      if(!node.matches('.soft-btn,.primary-btn,.secondary-btn,.km-action,.knx-primary,.knx-secondary,.kp-button,.kz-col-view,.kz-col-flip,.col-market-sell-btn,.kb-open,#kzFeaturedOpen,[data-ka-view],[data-ka-map],[data-kn-zoom],[data-kn-view],[data-market-view],.col-chip,.col-seg button,.rank-tabs button,.kb-tabs button,.kb-multi button,.kg-binder-controls button'))return;
+      if(node.matches('.tcard,.fcard,.kpack,.rb-stage-pack,.kg-hero-pack,.ka-companion-card,.knx-node,.knx-branch-label,.ka-star-node,.ka-constellation-tile,.ka-destination,.kz-universe-tile,.kz-discovery-card,[data-colcard],[data-wiki]')||node.closest('.kza-navigation'))return;
+      // All ordinary interface buttons receive a shared interaction treatment. Artwork tiles and navigation stay untouched.
       node.dataset.uiKind=node.matches('.primary,.primary-btn,.knx-primary,.kb-open,#kzFeaturedOpen')?'hero':node.matches('[data-ka-view],[data-market-view],.col-seg button,.rank-tabs button,.kb-tabs button')?'tab':node.matches('[data-ka-map],[data-kn-zoom],[data-kn-view],.kz-col-view,.kz-col-flip,.kg-binder-controls button')?'compact':'secondary';
     });
     const market=$('#marketTabs'),selected=market?.querySelector('[aria-selected="true"]');
