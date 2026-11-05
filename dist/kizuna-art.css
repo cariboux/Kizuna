@@ -134,4 +134,19 @@ body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-action.primary{border-color:#a
 body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-action:hover{border-color:var(--cp-accent);filter:brightness(1.07)}
 body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-related-card{border-color:#36556a;background:#102739;color:#eef0e7}
 body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-related-card:hover{background:#18364a;border-color:var(--cp-accent)}
+/* Locked and owned dossiers: clear character art and aligned market panel. */
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-card-art{aspect-ratio:7/10}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-card-art img{
+ display:block;width:100%;height:100%;object-fit:cover;object-position:50% 18%;
+ image-rendering:auto;backface-visibility:hidden
+}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-card-art.is-locked img{
+ filter:grayscale(1) brightness(.43) contrast(1.02)
+}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-market-panel{margin-top:0;border-color:#35566a}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-market-panel .cp-section-title{color:#f1eddf}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-market-panel .cp-market-foot{color:#9ab5c1;line-height:1.6}
+@media(max-width:760px){
+ body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-card-art{aspect-ratio:7/10;max-height:300px}
+}
 
