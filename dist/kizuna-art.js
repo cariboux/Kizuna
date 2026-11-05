@@ -7,7 +7,7 @@
   // A blocked/offline portrait must never look like another character or a lost card.
   document.addEventListener('error',event=>{
     const img=event.target;
-    if(!(img instanceof HTMLImageElement)||!img.closest('.tcard,.ka-companion-card')||img.dataset.rbFallback)return;
+    if(!(img instanceof HTMLImageElement)||!img.closest('.tcard,.ka-companion-card,.kzw-card,#kadWikiStage,.ka-star-node,.ka-linked-portraits,.kz-universe-tile')||img.dataset.rbFallback)return;
     img.dataset.rbFallback='true';img.src='assets/rebirth/card-unavailable.svg';
   },true);
   const destinations=[

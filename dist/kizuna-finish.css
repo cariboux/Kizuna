@@ -1,0 +1,255 @@
+/* Shared visual language. These rules never change game state or availability. */
+body.theme-kizuna.kz-art{
+  --rf-ink:#0b172a;--rf-panel:#10263b;--rf-edge:#95bfcd50;--rf-muted:#b9ccda;--rf-gold:#f7ce80;--rf-teal:#80ecd9;
+}
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#encyclopedia,#universes,#community,#ranking,#kzAdventurePage,#kzNexusPage,#profilePage,dialog) :is(.soft-btn,.primary-btn,.secondary-btn,.km-action,.knx-primary,.knx-secondary,.ka-tabs button,.rank-tabs button,.col-seg button,.col-chip,.km-tabs button,.km-rarity-filters button,.kzw-ownership button,.kac-mission-filters button,.knx-atlas-toolbar button){
+  min-height:44px;border-radius:12px 5px 12px 5px!important;border:1px solid var(--rf-edge)!important;
+  background:linear-gradient(160deg,#29465b,#152d42)!important;color:#e9f3f8!important;
+  box-shadow:inset 0 1px #d1f1ff19,0 3px 0 #06142390!important;font-family:Rajdhani,system-ui,sans-serif;font-size:14px!important;font-weight:700;
+  transition:background .16s,box-shadow .16s,transform .16s;
+}
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#encyclopedia,#universes,#community,#ranking,#kzAdventurePage,#kzNexusPage,#profilePage,dialog) :is(.soft-btn.primary,.primary-btn,.km-action.primary,.knx-primary),
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#encyclopedia,#universes,#community,#ranking,#kzAdventurePage,#kzNexusPage,#profilePage,dialog) :is(.ka-tabs,.rank-tabs,.col-seg,.col-chips,.km-tabs,.km-rarity-filters,.kzw-ownership,.kac-mission-filters,.knx-atlas-toolbar) :is(.active,.on,[aria-selected=true],[aria-pressed=true]){
+  background:linear-gradient(135deg,#fff0b9,#f0bf60)!important;color:#1f2732!important;border-color:#ffe6a3!important;box-shadow:inset 0 1px #fff8,0 3px 0 #9c6d2a,0 0 18px #efc05c18!important;
+}
+@media(hover:hover){body.theme-kizuna.kz-art :is(#collection,#marketPage,#encyclopedia,#universes,#community,#ranking,#kzAdventurePage,#kzNexusPage,#profilePage,dialog) :is(.soft-btn,.primary-btn,.secondary-btn,.km-action,.knx-primary,.knx-secondary,.ka-tabs button,.rank-tabs button,.col-seg button,.col-chip,.km-tabs button,.km-rarity-filters button,.kzw-ownership button):not(:disabled):hover{filter:brightness(1.13);border-color:#a4ebdf!important;transform:translateY(-2px)}}
+body.theme-kizuna.kz-art :is(button,a,summary,input,select):focus-visible{outline:3px solid #9ef3e4!important;outline-offset:4px!important}
+body.theme-kizuna.kz-art button:disabled{opacity:.48!important;filter:saturate(.35);cursor:not-allowed!important;transform:none!important;box-shadow:none!important}
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#encyclopedia,#universes,#community,#ranking,#kzAdventurePage,#kzNexusPage,#profilePage,dialog) :is(.soft-btn,.km-action,.knx-primary,.knx-secondary):not(:disabled):active{transform:translateY(2px);box-shadow:inset 0 2px 6px #0005!important}
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#encyclopedia,#universes,#community,#ranking,#kzAdventurePage,#kzNexusPage,#profilePage,dialog) :is(.col-input,input[type=search],input[type=number],select){border:1px solid #93b9ca70!important;border-radius:9px!important;min-height:44px;background:#0b1b2ef2!important;color:#edf4fa!important;padding:10px 13px!important;font-size:13px!important;box-sizing:border-box;max-width:100%}
+body.theme-kizuna.kz-art :is(input,select)::placeholder{color:#aec4d3!important}
+body.theme-kizuna.kz-art :is(dialog,.knx-confirm,.ka-dialog){border:1px solid #a3d4de80;border-radius:24px 8px 24px 8px;background:linear-gradient(145deg,#253e55,#0c1c30);color:#f4f4eb;box-shadow:0 24px 100px #000a;max-width:calc(100vw - 24px)}
+body.theme-kizuna.kz-art dialog::backdrop{background:#050e20bd;backdrop-filter:blur(5px)}
+body.theme-kizuna.kz-art .ik-arrow-glyph{font-family:system-ui,sans-serif!important}
+/* Native details retain keyboard operation, focus and every original event listener. */
+body.kz-art .rf-fold{margin:12px 0;border:1px solid var(--rf-edge);border-radius:14px;background:#102238ec;min-width:0;color:#ecf3f9}
+body.kz-art .rf-fold>summary{cursor:pointer;padding:14px 18px;min-height:52px;box-sizing:border-box;font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;list-style:none}
+body.kz-art .rf-fold>summary::-webkit-details-marker{display:none}
+body.kz-art .rf-fold>summary:before{content:'+';font-family:system-ui;width:22px;color:var(--rf-gold);font-size:20px;font-weight:400;flex-shrink:0}
+body.kz-art .rf-fold[open]>summary:before{content:'−'}
+body.kz-art .rf-fold>summary small{margin-left:auto;font-size:11px;color:#bdd3dd;font-weight:400;text-align:right}
+body.kz-art .rf-fold[data-active=true]>summary:after{content:'Filtres actifs';font-size:10px;color:var(--rf-teal);border:1px solid #80ecd955;padding:4px 7px;border-radius:20px}
+body.kz-art .rf-fold-body{padding:4px 18px 18px;min-width:0}
+body.kz-art .rf-fold-body>.rf-fold{margin:0}
+/* Distinct places share one palette, with opaque reading surfaces. */
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#universes,#encyclopedia,#community,#ranking,#profilePage,#kzNexusPage,#kzAdventurePage){
+  background-color:var(--rf-ink)!important;background-image:linear-gradient(180deg,#0b172ac9,#0b172af0 700px),var(--rf-scene)!important;background-position:center top!important;background-size:100% 1100px,auto 1100px!important;background-repeat:no-repeat!important;min-height:calc(100vh - 76px);padding-top:28px!important;
+}
+body.kz-art :is(#collection,#encyclopedia,#ranking){--rf-scene:url('assets/rebirth/library.webp')}
+body.kz-art :is(#marketPage,#community){--rf-scene:url('assets/rebirth/bazar.webp')}
+body.kz-art #universes{--rf-scene:url('assets/rebirth/city-portal.webp')}
+body.kz-art #profilePage{--rf-scene:url('assets/rebirth/library.webp')}
+body.kz-art #kzNexusPage{--rf-scene:url('assets/rebirth/nexus-tree.webp')}
+body.kz-art #kzAdventurePage{--rf-scene:url('assets/rebirth/sanctuary.webp')}
+body.kz-art #kzAdventurePage[data-art-view=constellations]{--rf-scene:url('assets/rebirth/nexus-tree.webp')}
+body.kz-art #kzAdventurePage[data-art-view=sanctuary]{--rf-scene:url('assets/rebirth/library.webp')}
+body.kz-art #kzAdventurePage[data-art-view=journey]{--rf-scene:url('assets/rebirth/city-portal.webp')}
+body.theme-kizuna.kz-art :is(#collection,#marketPage,#universes,#encyclopedia,#community,#ranking,#kzNexusPage,#kzAdventurePage)::before{display:none!important}
+body.kz-art :is(.col-title,.rank-title,#kzUniversesTitle,#kzCommunityTitle,#marketTitle,.knx-header h1){text-shadow:0 3px 20px #07132380}
+/* The collector's library: search and display mode first, advanced controls one step away. */
+body.theme-kizuna.kz-art #collection .cx-hero{position:relative;padding:32px!important;min-height:260px;gap:24px;background:linear-gradient(90deg,#0c1a2bf5 0%,#0d2139c2 50%,#0b172a30),url('assets/rebirth/library.webp') center 45%/cover!important;border:1px solid #e4cd8c70!important;border-radius:24px 8px 24px 8px!important;margin-bottom:22px;grid-template-columns:1fr 150px 210px}
+body.kz-art #collection .cx-hero:after{display:none}
+body.kz-art #collection .cx-pills{gap:18px;margin:16px 0!important}
+body.kz-art #collection .col-actions{margin-top:16px!important}
+body.kz-art #collection [data-rf-fold=collection-progress]{align-self:center;background:#0c1b2bcf}
+body.kz-art #collection [data-rf-fold=collection-progress] summary{font-size:12px;padding:12px}
+body.kz-art #collection #colUni{width:100%;padding:0;display:block}
+body.kz-art #collection .cx-bar{background:#0d2036e8!important;padding:18px!important;border:1px solid var(--rf-edge)!important;border-radius:18px!important;margin:0 0 18px!important}
+body.kz-art #collection .col-top{gap:16px;margin:0!important}
+body.kz-art #collection .col-top .col-input{max-width:620px;width:100%}
+body.kz-art #collection .col-chips{flex-wrap:wrap;margin:8px 0 16px!important;gap:7px}
+body.kz-art #collection .col-filters{gap:12px;display:flex!important;flex-wrap:wrap;align-items:end}
+body.kz-art #collection .col-filters>label{flex:1 1 170px;max-width:none!important;width:auto!important}
+body.kz-art #collection .col-filters select{width:100%!important}
+body.kz-art #collection .col-empty{background:linear-gradient(120deg,#182b41e8,#173b4699)!important;border:1px solid #afc8cc50!important;border-radius:24px!important;min-height:180px;padding:34px!important}
+body.kz-art #collection .col-empty:before{content:'✧';display:block;color:var(--rf-gold);font-size:42px;margin-bottom:10px}
+body.kz-art :is(.col-album,.kz-universe-tile){border-radius:24px 8px 24px 8px!important;box-shadow:0 12px 25px #0004!important}
+/* Trading street: all five market functions remain in a compact tab bar. */
+body.theme-kizuna.kz-art #marketPage .km-head{min-height:235px;padding:32px!important;background:linear-gradient(90deg,#111e32f5,#111e32b0 50%,#111e3218),url('assets/rebirth/bazar.webp') center 44%/cover!important;border:1px solid #edbe7970!important;border-radius:24px 8px 24px 8px!important;margin:0 0 18px!important}
+body.kz-art #marketPage .km-head:after{display:none}
+body.kz-art #marketPage .km-title-group{max-width:620px}
+body.kz-art #marketPage .km-wallet{background:#0c1b2cd9!important;border-radius:16px!important}
+body.kz-art #marketPage .km-workspace{padding:0!important;background:transparent!important}
+body.kz-art #marketPage .km-toolbar{gap:16px;padding:14px!important;border:1px solid var(--rf-edge);border-radius:16px;background:#10263bed!important;flex-wrap:wrap}
+body.kz-art #marketPage .km-tabs{gap:7px;flex-wrap:wrap}
+body.kz-art #marketPage .km-tabs button{padding:10px 15px!important;flex:0 1 auto}
+body.kz-art #marketPage .km-controls{flex:1;min-width:300px}
+body.kz-art #marketPage .km-search{padding:0!important;border:0!important;background:none!important;max-width:none}
+body.kz-art #marketPage .km-search>span{display:none}
+body.kz-art #marketPage .km-search input{width:100%!important}
+body.kz-art #marketPage .km-filterbar{background:none!important;padding:6px 0!important;border:0!important;margin:0!important}
+body.kz-art #marketPage .km-local-notice{margin:0 0 12px;padding:12px;border-radius:8px}
+body.kz-art #marketPage .km-market-collection-link{margin:0;padding:8px 0;gap:18px}
+body.kz-art #marketPage .km-market-collection-link button{flex:0 0 auto;width:auto}
+body.kz-art #marketPage .km-empty{min-height:210px!important;border-radius:22px!important;background:linear-gradient(135deg,#183247f5,#10273cdd)!important;border:1px solid #9fc1cc66!important}
+body.kz-art #marketPage .km-view-head{margin:24px 0 12px!important}
+/* Nexus: one central scene with a readable branch rail and adjacent detail. */
+body.theme-kizuna.kz-art #kzNexusPage .knx-wrap{padding-top:0!important}
+body.kz-art #kzNexusPage .knx-header{margin-bottom:16px;padding:8px 0!important}
+body.kz-art #kzNexusPage .knx-header h1{font-size:44px;margin:8px 0!important}
+body.kz-art #kzNexusPage .knx-header p{margin:4px 0}
+body.kz-art #kzNexusPage .knx-notice{padding:10px 16px;border-radius:12px;background:#142e42ed;font-size:12px;margin:10px 0}
+body.kz-art #kzNexusPage .knx-progress{padding:12px;background:#0c2034db;border-radius:12px;margin-bottom:12px}
+body.kz-art #kzNexusPage[data-kn-mode=discovery] :is(.knx-progress,.knx-wallet){display:none}
+body.kz-art #kzNexusPage .knx-branch-progress{gap:9px;margin:14px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+body.kz-art #kzNexusPage .knx-branch-progress button{padding:10px 14px;background:#10263bf0;border:1px solid color-mix(in srgb,var(--knx-color) 40%,transparent);border-radius:14px 5px 14px 5px;min-height:62px;gap:12px;opacity:1}
+body.kz-art #kzNexusPage .knx-branch-progress button[aria-pressed=true]{background:linear-gradient(120deg,#29434e,#15263b);box-shadow:inset 0 -3px var(--knx-color),0 0 22px #b6dacc18;border-color:var(--knx-color)}
+body.kz-art #kzNexusPage .knx-branch-progress strong{font-size:18px}
+body.kz-art #kzNexusPage .knx-branch-progress small{font-size:11px;color:#c2d4e0}
+body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-progress i{display:none}
+body.kz-art #kzNexusPage .knx-mastery-status{font-size:11px;color:#bfd4e2;margin:10px 0}
+body.kz-art #kzNexusPage .knx-layout{grid-template-columns:minmax(0,1fr) 290px;gap:16px;align-items:start}
+body.kz-art #kzNexusPage .knx-atlas{border-radius:20px!important;background:#0b1c32;overflow:hidden;border:1px solid #bdd4d55c}
+body.kz-art #kzNexusPage .knx-atlas-toolbar{padding:8px 12px;background:#10263bf0;gap:8px;flex-wrap:wrap}
+body.kz-art #kzNexusPage .knx-atlas-toolbar button{min-height:40px;padding:8px 12px;font-size:12px!important}
+body.kz-art #kzNexusPage .knx-viewport{height:555px;background:radial-gradient(ellipse,#173b65,#0a1c31)!important}
+body.kz-art #kzNexusPage .knx-world{height:700px;background:linear-gradient(#0a21423b,#08294a26),url('assets/rebirth/nexus-tree.webp') center/100% 100%;border-radius:24px}
+body.kz-art #kzNexusPage .knx-viewport::before{display:none!important}
+body.kz-art #kzNexusPage .knx-viewport::after{box-shadow:inset 0 0 50px 5px #061b3866}
+body.kz-art #kzNexusPage .knx-heart{top:430px;width:100px;height:130px}
+body.kz-art #kzNexusPage .knx-heart>span{background:#102b40d9;border-radius:20px;padding:6px;color:#f8e4a8;font-size:10px}
+body.kz-art #kzNexusPage .knx-orbit{opacity:.18}
+body.kz-art #kzNexusPage .knx-branch-label{background:#0c1f35ed;border:1px solid var(--knx-color);border-radius:16px;padding:8px 16px;color:var(--knx-color);font-size:16px;min-width:120px;min-height:66px;cursor:pointer;z-index:2;box-shadow:0 5px 25px #0611289c}
+body.kz-art #kzNexusPage .knx-branch-label b{font-size:28px}
+body.kz-art #kzNexusPage .knx-branch-label small{font-size:11px;color:#deecf1}
+body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-label{min-width:155px;min-height:84px}
+body.kz-art #kzNexusPage .knx-node{width:56px;height:56px;background:#112c44f2;border-width:2px;box-shadow:0 0 0 5px #0c1e37b0,0 5px 20px #0008}
+body.kz-art #kzNexusPage .knx-node[data-state=available]{box-shadow:0 0 0 5px #112f40,0 0 25px var(--knx-color);border-color:var(--knx-color)}
+body.kz-art #kzNexusPage .knx-node[data-state=owned]{background:#245248;border-color:#afffe7}
+body.kz-art #kzNexusPage .knx-node[data-state=locked]{border-style:dashed;filter:saturate(.5)}
+body.kz-art #kzNexusPage .kanx-node-name{background:#0b1d32eb;border-radius:4px;padding:3px 5px;max-width:125px;font-size:11px;color:#f4f3eb}
+body.kz-art #kzNexusPage #knxLines path{stroke-width:4;stroke:#c5d2e4;opacity:.65;stroke-dasharray:5 5;filter:drop-shadow(0 1px 2px #001)}
+body.kz-art #kzNexusPage #knxLines path[data-state=owned]{stroke:var(--knx-color);stroke-dasharray:none;opacity:1;filter:drop-shadow(0 0 5px var(--knx-color))}
+body.kz-art #kzNexusPage .knx-detail{position:relative;top:auto;padding:24px!important;background:linear-gradient(155deg,#264556f5,#10263bf5)!important;border-radius:20px!important;border:1px solid #a9c4ce60;box-shadow:0 15px 40px #0003;min-height:420px;display:block}
+body.kz-art #kzNexusPage .knx-detail h2{font-size:30px;line-height:1.1;color:#fff0cf;margin:20px 0 14px}
+body.kz-art #kzNexusPage .knx-detail p{color:#d1e1e9;font-size:13px;line-height:1.75}
+body.kz-art #kzNexusPage .knx-detail .rf-discovery-note{font-size:11px;color:#b5c6d4;padding-top:14px;border-top:1px solid #a5c8cf30}
+body.kz-art #kzNexusPage .knx-detail-emblem{width:70px;height:70px;border-radius:22px 5px;background:radial-gradient(#3c6173,#1c364f);margin-top:22px}
+body.kz-art #kzNexusPage .knx-atlas-footer{padding:10px 16px;background:#0b1c30e8;gap:12px}
+body.kz-art #kzNexusPage .knx-atlas-footer p{margin:0;font-size:10px}
+body.kz-art .rf-branch-preview{width:100%;display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;background:#152e42;border:1px solid var(--knx-color);border-radius:14px;margin:0 0 10px;color:#e6eff3;min-height:88px}
+body.kz-art .rf-branch-preview b{color:var(--knx-color);font-size:19px}
+body.kz-art .rf-branch-preview span{font-size:13px}
+body.kz-art #kzNexusPage .rf-fold-body>.knx-benefit{margin-top:14px}
+body.kz-art #kzNexusPage [data-rf-fold=nexus-rewards]>summary:before{content:'✦'}
+body.kz-art #kzNexusPage [data-rf-fold=nexus-rewards]{border-color:#d5b46d77;background:linear-gradient(110deg,#223a49,#1c2b3d)}
+/* Atlas and journal. Portraits stay real; only the scenery is illustrative. */
+body.kz-art #kzAdventurePage .ka-header{padding:0 0 16px!important;align-items:center;border:0!important}
+body.kz-art #kzAdventurePage .ka-header h1{font-size:34px!important;outline:0!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.kz-art #kzAdventurePage .ka-header h1:before,body.kz-art #kzAdventurePage .ka-header h1:after{display:none}
+body.kz-art #kzAdventurePage .ka-tabs{display:flex;gap:8px;overflow:auto;flex-wrap:nowrap;padding:0 0 12px;margin-bottom:10px!important;border:0!important;scrollbar-width:thin}
+body.kz-art #kzAdventurePage .ka-tabs button{white-space:nowrap;flex:0 0 auto;padding:10px 16px!important;min-height:44px!important}
+body.kz-art #kzAdventurePage .ka-tabs button:before{display:none}
+body.kz-art #kzAdventurePage #kaStatus{border:0!important;padding:7px 12px!important;background:#0c2135c7!important;color:#c4deea!important;border-radius:8px;font-size:11px!important;margin:0 0 18px!important}
+body.kz-art #kzAdventurePage .kac-sky-intro{padding:30px 34px!important;min-height:270px;border:1px solid #a7dcd06b;border-radius:24px 6px 24px 6px;background:linear-gradient(90deg,#0c1a33f5,#0d2548b0 50%,#0c1a3326),url('assets/rebirth/nexus-tree.webp') center 48%/cover!important;margin:0 0 22px!important}
+body.kz-art #kzAdventurePage .kac-sky-intro>div:first-child{max-width:540px}
+body.kz-art #kzAdventurePage .kac-sky-intro h2{font-size:46px!important;margin:12px 0!important;color:#fff0cf}
+body.kz-art #kzAdventurePage .kac-sky-intro p{font-size:13px;line-height:1.7;color:#d2e3ee}
+body.kz-art #kzAdventurePage .kac-sky-count{background:#102438dd;border:1px solid #8bcbbd70;padding:18px;border-radius:18px;min-width:150px}
+body.kz-art #kzAdventurePage .kac-atlas-tools{margin:12px 0 18px;align-items:end}
+body.kz-art #kzAdventurePage .ka-constellation-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+body.kz-art #kzAdventurePage .ka-constellation-tile{border-radius:22px 6px 22px 6px;padding:18px!important;background:radial-gradient(ellipse at 50% 20%,#325e7280,transparent 65%),#10283deb!important;border:1px solid #85b9c16b;box-shadow:0 12px 30px #0004;transition:transform .18s,border-color .18s}
+body.kz-art #kzAdventurePage .ka-constellation-tile:hover{transform:translateY(-5px);border-color:#f3cf81}
+body.kz-art #kzAdventurePage .ka-constellation-tile:before{border-radius:16px;opacity:.4}
+body.kz-art #kzAdventurePage .kac-mini-sky{height:160px!important;margin:8px 0!important}
+body.kz-art #kzAdventurePage .kac-mini-sky>span{width:60px;height:60px}
+body.kz-art #kzAdventurePage .kac-atlas-tile-copy h2{font-size:24px!important}
+body.kz-art #kzAdventurePage .ka-tile-link{font-size:12px}
+body.kz-art #kzAdventurePage .ka-tile-link b{font-family:system-ui,sans-serif}
+body.kz-art #kzAdventurePage .kac-chart{background:radial-gradient(ellipse,#164067a8,#0c1832e0),url('assets/rebirth/nexus-tree.webp') center/cover;border:1px solid #8dc9d08c;border-radius:24px;overflow:hidden}
+body.kz-art #kzAdventurePage .ka-map-controls{gap:6px;background:#10263bc9;padding:10px;flex-wrap:wrap}
+body.kz-art #kzAdventurePage .ka-map-controls button{min-width:44px;min-height:44px}
+body.kz-art #kzAdventurePage .ka-star-map{background:transparent!important;min-height:420px}
+body.kz-art #kzAdventurePage .ka-star-node strong{background:#0b1b32ec;border-radius:8px;padding:5px 8px;color:#fff0cf;font-size:16px}
+body.kz-art #kzAdventurePage .ka-star-node small{background:#0c1d31db;border-radius:6px;padding:3px;color:#dcebf4}
+body.kz-art #kzAdventurePage .ka-map-canvas svg line{stroke:#b4d2eb;stroke-width:3;opacity:.7;stroke-dasharray:7 6}
+body.kz-art #kzAdventurePage .ka-map-canvas svg line.is-lit{stroke:#9ef3db;stroke-dasharray:none;filter:drop-shadow(0 0 5px #79ffdf)}
+body.kz-art #kzAdventurePage .ka-story{background:linear-gradient(135deg,#294652f2,#10253bf5);border-radius:22px;padding:24px;border:1px solid var(--rf-edge)}
+body.kz-art #kzAdventurePage .ka-journal-hero{background:linear-gradient(90deg,#19293ceb,#19293c55),url('assets/rebirth/library.webp') center/cover!important;border-radius:24px}
+body.kz-art #kzAdventurePage :is(.ka-challenge,.ka-sanctuary-editor,.kad-gallery-studio){border-radius:18px;background:#112a3eea}
+/* Encyclopaedia, universes and social hall. */
+body.theme-kizuna.kz-art #encyclopedia .section-heading{background:linear-gradient(90deg,#0d1e31ef,#0e234b73),url('assets/rebirth/library.webp') center 35%/cover!important;border:1px solid var(--rf-edge)!important;border-radius:24px;padding:28px!important;min-height:250px;margin-bottom:22px!important}
+body.kz-art #encyclopedia .section-heading h1{font-size:42px!important;max-width:520px}
+body.kz-art #encyclopedia .kzw-tools{background:#10263beb;border:1px solid var(--rf-edge);border-radius:18px;padding:18px!important;position:static!important;max-width:100%;align-self:start}
+body.kz-art #encyclopedia .kzw-tools .rf-fold>summary{padding:10px;font-size:12px}
+body.kz-art #encyclopedia .kzw-tools .rf-fold>summary small{display:none}
+body.kz-art #encyclopedia .kzw-controls{padding:0!important;background:none!important;border:0!important}
+body.kz-art #encyclopedia .kzw-card{border-radius:18px 6px!important;box-shadow:0 8px 20px #0004;border-color:#88b6c263!important;background:#132c40!important}
+body.kz-art #universes .section-heading{background:linear-gradient(90deg,#10233ced,#10233c40),url('assets/rebirth/city-portal.webp') center 45%/cover!important;padding:30px!important;border-radius:24px;border:1px solid var(--rf-edge);min-height:230px;margin:18px 0!important}
+body.kz-art #universes .section-heading h1{font-size:42px!important}
+body.kz-art #universes .section-heading p{color:#d0e1ea;max-width:620px}
+body.kz-art #universes .kz-universe-search{max-width:600px;background:#10263be8;padding:14px;border-radius:12px}
+body.kz-art #community>.wrap{padding:30px!important;background:linear-gradient(180deg,#0e203abb,#0c1b31ed 600px);border:1px solid var(--rf-edge);border-radius:24px}
+body.kz-art #community .kz-community-links{gap:12px;margin:24px 0!important}
+body.kz-art #community .kz-community-links>a{min-height:150px!important;padding:22px!important;border-radius:20px 6px!important;background:linear-gradient(140deg,#2d4b59f0,#10283df5)!important;border:1px solid #a4c5ce6b!important}
+body.kz-art #community .kz-community-links h2{font-size:26px!important;margin:6px 0 10px}
+body.kz-art #community .kz-community-links>a>span{font-size:38px!important;opacity:.18}
+body.kz-art #community .ka-community{padding:0!important;border:0!important;margin:0!important}
+body.kz-art #community .ka-entry-links{background:none!important;padding:0 0 18px!important;border:0!important;min-height:0!important;justify-content:flex-start}
+body.kz-art #community #kaPublicSanctuaries{background:#0c2036d9;border:1px solid var(--rf-edge);padding:20px;border-radius:18px}
+body.kz-art #community .ka-empty{min-height:90px;padding:22px;border-radius:12px;background:#19364b99}
+body.kz-art #ranking .rank-wrap{max-width:1100px;width:calc(100% - 64px);padding:24px;background:#0c1d32ce;border:1px solid #d6c28b55;border-radius:24px}
+body.kz-art #ranking .rank-podium{border-radius:22px!important;background:linear-gradient(100deg,#18394cec,#132c49ad),url('assets/rebirth/library.webp') center/cover!important;grid-template-columns:1fr 240px!important;gap:20px;padding:30px!important;min-height:300px!important}
+body.kz-art #ranking .kad-ranking-future{grid-column:1/-1;display:flex;gap:12px;align-items:center;padding:10px 0 0;border-top:1px solid #b9cfce40;min-height:0}
+body.kz-art #ranking .kad-ranking-future>span{font-size:24px!important}
+body.kz-art #ranking .kad-ranking-future p{font-size:12px!important;margin:0}
+body.kz-art #ranking .kad-prestige-seat{min-height:0;padding:0!important}
+body.kz-art #ranking .kad-prestige-seat h3{font-size:32px!important}
+body.kz-art #ranking .kad-prestige-card{min-height:180px!important}
+body.kz-art #ranking .kad-prestige-card>button{max-height:240px}
+body.kz-art #ranking .kad-empty-trophy{font-size:80px}
+body.kz-art .ka-profile-entry{gap:8px;padding:0 0 14px!important}
+body.kz-art .kad-profile-gallery{border-radius:24px!important;overflow:hidden}
+body.kz-art .kad-gallery-studio>summary{padding:18px!important;min-height:52px;color:#f8e1ad}
+body.kz-art .ka-intro{background:#0b2036d9;padding:14px 18px;border-radius:12px;color:#c5dce7}
+body.kz-art .kad-event-empty{border-radius:24px!important;background:linear-gradient(#102542c9,#102542e8),url('assets/rebirth/sanctuary.webp') center/cover!important;min-height:340px!important}
+/* Responsive scenes keep filters, maps and tabs usable without page overflow. */
+@media(max-width:1100px){
+ body.kz-art #collection .cx-hero{grid-template-columns:1fr 140px!important}body.kz-art #collection [data-rf-fold=collection-progress]{grid-column:1/-1;margin:0}
+ body.kz-art #kzNexusPage .knx-layout{grid-template-columns:minmax(0,1fr) 260px}body.kz-art #kzNexusPage .knx-viewport{height:480px}
+ body.kz-art #kzNexusPage .knx-branch-progress button{padding:8px;gap:7px}body.kz-art #kzNexusPage .knx-branch-progress strong{font-size:16px}
+ body.kz-art #kzAdventurePage .ka-constellation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:800px){
+ body.kz-art #kzNexusPage .knx-layout{grid-template-columns:1fr}body.kz-art #kzNexusPage .knx-detail{min-height:0;display:block}body.kz-art #kzNexusPage .knx-detail-emblem{float:right;margin:0 0 10px 14px}
+ body.kz-art #kzNexusPage .knx-branch-progress{display:flex;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}body.kz-art #kzNexusPage .knx-branch-progress button{min-width:145px;flex-shrink:0;padding:10px}
+ body.kz-art #kzNexusPage .knx-detail h2{margin:10px 0;font-size:28px}body.kz-art #kzNexusPage .knx-detail p{margin:8px 0}
+ body.kz-art #encyclopedia .section-heading{min-height:200px}
+}
+@media(max-width:600px){
+ body.theme-kizuna.kz-art :is(#collection,#marketPage,#universes,#encyclopedia,#community,#ranking,#kzNexusPage,#kzAdventurePage){padding-top:18px!important;background-size:100% 1000px,auto 1000px!important}
+ body.kz-art .rf-fold>summary{padding:12px;font-size:12px;flex-wrap:wrap;gap:5px}body.kz-art .rf-fold>summary small{font-size:10px;margin-left:27px;text-align:left;width:100%}body.kz-art .rf-fold-body{padding:4px 12px 14px}
+ body.theme-kizuna.kz-art #collection .cx-hero{display:block!important;min-height:0;padding:22px!important;background-position:60% center!important}body.kz-art #collection .col-title{font-size:34px!important}body.kz-art #collection .cx-ring{display:none}body.kz-art #collection .cx-pills{display:grid!important;grid-template-columns:1fr 1fr;gap:12px}body.kz-art #collection .cx-pills>div{border:0!important;padding:0!important}body.kz-art #collection .cx-pills b{font-size:24px!important}body.kz-art #collection .col-actions{display:flex;flex-wrap:wrap;gap:8px}body.kz-art #collection .col-actions button{font-size:12px!important;padding:10px!important}body.kz-art #collection [data-rf-fold=collection-progress]{margin-top:18px}body.kz-art #collection .cx-bar{padding:12px!important}body.kz-art #collection .col-top{display:flex;flex-direction:column}body.kz-art #collection .col-seg{align-self:stretch;justify-content:center}body.kz-art #collection .col-seg button{flex:1}body.kz-art #collection .col-filters>label{flex-basis:100%}body.kz-art #collection .col-empty{padding:22px!important}
+ body.theme-kizuna.kz-art #marketPage .km-head{padding:22px!important;min-height:250px;background-position:65% center!important;display:block}body.kz-art #marketPage #marketTitle{font-size:34px!important}body.kz-art #marketPage .km-wallet{padding:10px 14px!important;display:flex;align-items:center;gap:12px;width:max-content;max-width:100%;margin-top:18px}body.kz-art #marketPage .km-wallet small{display:none}body.kz-art #marketPage .km-wallet strong{font-size:24px!important;margin:0}body.kz-art #marketPage .km-controls{min-width:0;display:flex!important;flex-direction:column;width:100%}body.kz-art #marketPage .km-tabs{gap:6px}body.kz-art #marketPage .km-tabs button{font-size:12px!important;padding:8px 10px!important}body.kz-art #marketPage .km-controls select{max-width:none;width:100%}body.kz-art #marketPage .km-market-collection-link{flex-direction:column;align-items:start}
+ body.kz-art #kzNexusPage .knx-header h1{font-size:32px!important}body.kz-art #kzNexusPage .knx-header p{font-size:12px;max-width:none}body.kz-art #kzNexusPage .knx-notice{font-size:11px;gap:8px}body.kz-art #kzNexusPage .knx-notice button{min-height:44px}body.kz-art #kzNexusPage .knx-atlas-toolbar{padding:8px}body.kz-art #kzNexusPage .knx-atlas-toolbar>div:first-child{width:auto;display:flex;flex:1}body.kz-art #kzNexusPage .knx-atlas-toolbar .knx-zoom{margin:0;display:flex;justify-content:center;width:100%}body.kz-art #kzNexusPage .knx-viewport{height:300px}body.kz-art #kzNexusPage .knx-branch-label{min-width:120px;font-size:22px;min-height:110px}body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-label{min-width:145px;min-height:120px;padding:10px}body.kz-art #kzNexusPage .knx-branch-label small{font-size:16px}body.kz-art #kzNexusPage .knx-branch-label b{font-size:38px}body.kz-art #kzNexusPage .knx-atlas-footer{gap:8px;font-size:10px}body.kz-art #kzNexusPage .knx-detail{padding:20px!important}body.kz-art #kzNexusPage .knx-detail button{width:100%;max-width:none}
+ body.kz-art #kzAdventurePage .ka-header h1{font-size:28px!important}body.kz-art #kzAdventurePage .ka-tabs button{font-size:12px!important;padding:8px 12px!important}body.kz-art #kzAdventurePage .kac-sky-intro{padding:22px!important;display:block;min-height:300px;background-position:65% center!important}body.kz-art #kzAdventurePage .kac-sky-intro h2{font-size:36px!important}body.kz-art #kzAdventurePage .kac-sky-count{display:flex;align-items:center;gap:12px;min-width:0;margin-top:18px;padding:12px}body.kz-art #kzAdventurePage .kac-sky-count strong{font-size:30px}body.kz-art #kzAdventurePage .kac-sky-count>span{font-size:11px}body.kz-art #kzAdventurePage .kac-sky-count>small{display:none}body.kz-art #kzAdventurePage .kac-atlas-tools>span{display:none}body.kz-art #kzAdventurePage .ka-constellation-grid{grid-template-columns:1fr;gap:14px}body.kz-art #kzAdventurePage .ka-constellation-tile{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:14px!important;align-items:center}body.kz-art #kzAdventurePage .kac-atlas-tile-top{grid-column:1/-1}body.kz-art #kzAdventurePage .kac-mini-sky{height:150px!important;width:110px}body.kz-art #kzAdventurePage .kac-mini-sky>span{width:42px;height:42px}body.kz-art #kzAdventurePage .kac-atlas-tile-copy h2{font-size:22px!important}body.kz-art #kzAdventurePage .kac-atlas-tile-copy{padding:0;border:0}body.kz-art #kzAdventurePage .ka-star-map{min-height:320px}body.kz-art #kzAdventurePage .ka-story{padding:20px}
+ body.kz-art #universes .section-heading,body.theme-kizuna.kz-art #encyclopedia .section-heading{padding:22px!important;min-height:220px}body.kz-art #universes .section-heading h1,body.kz-art #encyclopedia .section-heading h1{font-size:34px!important}body.kz-art #community>.wrap{padding:22px 16px!important}body.kz-art #community .kz-community-links{grid-template-columns:1fr!important;gap:10px}body.kz-art #community .kz-community-links>a{min-height:115px!important;padding:16px!important}body.kz-art #community .kz-community-links h2{font-size:24px!important}body.kz-art #community .kz-community-links p{margin:5px 0!important}body.kz-art #community #kaPublicSanctuaries{padding:16px}body.kz-art #ranking .rank-wrap{width:calc(100% - 28px);padding:18px}body.kz-art #ranking .rank-title{font-size:32px!important}body.kz-art #ranking .rank-tabs{gap:7px}body.kz-art #ranking .rank-tabs button{padding:8px 10px;font-size:12px!important}body.kz-art #ranking .rank-podium{grid-template-columns:1fr 90px!important;padding:20px!important;gap:12px;min-height:0!important}body.kz-art #ranking .kad-prestige-card{min-height:100px!important}body.kz-art #ranking .kad-empty-trophy{font-size:58px}body.kz-art #ranking .kad-ranking-future p{font-size:11px!important}
+}
+@media(prefers-reduced-motion:reduce){body.kz-art :is(.rf-fold,.knx-world,.ka-constellation-tile,.knx-node,.soft-btn,.km-action){animation:none!important;transition:none!important}}
+html[data-kz-motion=reduced] body.kz-art :is(.rf-fold,.knx-world,.ka-constellation-tile,.knx-node,.soft-btn,.km-action){animation:none!important;transition:none!important}
+
+/* Final contrast and state details. */
+body.theme-kizuna.kz-art .ik-arrow-glyph{background:none!important;border:0!important;color:inherit!important;box-shadow:none!important;font-size:0!important}
+body.kz-art #kzNexusPage{--rf-scene:url('assets/rebirth/sanctuary.webp')}
+body.kz-art #kzNexusPage .knx-branch-label[aria-pressed=true]{outline:3px solid var(--knx-color);outline-offset:4px;background:#24485bea}
+body.kz-art #kzNexusPage[data-kn-mode=progression] #knxBranchLabels{display:none}
+body.kz-art #kzNexusPage .knx-node{width:48px;height:48px}
+body.kz-art #kzNexusPage .knx-node-caption{display:none}
+body.kz-art #kzNexusPage .kanx-node-name{opacity:0;pointer-events:none}
+body.kz-art #kzNexusPage .knx-node:is(:hover,:focus-visible,.is-selected) .kanx-node-name{opacity:1}
+body.kz-art #kzNexusPage .knx-detail[aria-live]{scroll-margin:90px}
+body.kz-art .rf-fold[data-reward-ready=true]>summary{color:#ffe2a0}
+body.kz-art .rf-fold[data-reward-ready=true]>summary:before{color:#fff2a7;text-shadow:0 0 14px #ffc75c}
+body.kz-art .rf-service-error{background:#322d42;border-left:3px solid #efc780;border-radius:8px;padding:18px;color:#f4e4cb;font-size:13px;line-height:1.7}
+body.kz-art #kzAdventurePage .kac-sky-intro .soft-btn{margin-top:12px}
+body.kz-art #kzAdventurePage .kad-event-empty{background:linear-gradient(#102542c9,#102542e8),url('assets/rebirth/sanctuary.webp') center/cover!important}
+body.kz-art #kzNexusPage .knx-world{border-radius:0}
+@media(max-width:600px){body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-label{min-height:132px}}
+
+body.kz-art .rf-fold[hidden],body.kz-art #collection .col-filters[style*="display: none"]{display:none!important}
+
+body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-atlas-footer>span{display:none}
+@media(max-width:600px){body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-label{font-size:0!important;width:136px;min-width:136px;height:136px;min-height:136px;display:grid;place-items:center}body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-label b{font-size:70px;line-height:1}body.kz-art #kzNexusPage[data-kn-mode=discovery] .knx-branch-label small{display:none}}
+body.kz-art #kzAdventurePage .kan-empty{border:1px solid var(--rf-edge);border-radius:24px!important;background:linear-gradient(#1025428c,#102542de),url('assets/rebirth/sanctuary.webp') center/cover!important;min-height:340px!important}
+body.kz-art #kzNexusPage .knx-detail{scroll-margin-block:90px}
+body.kz-art :is(.kzw-card-open,.ka-tile-link)>span,body.kz-art .ka-tile-link>b{font-family:system-ui,sans-serif!important}
