@@ -25,6 +25,15 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  assert.equal(await page.locator('#kyaraProfileOverlay #cpReturnTop').innerText(),'Retour à la Collection');
  assert.equal(await page.locator('#detailBackdrop').evaluate(node=>node.classList.contains('open')),false,'a card click opens the dossier, not the old centered viewer');
  assert.equal(await page.locator('#kyaraProfileOverlay .cp-market-panel').count(),1,'card dossier includes the market history panel');
+ await page.locator('#kyaraProfileOverlay [data-kz-profile-inspect]').click();
+ await page.locator('#kzViewerFlip').click();
+ const profileLink=page.locator('#detailContent [data-kz-open-profile]');
+ await profileLink.waitFor({state:'visible'});
+ assert.match(await profileLink.getAttribute('href'),/^#character\//,'profile link points to an internal KIZUNA route');
+ await profileLink.click();
+ await page.waitForSelector('#kyaraProfileOverlay.open #cpLayout .cp-side');
+ assert.equal(await page.locator('#detailBackdrop').evaluate(node=>node.classList.contains('open')),false,'profile link closes the card viewer');
+ assert.ok(!page.url().includes('anilist.co'),'profile link must not navigate to AniList');
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>!document.querySelector('#kyaraProfileOverlay')?.classList.contains('open'));
  const lockedCardId=await page.evaluate(()=>{
