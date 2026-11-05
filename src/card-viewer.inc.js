@@ -35,6 +35,13 @@ openCardViewer=function(card){
   $('cardViewer').addEventListener('click',event=>{if(event.target.closest('a,button'))return;event.preventDefault();event.stopPropagation();kzViewerBack=!kzViewerBack;kzViewerUpdate();});
   $('viewerClose').focus({preventScroll:true});
 };
+document.addEventListener('click',event=>{
+  const link=event.target.closest('[data-kz-open-profile]');
+  if(!link)return;
+  event.preventDefault();
+  const card=LOCAL_CARDS.find(row=>String(row.id)===String(link.dataset.kzOpenProfile));
+  if(card)openDetail(card);
+});
 openDetail=function(card,source){
   if(!card)return;
   const tab=document.body.dataset.tab||'';
