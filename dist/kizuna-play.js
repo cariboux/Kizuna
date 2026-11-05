@@ -4,7 +4,7 @@
  const key='kizuna_reveal_preferences_v1', $=id=>document.getElementById(id);
  const media=window.matchMedia?.('(prefers-reduced-motion: reduce)');
  let prefs;try{prefs=JSON.parse(localStorage.getItem(key)||'{}');}catch{prefs={};}
- prefs={quick:prefs.quick===true,sound:prefs.sound===true,reduce:prefs.reduce===true};
+ prefs={quick:prefs.quick===true,sound:prefs.sound!==false,reduce:prefs.reduce===true};
  let gesture=false,context,lastSound=0,tilted=null,tiltFrame=0,queued=false,owner=null,previousOwned=null,previousAlbums=null;
  const newCards=new Set(),newAt=new Map(),numbers=new Map();
  const reduced=()=>prefs.reduce||media?.matches===true;
@@ -77,7 +77,7 @@
  function mountActivities(){const activities=$('kaHomeAdventure'),slot=$('kgActivityFooter');if(activities&&slot&&activities.parentElement!==slot)slot.append(activities);}
  mountActivities();document.addEventListener('DOMContentLoaded',mountActivities,{once:true});window.KizunaHome?.refresh();
  window.KizunaExperience=Object.freeze({reduced,sfx,celebrate,setPreference,animateNumbers,isNew:id=>owner===identity()&&newCards.has(String(id))&&Date.now()-(newAt.get(String(id))||0)<=120000,getPreferences:()=>({...prefs}),refresh:schedule});
- const controls=document.createElement('details');controls.className='kg-settings';controls.innerHTML='<summary aria-label="Réglages de jeu">⚙ <span>Réglages</span></summary><div class="kg-settings-menu"><strong>À ton rythme</strong><button type="button" data-kg-pref="sound" aria-pressed="false">Effets sonores <b>Non</b></button><button type="button" data-kg-pref="reduce" aria-pressed="false">Réduire les animations <b>Non</b></button><small>Les préférences d’accessibilité de ton appareil sont respectées.</small></div>';
+ const controls=document.createElement('details');controls.className='kg-settings';controls.innerHTML='<summary aria-label="Réglages de jeu">⚙ <span>Réglages</span></summary><div class="kg-settings-menu"><strong>À ton rythme</strong><button type="button" data-kg-pref="sound" aria-pressed="true">Effets sonores <b>Oui</b></button><button type="button" data-kg-pref="reduce" aria-pressed="false">Réduire les animations <b>Non</b></button><small>Les préférences d’accessibilité de ton appareil sont respectées.</small></div>';
  document.querySelector('.top-actions')?.append(controls);document.body.classList.add('kz-game');updateSettings();schedule();
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&controls.open&&controls.contains(event.target)){controls.open=false;controls.querySelector('summary').focus({preventScroll:true});}});
  document.addEventListener('click',event=>{if(controls.open&&!controls.contains(event.target))controls.open=false;});
