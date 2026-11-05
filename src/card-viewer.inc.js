@@ -10,31 +10,13 @@ function kzViewerUpdate(){
   if(zoom){zoom.textContent='Illustration entière';zoom.removeAttribute('aria-pressed');}
   if($('kzViewerStatus'))$('kzViewerStatus').textContent=(kzViewerBack?'Verso':'Recto')+' · '+(kzViewerZoom?'Agrandissement activé':'Taille normale');
 }
+// Keep the original drag / tilt / flip viewer for direct card clicks.
+const kzInteractiveCardOpen = openDetail;
 openCardViewer=function(card){
   if(!card)return;
-  if(!$('detailBackdrop').classList.contains('open'))kzViewerReturn=document.activeElement;
-  state.activeCharacter=card;kzViewerBack=false;kzViewerZoom=false;
-  const info=ownInfo(card.id),rarity=rarityFor(card),root=$('detailBackdrop'),reserved=collectionStatus().reserved[card.id]||0;
-  root.classList.add('kz-card-viewer');root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Carte : '+card.name);root.style.setProperty('--viewer-glow',rarity.color);
-  $('detailTitle').textContent=card.name;$('detailSubtitle').textContent=card.series;
-  const acquired=info.since>0&&Number.isFinite(new Date(info.since).getTime())?new Date(info.since).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
-  const owned=info.count>0?info.count+' exemplaire'+(info.count>1?'s disponibles':' disponible'):reserved?'Exemplaire réservé au marché':'À découvrir dans un booster';
-  $('detailContent').innerHTML='<div class="kz-viewer-head"><div><small>COLLECTION · '+esc(rarity.name)+'</small><h2>'+esc(card.name)+'</h2><p>'+esc(card.series)+'</p></div><button type="button" class="kr-detail-close" id="viewerClose" aria-label="Fermer la carte">×</button></div><div class="ka-viewer-layout"><div class="kz-viewer-stage"><div class="ka-viewer-halo" aria-hidden="true"></div><span class="ka-viewer-seal" aria-hidden="true">KIZUNA<br>COLLECTION</span><div class="bigcard" id="cardViewer">'+cardMarkup(card,{flip:true,count:info.count,since:info.since})+'</div></div><div class="ka-viewer-dossier"><span class="ka-viewer-kicker">FICHE DE COLLECTION</span><p class="ka-viewer-number">N° <strong>'+String(card.rank).padStart(4,'0')+'</strong><span> / '+String(LOCAL_CARDS.length).padStart(4,'0')+'</span></p><p class="ka-viewer-owned">'+esc(owned)+'</p><dl class="ka-viewer-facts"><div><dt>Univers</dt><dd>'+esc(card.series)+'</dd></div><div><dt>Rareté</dt><dd class="ka-viewer-rarity">'+esc(rarity.name)+'</dd></div>'+(card.native?'<div><dt>Nom original</dt><dd>'+esc(card.native)+'</dd></div>':'')+(reserved?'<div><dt>Au marché</dt><dd>'+reserved+' exemplaire'+(reserved>1?'s réservés':' réservé')+'</dd></div>':'')+(acquired?'<div><dt>Première obtention disponible</dt><dd>'+esc(acquired)+'</dd></div>':'')+'</dl><p class="ka-viewer-help">Retourne la carte pour consulter ses caractéristiques. Clique sur l’illustration ou utilise les commandes ci-dessous.</p><div class="kz-viewer-controls"><button class="soft-btn" id="kzViewerFlip" type="button" aria-pressed="false">Voir le verso</button><button class="soft-btn" id="kzViewerZoom" type="button" aria-pressed="false">Agrandir</button></div><p class="kz-viewer-caption" id="kzViewerStatus" role="status"></p></div></div>';
-  if(card.rarity==='Mythique'){const b=document.createElement('button');b.type='button';b.className='soft-btn';b.dataset.kmOpen=card.id;b.textContent='Éveil mythique';$('detailContent').querySelector('.kz-viewer-controls').append(b);}
-  root.classList.add('open');document.body.style.overflow='hidden';kzViewerUpdate();
-  $('viewerClose').addEventListener('click',()=>closeBackdrop('detailBackdrop'));
-  $('kzViewerFlip').addEventListener('click',()=>{kzViewerBack=!kzViewerBack;kzViewerUpdate();});
-  $('kzViewerZoom').addEventListener('click',()=>{
-    let art=$('kdArtwork');if(!art){art=document.createElement('dialog');art.id='kdArtwork';document.body.append(art);}
-    art.setAttribute('aria-label','Illustration entière de '+card.name);
-    art.innerHTML='<p>'+esc(card.name)+'</p><button type="button" class="soft-btn" data-ui-kind="compact">Fermer ×</button><img src="'+esc(card.image)+'" alt="'+esc(card.name)+'" referrerpolicy="no-referrer">';
-    const close=()=>{art.close();$('kzViewerZoom')?.focus({preventScroll:true});};
-    art.querySelector('img').addEventListener('error',function(){if(this.dataset.unavailable)return;this.dataset.unavailable='true';this.src='assets/rebirth/card-unavailable.svg';art.querySelector('p').textContent=card.name+' · illustration indisponible';});
-    art.querySelector('button').onclick=close;art.oncancel=event=>{event.preventDefault();close();};art.showModal();
-  });
-  $('cardViewer').addEventListener('click',event=>{if(event.target.closest('a,button'))return;event.preventDefault();event.stopPropagation();kzViewerBack=!kzViewerBack;kzViewerUpdate();});
-  $('viewerClose').focus({preventScroll:true});
+  kzInteractiveCardOpen(card);
 };
+
 document.addEventListener('click',event=>{
   const link=event.target.closest('[data-kz-open-profile]');
   if(!link)return;
