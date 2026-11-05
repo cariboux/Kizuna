@@ -27,7 +27,7 @@ Les gestionnaires de tirage, de stock, de Chakra et de sauvegarde sont conservé
 
 [Révélation](rebirth/after-laptop-reveal.webp) · [Récapitulatif](rebirth/after-laptop-summary.webp)
 
-Les captures après tests montrent un profil invité ayant réellement ouvert des boosters ; les captures initiales montrent un nouveau profil vide.
+Les captures principales avant/après montrent un nouveau profil invité. Les captures de révélation et de récapitulatif proviennent de vrais tirages dans le contexte de test isolé.
 
 ## À valider avant fusion
 
