@@ -96,3 +96,13 @@ kaMarketProfilePanel=function(card,r){
   const chart=visible.length>=2?kaChartSvg(visible,r?.color||'#d9b86f',165):'<p class="kz-price-empty">'+(visible.length?'Une vente enregistrée sur cette période. Le graphique apparaîtra à partir de deux ventes.':'Aucune vente enregistrée sur cette période.')+'</p>';
   return '<section class="cp-panel cp-market-panel"><div class="cp-section-id">MARCHÉ · HISTORIQUE DES PRIX</div><div class="cp-market-title-row"><h2 class="cp-section-title">Cote de la carte</h2><div class="ka-range-toggle" role="group" aria-label="Période du graphique">'+[7,30].map(days=>'<button type="button" data-ka-range="'+days+'" data-ka-range-card="'+esc(card.id)+'" class="'+(kyaraMarketChartRange===days?'active':'')+'" aria-pressed="'+(kyaraMarketChartRange===days)+'">'+days+' j</button>').join('')+'</div></div><div class="cp-market-stats"><div><span>Médiane 7 j</span><b>'+median(w)+'</b></div><div><span>Médiane 30 j</span><b>'+median(m)+'</b></div><div><span>Ventes 30 j</span><b>'+fmt(m.length)+'</b></div></div>'+chart+'<p class="cp-market-foot">Transactions enregistrées dans ton espace de jeu. Les prix demandés dans les annonces ne sont pas des ventes conclues.</p><div class="cp-market-actions"><button class="cp-action primary" type="button" data-cp-market-list="'+esc(card.id)+'">Voir les annonces</button><button class="cp-action" type="button" data-cp-toggle-wishlist="'+esc(card.id)+'">'+(kyaraMarketWishlistIds.includes(String(card.id))?'Retirer de mes envies':'Ajouter à mes envies')+'</button></div></section>';
 };
+
+/* Card-back action: open the character dossier inside Kizuna. */
+const kzOriginalCardBackMarkup = backMarkup;
+backMarkup = function(card, info) {
+  const markup = kzOriginalCardBackMarkup(card, info);
+  return markup.replace(
+    /<a href="#character\/[^"]+" data-kz-open-profile="([^"]+)" aria-label="([^"]+)">Voir la fiche du perso<\/a>/,
+    '<button type="button" class="kz-card-profile-link" data-kz-open-profile="$1" aria-label="$2" aria-haspopup="dialog">Voir la fiche du perso <span aria-hidden="true">↗</span></button>'
+  );
+};
