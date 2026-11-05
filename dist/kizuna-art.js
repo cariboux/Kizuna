@@ -4,6 +4,12 @@
   const root=document.body,nav=document.querySelector('.kz-shell-nav');
   if(!nav)return;
   root.classList.add('kz-art');
+  // A blocked/offline portrait must never look like another character or a lost card.
+  document.addEventListener('error',event=>{
+    const img=event.target;
+    if(!(img instanceof HTMLImageElement)||!img.closest('.tcard,.ka-companion-card')||img.dataset.rbFallback)return;
+    img.dataset.rbFallback='true';img.src='assets/rebirth/card-unavailable.svg';
+  },true);
   const destinations=[
     ['home','Accueil','Le sanctuaire des liens','home'],
     ['boosts','Invocation','Choisir et ouvrir un booster','boosters'],
@@ -21,14 +27,18 @@
     ['rank','Classement','Consulter les scores réels','ranking'],
     ['wiki','Encyclopédie','Explorer le catalogue','encyclopedia'],
     ['profile','Mon profil','Ton identité de collectionneur','profile'],
+    ['notices','Carnet','Notifications et dernières découvertes',''],
     ['staff','Staff','Administrer Kizuna','staff']
   ];
-  const glyph={home:'⌂',boosts:'✦',col:'▤',universes:'◎',nexus:'✧',missions:'☷',constellations:'✳',journey:'⌁',awakening:'✺',sanctuary:'❖',events:'ϟ',market:'◇',community:'♧',rank:'♜',wiki:'▥',profile:'◉',staff:'⚑'};
+  const glyph={home:'⌂',boosts:'✦',col:'▤',universes:'◎',nexus:'✧',missions:'☷',constellations:'✳',journey:'⌁',awakening:'✺',sanctuary:'❖',events:'ϟ',market:'◇',community:'♧',rank:'♜',wiki:'▥',profile:'◉',staff:'⚑',notices:'◇'};
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const menuButton=document.createElement('button');
   menuButton.type='button';menuButton.className='kza-menu-button';menuButton.id='kzaMenuButton';
-  menuButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Tout</span>';
-  menuButton.setAttribute('aria-label','Ouvrir toutes les destinations');menuButton.setAttribute('aria-haspopup','dialog');menuButton.setAttribute('aria-controls','kzaNavigation');nav.append(menuButton);
+  menuButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Explorer</span>';
+  menuButton.setAttribute('aria-label','Ouvrir toutes les destinations');menuButton.setAttribute('aria-haspopup','dialog');menuButton.setAttribute('aria-controls','kzaNavigation');document.querySelector('.top-actions')?.prepend(menuButton);
+  const primary=['home','boosts','col','nexus','market'];
+  for(const key of primary){const link=nav.querySelector('[data-tab="'+key+'"]');if(link)nav.append(link);}
+  nav.querySelectorAll('a').forEach(a=>{if(!primary.includes(a.dataset.tab))a.remove();});
   const dialog=document.createElement('dialog');dialog.id='kzaNavigation';dialog.className='kza-navigation';dialog.setAttribute('aria-labelledby','kzaNavigationTitle');
   dialog.innerHTML='<header><div><p class="kza-eyebrow">KIZUNA · TON VOYAGE</p><h2 id="kzaNavigationTitle">Où allons-nous ?</h2></div><button type="button" class="kza-close" aria-label="Fermer les destinations">×</button></header><div class="kza-destinations"></div><p class="kza-menu-note">Chaque lien continue ton aventure dans Kizuna.</p>';
   document.body.append(dialog);
@@ -36,27 +46,30 @@
   const active=()=>root.dataset.tab==='adventure'?(location.hash.match(/^#adventure\/([^/]+)/)?.[1]||'constellations'):root.dataset.tab;
   const hasStaff=()=>{const link=document.getElementById('staffNav');return !!link&&!link.hidden&&link.style.display!=='none';};
   function renderMenu(){
-    dialog.querySelector('.kza-destinations').innerHTML=destinations.filter(d=>d[0]!=='staff'||hasStaff()).map(([key,label,detail,hash])=>'<button type="button" data-kza-destination="'+key+'"'+(active()===key?' aria-current="page"':'')+'><i aria-hidden="true">'+glyph[key]+'</i><span><strong>'+esc(label)+'</strong><small>'+esc(detail)+'</small></span><b aria-hidden="true">↗</b></button>').join('');
+    const groups=[['Explorer',['universes','wiki','constellations','journey']],['Activités',['missions','events','awakening']],['Mon joueur',['profile','sanctuary','rank']],['Social',['community','notices','staff']]];
+    dialog.querySelector('.kza-destinations').innerHTML=groups.map(([title,keys])=>'<section><h3>'+title+'</h3>'+destinations.filter(d=>keys.includes(d[0])&&(d[0]!=='staff'||hasStaff())).map(([key,label,detail])=>'<button type="button" data-kza-destination="'+key+'"'+(active()===key?' aria-current="page"':'')+'><i aria-hidden="true">'+glyph[key]+'</i><span><strong>'+esc(label)+'</strong><small>'+esc(detail)+'</small></span><b aria-hidden="true">↗</b></button>').join('')+'</section>').join('');
   }
   function sync(){
     const current=destinations.find(d=>d[0]===active());
     root.dataset.artSection=active();
     document.querySelectorAll('.kz-shell-nav a[data-tab]').forEach(a=>{
-      const primary=['home','boosts','col','universes'].includes(a.dataset.tab);a.classList.toggle('kza-primary-destination',primary);
+      const primary=['home','boosts','col','nexus','market'].includes(a.dataset.tab);a.classList.toggle('kza-primary-destination',primary);
       a.title=destinations.find(d=>d[0]===a.dataset.tab)?.[1]||a.textContent.trim();
     });
-    menuButton.classList.toggle('active',!['home','boosts','col','universes'].includes(active()));
+    menuButton.classList.toggle('active',!['home','boosts','col','nexus','market'].includes(active()));
     menuButton.setAttribute('aria-expanded',String(dialog.open));
     const context=document.getElementById('kzaHeaderContext');if(context)context.textContent=current?.[1]||'Kizuna';
   }
   const context=document.createElement('span');context.id='kzaHeaderContext';context.className='kza-header-context';context.setAttribute('aria-hidden','true');document.querySelector('.brand-logo')?.after(context);
   menuButton.addEventListener('click',()=>{lastFocus=document.activeElement;renderMenu();dialog.showModal();sync();});
+  document.addEventListener('click',event=>{if(event.target.closest('[data-rb-activities]')){menuButton.click();dialog.querySelector('[data-kza-destination=missions]')?.focus();}});
   dialog.querySelector('.kza-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{sync();if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});});
   dialog.addEventListener('click',event=>{
     const button=event.target.closest('[data-kza-destination]');if(!button)return;
     const key=button.dataset.kzaDestination;dialog.close();
     if(['missions','constellations','journey','awakening','sanctuary'].includes(key))window.KizunaAdventure?.navigate(key);
+    else if(key==='notices')document.getElementById('kzNotifications')?.click();
     else if(key==='events')window.KizunaAnomalies?.open();
     else window.KizunaGame?.showTab(key);
     sync();

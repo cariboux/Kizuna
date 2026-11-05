@@ -21,18 +21,18 @@
     const featured=layout.querySelector('.kz-featured-booster'),progress=layout.querySelector('.kz-home-progress'),activities=layout.querySelector('.kg-activity-map');
     if(!featured||!progress||!activities)return;
     const scene=document.createElement('div');scene.className='ka-lobby-scene';
-    scene.innerHTML='<header class="ka-lobby-intro"><p class="ka-lobby-eyebrow"><span aria-hidden="true">✦</span> L’OBSERVATOIRE DES LIENS</p><h1>Ta prochaine<br><em>rencontre.</em></h1><span class="ka-lobby-coordinate" aria-hidden="true">絆 / KIZUNA CARD CLUB</span></header><aside class="ka-lobby-companion" aria-label="Mon personnage favori"><div class="ka-companion-label"><span>MON PERSONNAGE</span><button id="kaFavouriteSettings" type="button" aria-haspopup="dialog">Personnaliser <span aria-hidden="true">↗</span></button></div><div id="kaFavouriteStage"></div><p id="kaFavouriteReaction" class="ka-favourite-reaction" role="status" hidden></p></aside><div class="ka-lobby-invocation"></div><aside class="ka-lobby-hud"></aside><div class="ka-lobby-orbit" aria-hidden="true"><i></i><i></i><i></i></div>';
-    layout.before(scene);scene.querySelector('.ka-lobby-invocation').append(featured);scene.querySelector('.ka-lobby-hud').append(progress);
-    const title=progress.querySelector('h2');if(title)title.textContent='Ton carnet de liens';
-    const overline=progress.querySelector('.kz-overline');if(overline)overline.textContent='LA COLLECTION CONTINUE';
-    const trail=document.createElement('section');trail.className='ka-lobby-journeys';trail.setAttribute('aria-labelledby','kaJourneysTitle');
-    trail.innerHTML='<header><span class="ka-section-index" aria-hidden="true">02 /</span><h2 id="kaJourneysTitle">À toi de jouer</h2><span class="ka-section-line" aria-hidden="true"></span></header>';
-    activities.classList.add('ka-activity-trail');trail.append(activities);scene.after(trail);layout.remove();
-    featured.querySelector('.kg-lobby-seal').textContent='INVOCATION · BOOSTER VEDETTE';
-    const featuredButton=$('kzFeaturedOpen');if(featuredButton)featuredButton.innerHTML='Invoquer mes cartes <span aria-hidden="true">↗</span>';
-    const sourceNote=featured.querySelector('.kg-preview-note');if(sourceNote)sourceNote.textContent='Aperçus du catalogue · illustrations d’Éveil';
-    const news=$('kzNewsTitle');if(news)news.textContent='Des visages. Des univers. Tes liens.';
+    scene.innerHTML=`<header class="ka-lobby-intro"><p class="ka-lobby-eyebrow">KIZUNA REBIRTH <span>絆</span></p><h1>Un monde.<br><em>Mille liens.</em></h1><p class="rb-welcome">La prochaine rencontre<br>pourrait tout changer.</p></header><aside class="ka-lobby-companion" aria-label="Mon personnage favori"><div class="ka-companion-label"><span>À TES CÔTÉS</span><button id="kaFavouriteSettings" type="button" aria-haspopup="dialog" aria-label="Personnaliser mon personnage favori">＋</button></div><div id="kaFavouriteStage"></div><p id="kaFavouriteReaction" class="ka-favourite-reaction" role="status" hidden></p></aside><div class="ka-lobby-invocation"></div><nav class="rb-lobby-destinations" aria-label="Activités du lobby"><button type="button" data-kg-go="nexus"><span class="rb-place rb-tree" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M24 42V18m0 14L12 20m12 6 12-12M24 42l-7 3m7-3 7 3"/><path d="m24 3 7 9-7 9-7-9Zm-12 9 7 8-7 8-7-8Zm24-8 7 9-7 9-7-9Z"/></svg></span><span><small>FAIS GRANDIR TES LIENS</small><strong>Nexus</strong></span><b>↗</b></button><button type="button" data-kg-go="daily"><span class="rb-place rb-gift" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22h36v19H6Zm0 0v-9h36v9M24 13v28M4 22h40"/><path d="M24 13C10 14 10 1 17 4c4 1 7 9 7 9Zm0 0c14 1 14-12 7-9-4 1-7 9-7 9Z"/></svg></span><span><small>TON RENDEZ-VOUS</small><strong>Cadeaux</strong></span><b>↗</b></button><button type="button" data-rb-activities><span class="rb-place rb-quest" aria-hidden="true">✦</span><span><small>L’AVENTURE CONTINUE</small><strong>Activités</strong></span><b>↗</b></button></nav>`;
+    layout.before(scene);scene.querySelector('.ka-lobby-invocation').append(featured);
+    // Keep the original account-backed progress controls available on demand.
+    const journal=document.createElement('details');journal.className='rb-journal';
+    journal.innerHTML='<summary>Mon carnet de collection</summary>';journal.append(progress);scene.after(journal);
+    layout.remove();
+    featured.querySelector('.kg-lobby-seal').textContent='LE PORTAIL EST OUVERT';
+    const featuredButton=$('kzFeaturedOpen');if(featuredButton)featuredButton.innerHTML='Ouvrir un booster <span aria-hidden="true">↗</span>';
+    // Discovery previews remain in the catalogue; the lobby spotlights one pack.
+    const news=$('kzHome').querySelector('.kz-home-news');if(news){const drawer=document.createElement('details');drawer.className='rb-journal';drawer.innerHTML='<summary>Découvrir le catalogue</summary>';news.before(drawer);drawer.append(news);}
   }
+
   function ownCards(snapshot=window.KizunaGame?.getSnapshot?.()) {
     const owned=new Set((snapshot?.owned||[]).map(copy=>String(copy.id)));
     return (snapshot?.cards||[]).filter(card=>owned.has(String(card.id))).sort((a,b)=>a.name.localeCompare(b.name,'fr'));

@@ -69,7 +69,7 @@ renderKyaraPackSelection=function(n=1){
       <div class="kr-pack-controls"><p class="kr-pack-hint">Ouvre le passage.</p><p class="ksm-ritual-status" role="status" aria-live="polite">Choisis le nombre de paquets, puis lance ton invocation.</p>
         <div class="kr-quantity-options" role="group" aria-label="Nombre de boosters">${[1,5,10].map(q=>`<button type="button" data-kr-action="quantity" data-count="${q}" aria-pressed="${q===state.requestedBoosters}" class="${q===state.requestedBoosters?'selected':''}"><b>×${q}</b><small>${q*5} cartes</small></button>`).join('')}</div>
         ${kzRevealSettings()}
-        <button type="button" class="kr-open-cta" data-kr-action="open-pack"><span aria-hidden="true">✦</span><b>Invoquer mes cartes</b><small data-kr-open-label>${packCostLabel(state.requestedBoosters)}</small></button>
+        <button type="button" class="kr-open-cta" data-kr-action="open-pack"><span aria-hidden="true">✦</span><b>Ouvrir</b><small data-kr-open-label>${packCostLabel(state.requestedBoosters)}</small></button>
         <button type="button" class="ksm-skip-intro" data-ksm-skip hidden>Passer l’invocation →</button>
         <p class="kr-pack-foot" data-kr-pack-count>${state.requestedBoosters*5} cartes à découvrir</p><p class="kz-reveal-guarantee">Une Rare ou mieux par booster. Les probabilités et garanties restent celles affichées dans Boosters.</p>
         <button class="kr-pack-change" type="button" data-kr-action="change">Changer de booster</button>
@@ -147,7 +147,7 @@ renderKyaraFinale=function(){
   root.innerHTML=`<button class="kr-close" type="button" data-kr-action="close" aria-label="Fermer le récapitulatif">×</button><div class="kr-finale-shell kz-reveal-summary"><header class="kr-finale-heading"><span class="kr-eyebrow">03 / L’EMPREINTE DE TON INVOCATION</span><h1 id="kzRevealTitle" tabindex="-1">${freshCount?'De nouveaux liens.':'Tes liens se renforcent.'}</h1><p>${cards.length} cartes · ${esc(b.title)} · ${cards.length/5} booster${cards.length>5?'s':''} ouvert${cards.length>5?'s':''}</p><span class="kr-new-count">${freshCount} nouvelle${freshCount>1?'s':''} découverte${freshCount>1?'s':''}</span></header>
     <div class="kz-summary-rarities" aria-label="Raretés obtenues">${rarityData.slice().sort((a,b)=>a.level-b.level).filter(r=>counts.has(r.name)).map(r=>`<span style="--tier:${r.color}"><i aria-hidden="true"></i>${esc(r.name)} <b>×${counts.get(r.name)}</b></span>`).join('')}</div>
     <div class="kr-finale-fan kz-summary-grid">${cards.map((card,i)=>{const r=rarityFor(card);return `<button type="button" class="kr-finale-card${r.level===bestTier.level?' is-best':''}" data-kr-action="detail" data-kr-index="${i}" style="--kr-rarity:${r.color};--kr-index:${Math.min(i,9)}" aria-label="Voir ${esc(card.name)}, ${esc(r.name)}${state.revealNew[i]?', nouvelle carte':''}">${state.revealNew[i]?'<span class="kr-new-badge">Nouveau</span>':''}${cardMarkup(card)}${card.kzResonance?.delta?'<span class="km-finale-mark">+1 Résonance'+(card.kzResonance.unlocked>card.kzResonance.from?' · Éveil '+card.kzResonance.unlocked+' débloqué':'')+'</span>':''}</button>`;}).join('')}</div>
-    <div class="kr-finale-actions"><button type="button" class="kr-open-again" data-kr-action="again"><b>Ouvrir un autre</b><small>${esc(b.title)}</small></button><button type="button" data-kr-action="collection">Voir ma collection</button><button type="button" data-kr-action="change">Changer de booster</button><button type="button" data-kr-action="image">Exporter l’image</button><button type="button" data-kr-action="copy">Copier le lien du booster</button></div><p class="kr-finale-note">Cartes enregistrées dans ta collection · du moins rare au plus rare.</p></div>`;
+    <div class="kr-finale-actions"><button type="button" class="kr-open-again" data-kr-action="again"><b>Ouvrir un autre</b><small>${esc(b.title)}</small></button><button type="button" data-kr-action="collection">Voir ma collection</button><details class="rb-reveal-more"><summary>Plus d’actions</summary><button type="button" data-kr-action="change">Changer de booster</button><button type="button" data-kr-action="image">Exporter l’image</button><button type="button" data-kr-action="copy">Copier le lien du booster</button></details></div><p class="kr-finale-note">Cartes enregistrées dans ta collection · du moins rare au plus rare.</p></div>`;
   kzRevealFocus('#kzRevealTitle');
 };
 
@@ -166,7 +166,7 @@ document.addEventListener('keydown',event=>{
   const root=$('kyaraRevealRoot');if(!root)return;
   if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();closeBackdrop('revealBackdrop');return;}
   if(event.key==='Tab'){
-    const items=[...root.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled)')].filter(node=>!node.hidden&&!node.closest('[hidden]'));
+    const items=[...root.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),summary')].filter(node=>!node.hidden&&!node.closest('[hidden]')&&node.getClientRects().length);
     if(!items.length)return;const i=items.indexOf(document.activeElement);
     if(i<0||event.shiftKey&&i===0||!event.shiftKey&&i===items.length-1){event.preventDefault();items[event.shiftKey?items.length-1:0].focus();}return;
   }
@@ -192,6 +192,14 @@ function kgRenderPackPreview(){
  const root=$('kgPackPreview');if(!root)return;const b=kyaraBooster(),cards=kgBoosterCards(b).slice(0,3),signature=JSON.stringify(cards.map(c=>[c.id,c.name,kgBoosterArt(c)]));if(root.dataset.signature===signature)return;root.dataset.signature=signature;
  root.innerHTML='<p class="kg-preview-caption">Des rencontres possibles <span>Illustrations d’Éveil</span></p><div class="kg-pack-preview">'+cards.map(card=>'<button type="button" data-kg-card="'+esc(card.id)+'" aria-label="Découvrir '+esc(card.name)+'"><img src="'+esc(kgBoosterArt(card))+'" alt="" width="90" height="120" loading="eager" decoding="async"><span>'+esc(card.name)+'</span></button>').join('')+'</div>';
 }
+function rbRenderBoosterStage(){
+ const stage=$('rbBoosterStage');if(!stage)return;
+ const b=kyaraBooster();
+ const existing=stage.querySelector('[data-rb-open]');if(existing)existing.disabled=$('kOpen1').disabled;
+ const signature=b.id+kgPackImage(b);if(stage.dataset.signature===signature)return;stage.dataset.signature=signature;stage.dataset.pack=b.id;
+ stage.innerHTML='<span class="rb-stage-label">SANCTUAIRE DES INVOCATIONS</span><button class="rb-stage-pack" type="button" data-rb-open aria-label="Ouvrir '+esc(b.title)+'">'+kgPackImage(b)+'<small>絆 · KIZUNA</small>'+boosterLogo(b)+'<strong>'+esc(b.title)+'</strong><span>5 CARTES · RARE OU +</span></button><span class="rb-stage-plinth" aria-hidden="true"></span>';
+ stage.querySelector('[data-rb-open]').disabled=$('kOpen1').disabled;
+}
 function karArrangeBoosterPanel(){
  const panel=document.querySelector('#boosters .kb-panel'),heading=panel?.querySelector('.kb-sel');
  if(!panel||!heading||panel.querySelector('.kar-panel-actions'))return;
@@ -201,8 +209,9 @@ function karArrangeBoosterPanel(){
  heading.after(actions);
 }
 const kgBaseRenderPanel=renderPanel;
-renderPanel=function(){kgBaseRenderPanel();kgRenderPackPreview();karArrangeBoosterPanel();};
+renderPanel=function(){kgBaseRenderPanel();kgRenderPackPreview();karArrangeBoosterPanel();rbRenderBoosterStage();};
 document.addEventListener('click',event=>{
+ if(event.target.closest('[data-rb-open]'))$('kOpen1')?.click();
  const rail=event.target.closest('[data-kg-rail]');if(rail){const grid=$('kGrid');if(!grid||grid.hidden)return;const amount=Number(rail.dataset.kgRail)*Math.max(210,grid.clientWidth*.75),left=Math.max(0,Math.min(grid.scrollWidth-grid.clientWidth,grid.scrollLeft+amount));if(grid.scrollTo)grid.scrollTo({left,behavior:kzReducedMotion()?'instant':'smooth'});else grid.scrollLeft=left;}
  const card=event.target.closest('[data-kg-card]');if(card)window.KizunaGame?.openCard(card.dataset.kgCard);
 });
