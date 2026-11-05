@@ -1,15 +1,15 @@
 /* One card geometry, shared by the album, reveal and viewer. Artwork never bleeds into its frame. */
-body .tcard{position:relative;isolation:isolate;display:flex;flex-direction:column;width:100%;height:100%;aspect-ratio:7/10;box-sizing:border-box;padding:8px;overflow:hidden;border:1px solid color-mix(in srgb,var(--rarity) 70%,#fff);border-radius:12px 4px;background:linear-gradient(145deg,color-mix(in srgb,var(--rarity) 22%,#152338),#0c1525 55%);box-shadow:inset 0 0 0 3px #0a1326,inset 0 0 0 4px color-mix(in srgb,var(--rarity) 45%,transparent),0 6px 14px #0005;color:#fff}
-body .tcard:after{content:'';pointer-events:none;position:absolute;inset:4px;border:1px solid color-mix(in srgb,var(--rarity) 50%,transparent);border-radius:8px 2px}
-body .tcard .ti{position:relative;flex:1;min-height:0;overflow:hidden;display:grid;place-items:center;width:100%;padding:0;background:radial-gradient(ellipse at 50% 45%,color-mix(in srgb,var(--rarity) 14%,#172238),#091320);border-radius:7px 2px}
-body .tcard .ti img{position:static;display:block;width:100%;height:100%;max-width:100%;max-height:100%;min-height:0;object-fit:contain;object-position:center;transform:none;clip-path:none;filter:none;border-radius:0}
-body .tcard .pt{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 10px #0002}
-body .kd-card-caption{flex:none;padding:9px 4px 3px;min-width:0}
-body .tcard .th{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:24px;padding:0;border:0;background:none;font:600 clamp(16px,1.5vw,21px)/1.05 Rajdhani,system-ui,sans-serif;letter-spacing:0;color:#fff6e5}
-body .tcard .th>span{min-width:0;overflow-wrap:anywhere}
-body .tcard .bd{flex:none;display:grid;place-items:center;min-width:24px;height:26px;padding:0 3px;box-sizing:border-box;clip-path:polygon(50% 0,100% 22%,91% 77%,50% 100%,9% 77%,0 22%);background:var(--rarity);color:#08182a;font:700 16px Rajdhani,system-ui}
-body .tcard .ts{font:400 12px/1.4 Manrope,system-ui,sans-serif;color:#c5d7e6;padding:5px 0 0;white-space:normal;background:none;border:0;overflow-wrap:anywhere}
-.kd-card-edition{display:flex;align-items:center;justify-content:space-between;gap:4px;padding-top:6px;color:var(--rarity);font:600 11px/1.4 Manrope,system-ui}.kd-card-edition i{font-style:normal;color:#acbbcc}
+body .tcard{position:relative;isolation:isolate;display:flex;flex-direction:column;width:100%;height:100%;aspect-ratio:7/10;box-sizing:border-box;padding:0;overflow:hidden;border:1px solid var(--rarity,#85819a);border-radius:12px;background:linear-gradient(160deg,#241b2d,#120f18);box-shadow:0 8px 18px #0006;color:#fff}
+body .tcard:after{content:'';pointer-events:none;position:absolute;inset:5px;border:1px solid color-mix(in srgb,var(--rarity) 48%,transparent);border-radius:8px}
+body .tcard .ti{position:relative;flex:1;min-height:0;overflow:hidden;display:block;width:100%;padding:0;background:radial-gradient(ellipse at 50% 45%,color-mix(in srgb,var(--rarity) 14%,#172238),#091320);border-radius:0}
+body .tcard .ti img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:100%;max-height:100%;min-height:0;object-fit:cover;object-position:center 20%;transform:none;clip-path:none;filter:none;border-radius:0}
+body .tcard .pt{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#0000 44%,#09070ee8 100%),linear-gradient(135deg,#ffffff18,transparent 36%);box-shadow:inset 0 0 10px #0002}
+body .kd-card-caption{flex:none;padding:10px 10px 11px;min-width:0;background:linear-gradient(160deg,#241b2d,#120f18)}
+body .tcard .th{display:block;position:static;min-height:0;padding:0;border:0;background:none;font:700 clamp(15px,1.5vw,19px)/1.1 Rajdhani,system-ui,sans-serif;letter-spacing:0;color:#fff6e5}
+body .tcard .th>span{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow-wrap:normal}
+body .tcard .bd{position:absolute;z-index:5;top:12px;left:12px;display:inline-flex;align-items:center;justify-content:center;max-width:calc(100% - 24px);min-height:22px;padding:4px 7px;box-sizing:border-box;clip-path:none;border:1px solid var(--rarity);border-radius:5px;background:#100b17e8;color:var(--rarity);font:800 9px/1.3 Manrope,system-ui,sans-serif;letter-spacing:.035em;text-transform:uppercase}
+body .tcard .ts{font:400 10px/1.45 Manrope,system-ui,sans-serif;color:#b6a8c7;padding:4px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:none;border:0}
+.kd-card-edition{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-top:8px;padding:7px 1px 0;border-top:1px solid color-mix(in srgb,var(--rarity) 30%,#34253f);color:var(--rarity);font:700 9px/1.4 Manrope,system-ui}.kd-card-edition i{font-style:normal;color:#acbbcc;font-weight:500}
 body .fcard{position:relative;width:100%;aspect-ratio:7/10;perspective:1200px;cursor:pointer}
 body .fcard .fin{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.2,.7,.3,1);transform-style:preserve-3d}
 body .fcard.flipped .fin{transform:rotateY(180deg)}

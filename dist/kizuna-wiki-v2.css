@@ -13,13 +13,13 @@ body.theme-kizuna #encyclopedia .kzw-ownership button:disabled{opacity:.5;cursor
 #encyclopedia .kzw-help{grid-column:1/-1;line-height:1.7;font-size:11px;color:var(--kz-muted,#a5a5b9);margin:0}
 body.theme-kizuna #encyclopedia .kzw-tools #wikiCount{grid-column:2;grid-row:1;justify-self:end;align-self:end;white-space:normal;max-width:240px;text-align:right;padding:0 0 12px;border:0;background:transparent;color:var(--kz-muted,#a5a5b9);font-size:12px}
 body.theme-kizuna #encyclopedia #wikiGrid.kzw-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px 16px;align-items:stretch}
-body.theme-kizuna #encyclopedia .kzw-card{display:flex;flex-direction:column;width:100%;min-width:0;padding:0;text-align:left;border:1px solid var(--kz-line,#343449);border-radius:12px;background:var(--kz-surface,#171929);color:var(--kz-text,#f5f2fa);font:inherit;overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s;cursor:pointer}
+body.theme-kizuna #encyclopedia .kzw-card{display:flex;flex-direction:column;width:100%;min-width:0;padding:0;text-align:left;border:1px solid var(--kzw-rarity,var(--kz-line,#343449));border-radius:12px;background:linear-gradient(160deg,#241b2d,#120f18);box-shadow:0 8px 18px #0005;color:var(--kz-text,#f5f2fa);font:inherit;overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s;cursor:pointer}
 #encyclopedia .kzw-card-art{display:block;position:relative;overflow:hidden;width:100%;aspect-ratio:3/4;background:var(--kz-surface-2,#23243a)}
 #encyclopedia .kzw-card-art::after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#0d0e1855);pointer-events:none}
 body.theme-kizuna #encyclopedia .kzw-card-art img{display:block;width:100%;height:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 20%;transition:transform .3s;filter:none!important}
 #encyclopedia .kzw-card-rarity{position:absolute;top:9px;left:8px;max-width:calc(100% - 16px);padding:4px 7px;color:var(--kzw-rarity);background:#0d0e18f0;border:1px solid currentColor;border-radius:4px;font-size:10px;font-weight:800;line-height:1.4;z-index:1}
 #encyclopedia .kzw-card-quantity{position:absolute;bottom:8px;right:8px;padding:3px 8px;background:#0d0e18ed;border:1px solid var(--kz-line-strong,#57556e);border-radius:4px;font-size:12px;z-index:1}
-#encyclopedia .kzw-card-copy{display:flex;flex-direction:column;flex:1;min-width:0;padding:12px 11px}
+#encyclopedia .kzw-card-copy{display:flex;flex-direction:column;flex:1;min-width:0;padding:12px 11px;background:linear-gradient(160deg,#241b2d,#120f18)}
 #encyclopedia .kzw-card-copy strong{font-size:13px;line-height:1.45;overflow-wrap:anywhere;letter-spacing:0;margin:0 0 5px;font-weight:800}
 #encyclopedia .kzw-card-copy small{color:var(--kz-muted,#a5a5b9);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
 #encyclopedia .kzw-card-state{display:flex;flex-wrap:wrap;gap:5px 9px;font-size:10px;line-height:1.6;margin:12px 0;color:var(--kz-muted,#a5a5b9)}
