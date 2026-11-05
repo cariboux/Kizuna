@@ -7,7 +7,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  try{
  const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
- await page.route('**/rest/v1/**',route=>route.abort()); // Explicitly test the unavailable service state.
+ await page.route('**/rest/v1/**',route=>route.request().url().includes('/kizuna_adventure_definitions?')
+  ?route.fulfill({status:200,contentType:'application/json',body:'[]'})
+  :route.abort()); // Empty public definitions must not erase the bundled constellation catalogue.
  await page.goto(process.env.KIZUNA_TEST_URL||'http://127.0.0.1:8000');
  await page.waitForFunction(()=>window.KizunaAdventure&&window.KizunaGame?.getSnapshot().cards.length>0);
  await page.emulateMedia({reducedMotion:'reduce'});
@@ -59,9 +61,13 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  await page.click('[data-kn-view=tree]');const zoom=await page.locator('#knxZoomLabel').innerText();
  await page.click('[data-kn-zoom=in]');assert.notEqual(await page.locator('#knxZoomLabel').innerText(),zoom);
  await page.click('[data-kn-zoom=fit]');
- await page.evaluate(()=>KizunaAdventure.navigate('constellations'));await page.waitForSelector('[data-ka-select]');
- await page.locator('.ka-constellation-tile').first().click();await page.waitForSelector('.ka-star-node');
- assert.equal(await page.locator('.ka-star-node').count(),2);
+ await page.evaluate(()=>KizunaAdventure.navigate('constellations'));await page.waitForSelector('#kaConstellationSelect');
+ assert.equal(await page.locator('#kaConstellationSelect').inputValue(),'rivals-konoha','an empty remote response must keep the bundled default constellation');
+ await page.waitForSelector('.ka-star-node');assert.equal(await page.locator('.ka-star-node').count(),2);
+ await page.selectOption('#kaConstellationSelect','team-seven');
+ await page.waitForFunction(()=>document.querySelectorAll('.ka-star-node').length===4);
+ assert.equal(await page.evaluate(()=>document.body.dataset.tab),'adventure','changing a constellation must keep the current adventure page');
+ assert.ok(page.url().endsWith('#adventure/constellations/team-seven'),'selection updates the current hash without navigating away');
  const transform=await page.getAttribute('#kaMapCanvas','style');await page.click('[data-ka-map=in]');assert.notEqual(await page.getAttribute('#kaMapCanvas','style'),transform);
  await page.click('[data-ka-map=reset]');await page.locator('.ka-star-node').first().click();
  await page.waitForSelector(':is(#detailBackdrop,#kyaraProfileOverlay).open');await page.keyboard.press('Escape');

@@ -25,3 +25,19 @@ body.kz-art .toast{max-width:calc(100vw - 32px);overflow-wrap:anywhere;font-size
 @media(max-width:760px){body.kz-art :is(dialog,.ka-dialog,.kp-edit-dialog,.cm-market-modal){max-width:calc(100vw - 20px);max-height:calc(100dvh - 30px)}body.kz-art .toast{bottom:85px}body.kz-art .kg-celebration{max-width:calc(100vw - 28px);left:50%;box-sizing:border-box;padding:15px 18px}.kg-celebration>strong{line-height:1.45}body.kz-art #staffPage :is(input,select,textarea,button){min-height:44px}}
 @media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto!important}body.kz-art :is(.kad-wiki-stage button,.kad-prestige-card button,.ka-gallery-card):hover{transform:none!important}}
 html[data-kz-motion=reduced] body.kz-art :is(.kad-wiki-stage button,.kad-prestige-card button,.ka-gallery-card):hover{transform:none!important}
+/* Shared interaction finish for ordinary interface buttons across KIZUNA. */
+body.kz-art button[data-ui-kind]{
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .17s cubic-bezier(.2,.7,.2,1),filter .17s ease,box-shadow .17s ease;
+  box-shadow:inset 0 1px #ffffff1c,0 5px 14px #0003;
+  touch-action:manipulation;
+}
+body.kz-art button[data-ui-kind="hero"]{box-shadow:inset 0 1px #ffffff55,0 8px 22px #d9b86f35}
+body.kz-art button[data-ui-kind="tab"]{box-shadow:inset 0 1px #ffffff20,0 4px 12px #0004}
+body.kz-art button[data-ui-kind="compact"]{box-shadow:inset 0 1px #ffffff18,0 3px 9px #0004}
+body.kz-art button[data-ui-kind]:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08);box-shadow:inset 0 1px #ffffff30,0 9px 19px #0005}
+body.kz-art button[data-ui-kind]:active:not(:disabled){transform:translateY(0) scale(.985);filter:brightness(1.02)}
+body.kz-art button[data-ui-kind]:focus-visible{outline:3px solid #a5eee0;outline-offset:3px;z-index:2}
+body.kz-art button[data-ui-kind]:disabled{filter:saturate(.45);cursor:not-allowed;box-shadow:none;transform:none}
+@media(prefers-reduced-motion:reduce){body.kz-art button[data-ui-kind]{transition:none!important}body.kz-art button[data-ui-kind]:hover:not(:disabled),body.kz-art button[data-ui-kind]:active:not(:disabled){transform:none!important}}
+html[data-kz-motion=reduced] body.kz-art button[data-ui-kind]:hover:not(:disabled),html[data-kz-motion=reduced] body.kz-art button[data-ui-kind]:active:not(:disabled){transform:none!important}
