@@ -1,0 +1,41 @@
+{
+  "format": 1,
+  "asset_count": 1449,
+  "packs": [
+    {
+      "file": "medias-01.zip",
+      "sha256": "06ccc5819ecbba1bbfff53352872803dc879983e9d3b220cf9979ee28b616105",
+      "files": 97
+    },
+    {
+      "file": "medias-02.zip",
+      "sha256": "abbb94ba1b67b69e4089e289f933c3c01e8504906ccd17229585f4e3bfe3677d",
+      "files": 135
+    },
+    {
+      "file": "medias-03.zip",
+      "sha256": "68de4bcc00a6fd9af275878ea649f63786b6a81fb48cc8bb36ff141d66d8a1ed",
+      "files": 134
+    },
+    {
+      "file": "medias-04.zip",
+      "sha256": "f959b2bf18f34120b2f5e06a5ce31ab71bae54a53d24297bd822a0e26c397398",
+      "files": 116
+    },
+    {
+      "file": "medias-05.zip",
+      "sha256": "b5ba39240e2e8d8203d1e0937cb2de4d748a9c2dc3af68cd5c15209fad4114c5",
+      "files": 506
+    },
+    {
+      "file": "medias-06.zip",
+      "sha256": "b70ed68ac9fdc128f80923cb5ac5a3a44bad036960309c31436af92ea038c11b",
+      "files": 375
+    },
+    {
+      "file": "medias-07.zip",
+      "sha256": "9eb95fd4cbf5c389c2bb8fdf8ed80d7104557e310fd91babd8debb53ae91af8f",
+      "files": 86
+    }
+  ]
+}

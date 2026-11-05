@@ -1,5 +1,9 @@
 node_modules/
+public/
+.netlify/
 .env
 .env.*
 .sites-runtime/
 outputs/
+__pycache__/
+*.pyc

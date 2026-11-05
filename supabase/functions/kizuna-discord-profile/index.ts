@@ -6,6 +6,20 @@ const allowedOrigins = new Set([
   "https://kizuna.aleklecaribou.chatgpt.site",
   "http://127.0.0.1:8795",
 ]);
+
+// Migration Netlify: exact HTTPS origins only, configured in Supabase Secrets.
+// No wildcard, no automatic trust of arbitrary netlify.app sites.
+for (const value of (Deno.env.get("KIZUNA_ALLOWED_ORIGINS") || "").split(",")) {
+  const origin = value.trim();
+  if (!origin) continue;
+  try {
+    const url = new URL(origin);
+    if (url.protocol === "https:" && url.origin === origin && !url.username && !url.password) {
+      allowedOrigins.add(origin);
+    }
+  } catch { /* Invalid values are ignored: fail closed. */ }
+}
+
 const maxBodyBytes = 256;
 const usernamePattern = /^[A-Za-z0-9_.-]{2,20}$/;
 type Service = ReturnType<typeof createClient>;

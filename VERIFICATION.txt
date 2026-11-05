@@ -1,0 +1,27 @@
+KIZUNA — vérifications du paquet GitHub / Netlify
+Préparé le 4 novembre 2026 (heure du Québec)
+
+RÉUSSI
+- Compilation locale : python3 scripts/build-netlify.py.
+- Installation npm hors ligne, sans dépendance supplémentaire : npm ci --ignore-scripts --offline --no-audit --no-fund.
+- 1 517 fichiers reconstitués dans le dossier public/.
+- 1 449 médias reconstitués, tous identiques octet par octet aux originaux.
+- Toutes les références locales directes des balises HTML et des URL CSS existent.
+- Syntaxe JavaScript des fichiers dist/*.js, src/*.js et des scripts de synchronisation.
+- Analyse syntaxique des 2 scripts intégrés dans index.html.
+- Analyse de netlify.toml et cohérence de la commande / du dossier de publication.
+- Seul kizuna-config.js diffère du site original après compilation ; HTML, JS applicatifs, CSS et médias conservés.
+- Tests de sélection de l'adresse de production : URL Netlify, priorité du domaine personnalisé, refus des URL non HTTPS / chemins / identifiants.
+- Tests des 4 listes d'origines serveur adaptées : ajout d'origines HTTPS exactes, conservation de l'ancien domaine, refus de joker / HTTP additionnel / chemin / identifiants.
+- Contrôle de motifs de secrets privés dans les sources : aucun détecté. Ce contrôle n'est pas un audit de sécurité complet.
+- 99 fichiers à envoyer, tous inférieurs à 25 Mio ; les médias sont regroupés en 7 ZIP de moins de 20 Mio chacun.
+
+NON VÉRIFIÉ À DISTANCE
+- Aucun dépôt GitHub n'a été modifié et aucun déploiement Netlify n'a été lancé.
+- Aucun changement n'a été appliqué au projet Supabase.
+- Aucune connexion Discord réelle, permission de compte, transaction de jeu ou sauvegarde distante n'a été testée.
+- Les URL autorisées et les 4 fonctions Supabase doivent être mises à jour par le responsable du backend avant validation complète.
+- Le navigateur Chromium de l'environnement de préparation a bloqué l'accès au serveur HTTP local (ERR_BLOCKED_BY_ADMINISTRATOR). Le test visuel interactif n'a donc pas été achevé ; aucune réussite de test navigateur n'est revendiquée.
+- La suite originale jsdom n'a pas été exécutée ; elle est conservée dans maintenance-originale.zip.
+
+Le domaine kizuna-test.netlify.app utilisé pour la compilation locale est fictif : il n'est pas écrit dans la configuration source livrée. Netlify injecte son propre domaine à la construction.

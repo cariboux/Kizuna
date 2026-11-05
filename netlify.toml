@@ -1,0 +1,22 @@
+# Garder ce fichier a la RACINE du depot GitHub.
+[build]
+  command = "python3 scripts/build-netlify.py"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Les pages utilisent des onglets (#collection, #staff...).
+# Ne pas rediriger les fichiers manquants vers index.html : cela masque les erreurs.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Les fichiers n'ont pas tous un hash dans leur nom : revalidation necessaire.
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/kizuna-config.js"
+  [headers.values]
+    Cache-Control = "no-store"

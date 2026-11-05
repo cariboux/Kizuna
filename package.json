@@ -1,18 +1,13 @@
 {
-  "name": "kizuna-card-club",
+  "name": "kizuna-card-club-netlify",
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "description": "Migration Netlify : site conserve, medias regroupes, bibliotheques deja compilees.",
   "scripts": {
-    "build:vendor": "node scripts/build-vendor.mjs",
-    "build": "node scripts/build.mjs",
-    "test": "node scripts/verify-interface.mjs"
+    "build": "python3 scripts/build-netlify.py"
   },
-  "dependencies": {
-    "@supabase/supabase-js": "2.118.0"
-  },
-  "devDependencies": {
-    "esbuild": "0.28.2",
-    "jsdom": "26.1.0"
+  "engines": {
+    "node": ">=22"
   }
 }
