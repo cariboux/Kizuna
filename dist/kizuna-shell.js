@@ -15,11 +15,29 @@
     if(!$('kzUniverseGrid'))return;
     const query=($('kzUniverseSearch')?.value||'').trim().toLocaleLowerCase('fr');
     const loading=window.KizunaAccount?.getSnapshot?.().loading;
+    const snapshot=window.KizunaGame?.getSnapshot?.()||{};
+    const catalogue=Array.isArray(snapshot.cards)?snapshot.cards:[];
+    const ownedIds=new Set((snapshot.owned||[]).map(copy=>String(copy.id)));
     const albums=(window.KizunaGame?.getAlbums?.()||[]).filter(a=>a.name.toLocaleLowerCase('fr').includes(query));
-    const signature=JSON.stringify([loading,query,albums.map(a=>[a.key,a.name,a.owned,a.total,a.cover])]);
+    const albumCards=album=>{
+      const ids=new Set((album.cardIds||[]).map(String));
+      const rows=ids.size?catalogue.filter(card=>ids.has(String(card.id))):catalogue.filter(card=>card.series===album.name);
+      return rows.slice().sort((left,right)=>rarityFor(right).level-rarityFor(left).level||Number(left.rank||0)-Number(right.rank||0)||String(left.name).localeCompare(String(right.name),'fr'));
+    };
+    const prepared=albums.map(album=>({album,cards:albumCards(album)}));
+    const signature=JSON.stringify([loading,query,prepared.map(({album,cards})=>[album.key,album.name,album.owned,album.total,cards.slice(0,8).map(card=>[card.id,card.image,card.rarity,ownedIds.has(String(card.id))])])]);
     if(signature===albumSignature)return;albumSignature=signature;
-    $('kzUniverseCount').textContent=albums.length+' univers · ordre alphabétique';
-    $('kzUniverseGrid').innerHTML=albums.map((a,i)=>'<button class="kz-universe-tile" data-kz-album="'+esc(a.key)+'" type="button"><span class="kad-universe-number" aria-hidden="true">'+String(i+1).padStart(2,'0')+'</span><img src="'+esc(a.cover)+'" alt="" width="300" height="180" loading="lazy" decoding="async"><span class="kz-universe-name">'+esc(a.name)+'</span><span class="kz-universe-count">'+(loading?'Chargement…':format(a.owned)+' / '+format(a.total)+' cartes')+'</span><span class="kad-universe-progress" aria-hidden="true"><i style="width:'+(loading?0:Math.min(100,a.owned/Math.max(1,a.total)*100))+'%"></i></span><span class="kz-universe-link">Ouvrir l’album <span aria-hidden="true">↗</span></span></button>').join('')||'<p class="kz-empty">Aucun univers ne correspond à ta recherche.</p>';
+    $('kzUniverseCount').textContent=albums.length+' univers · '+format(albums.reduce((sum,album)=>sum+album.total,0))+' cartes · aperçus classés par rareté';
+    $('kzUniverseGrid').innerHTML=prepared.map(({album,cards},i)=>{
+      const total=Number(album.total)||cards.length,owned=Number(album.owned)||0,percent=loading?0:Math.min(100,owned/Math.max(1,total)*100);
+      const thumbnails=Array.from({length:8},(_,slot)=>{
+        const card=cards[slot];
+        if(!card)return '<span class="kz-universe-thumb is-empty" aria-hidden="true"><i>✧</i></span>';
+        const isOwned=ownedIds.has(String(card.id)),rarity=rarityFor(card);
+        return '<span class="kz-universe-thumb '+(isOwned?'is-owned':'is-missing')+'" style="--card-rarity:'+esc(rarity.color||'#7895a7')+'" title="'+esc(card.name+' · '+card.rarity)+'"><img src="'+esc(card.image)+'" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span>';
+      }).join('');
+      return '<button class="kz-universe-tile" data-kz-album="'+esc(album.key)+'" type="button" aria-label="Ouvrir l’album '+esc(album.name)+' · '+owned+'/'+total+' cartes"><span class="kz-universe-heading"><span class="kad-universe-number" aria-hidden="true">'+String(i+1).padStart(2,'0')+'</span><span class="kz-universe-name">'+esc(album.name)+'</span></span><span class="kz-universe-count">'+(loading?'Chargement…':format(owned)+'/'+format(total)+' cartes')+'</span><span class="kad-universe-progress" aria-hidden="true"><i style="width:'+percent+'%"></i></span><span class="kz-universe-cards" aria-label="Aperçu des cartes classées par rareté">'+thumbnails+'</span><span class="kz-universe-link">Ouvrir l’album <b aria-hidden="true">↗</b></span></button>';
+    }).join('')||'<p class="kz-empty">Aucun univers ne correspond à ta recherche.</p>';
   }
   function renderNotifications(){
     if(!dialog?.open)return;

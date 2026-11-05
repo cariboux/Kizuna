@@ -1,6 +1,6 @@
 /* KIZUNA artistic invocation · presentation only. The draw/save engine is untouched. */
 const kzRevealPreferenceKey='kizuna_reveal_preferences_v1';
-const kzRevealPreferences=(()=>{try{const value=JSON.parse(localStorage.getItem(kzRevealPreferenceKey)||'{}');return {quick:value.quick===true,sound:value.sound===true};}catch{return {quick:false,sound:false};}})();
+const kzRevealPreferences=(()=>{try{const value=JSON.parse(localStorage.getItem(kzRevealPreferenceKey)||'{}');return {quick:value.quick===true,sound:value.sound!==false};}catch{return {quick:false,sound:true};}})();
 let kzRevealEpoch=0,kzRevealReturnFocus=null,kzRevealQuickPending=false,kzSummonFinish=null;
 const kzReducedMotion=()=>window.KizunaExperience?.reduced?.()||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
 const kzRevealOpen=()=>$('revealBackdrop')?.classList.contains('open');

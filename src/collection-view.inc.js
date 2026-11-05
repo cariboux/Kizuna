@@ -30,7 +30,7 @@ function collectionStatus(){
 }
 function resetCollectionFilters(){
   COL.rar='all';COL.limit=60;window.KizunaMythic?.resetFilter();
-  for(const [id,value] of [['colSearch',''],['colUniv','all'],['colOwn','all'],['colSort','num']])if($(id))$(id).value=value;
+  for(const [id,value] of [['colSearch',''],['colUniv','all'],['colOwn','all'],['colSort','rar']])if($(id))$(id).value=value;
   renderCollection();
   $('colSearch')?.focus();
 }
@@ -77,7 +77,7 @@ function openCollectionAlbum(key){
   if(!entry){resetCollectionAlbum(true);COL.view='albums';renderCollection();return false;}
   if(!COL.albumReturn)COL.albumReturn={query:$('colSearch').value,universe:$('colUniv').value,own:$('colOwn').value,sort:$('colSort').value,rar:COL.rar,limit:COL.limit};
   COL.albumKey=entry.key;COL.view='albums';COL.rar='all';COL.limit=60;
-  $('colSearch').value='';$('colUniv').value='all';$('colOwn').value='all';$('colSort').value='num';
+  $('colSearch').value='';$('colUniv').value='all';$('colOwn').value='all';$('colSort').value='rar';
   document.querySelectorAll('#colSeg button').forEach(button=>button.classList.toggle('on',button.dataset.v==='albums'));
   if(document.body.dataset.tab==='col')renderCollection();else showTab('col');
   $('colAlbumTitle')?.focus({preventScroll:true});

@@ -1,5 +1,5 @@
 /* KIZUNA Lot 2 · browser of real catalogue entries, independent of economics. */
-const kzwState={query:'',universe:'all',rarity:'all',ownership:'all',sort:'name',limit:60};
+const kzwState={query:'',universe:'all',rarity:'all',ownership:'all',sort:'rarity',limit:60};
 const kzwCollator=new Intl.Collator('fr',{sensitivity:'base',numeric:true});
 const kzwFold=value=>String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/œ/g,'oe').toLocaleLowerCase('fr');
 let kzwSignature='',kzwOptionsSignature='',kzwIdentity=null,kzwQueued=false;
@@ -13,8 +13,9 @@ function kzwSetup(){
   // Replace the old two-button filter, including its old event listener.
   $('v8WikiFilter')?.remove();
   const controls=document.createElement('div');controls.id='kzwControls';controls.className='kzw-controls';
-  controls.innerHTML='<label>Univers<select id="kzwUniverse" aria-controls="wikiGrid"><option value="all">Tous les univers</option></select></label><label>Rareté<select id="kzwRarity" aria-controls="wikiGrid"><option value="all">Toutes les raretés</option>'+rarityData.slice().sort((a,b)=>b.level-a.level).map(r=>'<option value="'+esc(r.name)+'">'+esc(r.name)+'</option>').join('')+'</select></label><label>Trier par<select id="kzwSort" aria-controls="wikiGrid"><option value="name">Nom · A à Z</option><option value="popularity">Popularité AniList</option><option value="rarity">Rareté décroissante</option></select></label><button id="kzwReset" class="soft-btn" type="button">Effacer les filtres</button>';
+  controls.innerHTML='<label>Univers<select id="kzwUniverse" aria-controls="wikiGrid"><option value="all">Tous les univers</option></select></label><label>Rareté<select id="kzwRarity" aria-controls="wikiGrid"><option value="all">Toutes les raretés</option>'+rarityData.slice().sort((a,b)=>b.level-a.level).map(r=>'<option value="'+esc(r.name)+'">'+esc(r.name)+'</option>').join('')+'</select></label><label>Trier par<select id="kzwSort" aria-controls="wikiGrid"><option value="name">Nom · A à Z</option><option value="popularity">Popularité AniList</option><option value="rarity" selected>Rareté décroissante</option></select></label><button id="kzwReset" class="soft-btn" type="button">Effacer les filtres</button>';
   tools.append(controls);
+  $('kzwSort').value=kzwState.sort;
   const filters=document.createElement('div');filters.id='v8WikiFilter';filters.className='kzw-ownership';filters.setAttribute('role','group');filters.setAttribute('aria-label','Filtrer selon ma collection');
   filters.innerHTML=[['all','Toutes'],['own','Possédées'],['missing','Manquantes'],['duplicates','Doublons'],['wishlist','Recherchées']].map(([value,label])=>'<button type="button" data-v8-wiki-filter="'+value+'" aria-pressed="'+(value==='all')+'" class="'+(value==='all'?'active':'')+'">'+label+'</button>').join('');
   tools.append(filters);
@@ -32,9 +33,9 @@ function kzwSetup(){
   grid?.addEventListener('click',event=>{if(event.target.closest('[data-kzw-reset]')){kzwReset();search?.focus();}});
 }
 function kzwReset(options={}){
-  Object.assign(kzwState,{query:'',universe:'all',rarity:'all',ownership:'all',sort:'name',limit:60});v8WikiFilter='all';kzwSignature='';
+  Object.assign(kzwState,{query:'',universe:'all',rarity:'all',ownership:'all',sort:'rarity',limit:60});v8WikiFilter='all';kzwSignature='';
   if($('wikiSearch'))$('wikiSearch').value='';
-  for(const [id,value] of [['kzwUniverse','all'],['kzwRarity','all'],['kzwSort','name']])if($(id))$(id).value=value;
+  for(const [id,value] of [['kzwUniverse','all'],['kzwRarity','all'],['kzwSort','rarity']])if($(id))$(id).value=value;
   if(options.render!==false&&document.body.dataset.tab==='wiki')renderWiki('');
 }
 function kzwUniverseOptions(){
