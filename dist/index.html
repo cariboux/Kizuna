@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#08080A">
+<meta name="theme-color" content="#0D0E18">
 <meta name="description" content="KIZUNA : collection de cartes anime, boosters, marché, ventes, enchères, échanges et fiches personnages.">
 <title>KIZUNA — Anime Card Club</title>
 <link rel="icon" href="assets/favicon-v18.svg" type="image/svg+xml">
@@ -1655,7 +1655,6 @@ body[data-tab="market"] #marketPage .wrap{width:min(1180px,calc(100% - 36px))}
 <link rel="stylesheet" href="kizuna-scenes.css">
 <link rel="stylesheet" href="kizuna-design-system.css">
 <link rel="stylesheet" href="kizuna-cards.css">
-<link rel="stylesheet" href="kizuna-ui-polish.css">
 </head>
 <body class="theme-kizuna kz-game kz-art" data-tab="home">
 <script>window.addEventListener('error',function(e){try{const status=document.getElementById('localStatusText');if(status)status.textContent='Erreur JS · '+String(e.message||'chargement partiel').slice(0,90);console.error('Erreur application KIZUNA:',e.error||e.message)}catch(_){} });</script>
@@ -2891,10 +2890,8 @@ function bindCriticalUI(){
     if(flip){e.preventDefault();e.stopImmediatePropagation();collectionToggleCard(flip.dataset.colFlip,flip);return;}
     const full=target.closest('#collection [data-col-open]');
     if(full){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>x.id===full.dataset.colOpen);if(card)openDetail(card);return;}
-    const profile=target.closest('#collection [data-kz-open-profile]');
-    if(profile){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>String(x.id)===String(profile.dataset.kzOpenProfile));if(card)openCharacterProfile(card,'collection');return;}
     const collectionCard=target.closest('#collection [data-colcard]');
-    if(collectionCard&&!target.closest('a')){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>x.id===collectionCard.dataset.colcard);if(card)openCardViewer(card);return;}
+    if(collectionCard&&!target.closest('a')){e.preventDefault();e.stopImmediatePropagation();const card=LOCAL_CARDS.find(x=>x.id===collectionCard.dataset.colcard);if(card)openDetail(card);return;}
   },true);
 }
 bindCriticalUI();
