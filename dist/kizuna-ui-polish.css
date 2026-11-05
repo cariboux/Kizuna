@@ -5,16 +5,12 @@ html,
 body.theme-kizuna.kz-art,
 body.kz-art {
   min-height: 100%;
-  background: #08080a !important;
-  background-image: none !important;
 }
 body.kz-art main { background: transparent !important; }
 body.theme-kizuna.kz-art :is(
   #collection,#marketPage,#universes,#encyclopedia,#community,
   #ranking,#profilePage,#kzNexusPage,#kzAdventurePage
 ) {
-  background-color: #08080a !important;
-  background-image: none !important;
   color: #f2f0ee;
 }
 
@@ -23,11 +19,8 @@ body.kz-art :is(
   #collection,#marketPage,#universes,#encyclopedia,#community,
   #ranking,#profilePage,#kzNexusPage,#kzAdventurePage
 ) {
-  background-color: #08080a !important;
-  background-image: none !important;
 }
 body.kz-art #boosters .kb-main {
-  background: linear-gradient(145deg,#111116 0%,#0b0b0f 62%,#101015 100%) !important;
   border-color: #302d37 !important;
   box-shadow: inset 0 0 50px #0007,0 18px 45px #0005 !important;
 }
@@ -73,7 +66,6 @@ body.kz-art #collection .col-top .col-input {
   padding: 10px 13px !important;
   border: 1px solid #34343d !important;
   border-radius: 7px !important;
-  background: #111115 !important;
   color: #f2eff1 !important;
 }
 body.kz-art #collection .col-seg {
@@ -85,7 +77,6 @@ body.kz-art #collection .col-seg {
   padding: 3px;
   border: 1px solid #303039 !important;
   border-radius: 8px !important;
-  background: #101014 !important;
 }
 body.kz-art #collection .col-seg button {
   flex: 0 0 auto !important;
@@ -94,7 +85,6 @@ body.kz-art #collection .col-seg button {
   padding: 7px 11px;
   border: 1px solid transparent;
   border-radius: 6px !important;
-  background: transparent !important;
   color: #bdb8c1 !important;
   font-size: 10px !important;
   line-height: 1.2;
@@ -102,7 +92,6 @@ body.kz-art #collection .col-seg button {
 body.kz-art #collection .col-seg button.on,
 body.kz-art #collection .col-seg button[aria-pressed="true"] {
   border-color: #806c42 !important;
-  background: #282115 !important;
   color: #f2d99a !important;
 }
 body.kz-art #collection .col-filters {
@@ -122,7 +111,6 @@ body.kz-art #collection .select-input {
   padding: 7px 10px !important;
   border: 1px solid #34343d !important;
   border-radius: 6px !important;
-  background: #111115 !important;
   color: #eeeaf0 !important;
   font-size: 10px !important;
 }
@@ -138,14 +126,12 @@ body.kz-art #collection .col-chip {
   padding: 6px 9px !important;
   border: 1px solid #34313b !important;
   border-radius: 6px !important;
-  background: #111115 !important;
   color: #d0cbd3 !important;
   font-size: 9px !important;
   line-height: 1.2;
 }
 body.kz-art #collection .col-chip.on {
   border-color: #806c42 !important;
-  background: #241e14 !important;
   color: #f2d99a !important;
 }
 body.kz-art #collection .col-chip em {
@@ -233,7 +219,6 @@ body.kz-art #collection .kd-card-more button {
   padding: 7px 9px !important;
   border: 1px solid #393640 !important;
   border-radius: 6px !important;
-  background: #151419 !important;
   color: #e9e4ec !important;
   font: 800 9px/1.2 Manrope,sans-serif !important;
   text-align: center;
@@ -242,7 +227,6 @@ body.kz-art #collection .kz-col-view:hover,
 body.kz-art #collection .kd-card-more[open] > summary,
 body.kz-art #collection .kd-card-more button:hover {
   border-color: #8b7345 !important;
-  background: #241f17 !important;
   color: #f2d99a !important;
 }
 body.kz-art #collection .kd-card-more { position: relative; min-width: 0; }
@@ -265,7 +249,6 @@ body.kz-art #collection .kd-card-more > div {
   padding: 6px;
   border: 1px solid #38343e;
   border-radius: 8px;
-  background: #101014;
   box-shadow: 0 12px 30px #000b;
 }
 body.kz-art #collection .kd-card-more button { width: 100%; justify-content: flex-start; }
@@ -275,7 +258,6 @@ body.kz-art #collection #colMore {
   padding: 9px 15px;
   border: 1px solid #4a4235;
   border-radius: 7px;
-  background: #18140e;
   color: #ead49e;
   font-size: 10px;
 }
@@ -295,7 +277,6 @@ body.kz-art #collection button.col-album.ka-album-cover {
 body.kz-art #collection .col-empty {
   border: 1px dashed #39343e !important;
   border-radius: 8px !important;
-  background: #101014 !important;
   color: #d5cdd9;
 }
 
@@ -310,7 +291,6 @@ body.kz-art #kyaraProfileOverlay {
   max-height: 100dvh !important;
   overflow: hidden !important;
   overscroll-behavior: none;
-  background: #08080a !important;
   color: #f1eff2 !important;
   scroll-behavior: auto;
 }
@@ -320,7 +300,6 @@ body.kz-art #kyaraProfileOverlay.open {
 }
 body.kz-art #kyaraProfileOverlay .cp-topbar {
   flex: 0 0 auto;
-  background: #09090c !important;
   border-bottom: 1px solid #29262e !important;
 }
 body.kz-art #kyaraProfileOverlay .cp-topbar-inner {
@@ -331,7 +310,6 @@ body.kz-art #kyaraProfileOverlay .cp-back,
 body.kz-art #kyaraProfileOverlay .cp-close {
   border: 1px solid #37343d !important;
   border-radius: 6px !important;
-  background: #151419 !important;
   color: #f0edf2 !important;
 }
 body.kz-art #kyaraProfileOverlay .cp-back {
@@ -343,9 +321,7 @@ body.kz-art #kyaraProfileOverlay .cp-hero {
   flex: 0 0 auto;
   min-height: 0 !important;
   border-bottom: 1px solid #24232a !important;
-  background: #0d0d11 !important;
 }
-body.kz-art #kyaraProfileOverlay .cp-hero:after { display: none !important; }
 body.kz-art #kyaraProfileOverlay .cp-hero-inner {
   width: min(1760px,calc(100% - 40px)) !important;
   min-height: 0 !important;
@@ -375,7 +351,6 @@ body.kz-art #kyaraProfileOverlay .cp-tag {
   min-height: 20px;
   padding: 4px 7px !important;
   border-radius: 5px !important;
-  background: #151419 !important;
   border-color: color-mix(in srgb,var(--cp-accent) 42%,#34313a) !important;
   font-size: 8px !important;
 }
@@ -386,7 +361,6 @@ body.kz-art #kyaraProfileOverlay .kz-profile-enlarge {
   padding: 6px 10px !important;
   border: 1px solid #3b3741 !important;
   border-radius: 6px !important;
-  background: #17151b !important;
   color: #e8d39d !important;
   font-size: 9px !important;
 }
@@ -420,7 +394,6 @@ body.kz-art #kyaraProfileOverlay .cp-main > .cp-panel {
   padding: 11px 13px !important;
   border: 1px solid #2c2931 !important;
   border-radius: 7px !important;
-  background: #101014 !important;
   box-shadow: 0 8px 22px #0003 !important;
   overflow: hidden;
 }
@@ -473,7 +446,6 @@ body.kz-art #kyaraProfileOverlay .cp-note {
   padding: 8px 9px !important;
   border: 1px solid #34303a !important;
   border-radius: 6px !important;
-  background: #151419 !important;
   color: #c7c0cb !important;
   font-size: 8px !important;
   line-height: 1.45 !important;
@@ -507,7 +479,6 @@ body.kz-art #kyaraProfileOverlay .cp-related-card {
   padding: 4px 6px !important;
   border: 1px solid #302d36 !important;
   border-radius: 6px !important;
-  background: #151419 !important;
   color: #eeeaf0 !important;
 }
 body.kz-art #kyaraProfileOverlay .cp-related-card img {
@@ -527,7 +498,6 @@ body.kz-art #kyaraProfileOverlay .cp-market-panel {
   padding: 10px 12px !important;
   border: 1px solid #2c2931 !important;
   border-radius: 7px !important;
-  background: #101014 !important;
   overflow: auto;
 }
 body.kz-art #kyaraProfileOverlay .cp-market-panel .cp-section-title { font-size: 15px !important; }
@@ -557,7 +527,6 @@ body.kz-art #kyaraProfileOverlay .cp-side {
   padding: 9px !important;
   border: 1px solid color-mix(in srgb,var(--cp-accent) 32%,#302d36) !important;
   border-radius: 8px !important;
-  background: #101014 !important;
   box-shadow: 0 8px 24px #0004 !important;
   overflow: auto;
 }
@@ -575,7 +544,6 @@ body.kz-art #kyaraProfileOverlay .cp-card-art {
   margin: 0 auto;
   border: 1px solid var(--cp-accent) !important;
   border-radius: 6px !important;
-  background: #08080a !important;
   box-shadow: 0 6px 20px #0005 !important;
 }
 body.kz-art #kyaraProfileOverlay .cp-card-art img {
@@ -594,7 +562,6 @@ body.kz-art #kyaraProfileOverlay .cp-mini-stat {
   padding: 6px 8px !important;
   border: 1px solid #302d36 !important;
   border-radius: 5px !important;
-  background: #151419 !important;
 }
 body.kz-art #kyaraProfileOverlay .cp-mini-stat span { font-size: 7px !important; }
 body.kz-art #kyaraProfileOverlay .cp-mini-stat b { margin-top: 2px !important; font-size: 13px !important; }
@@ -641,14 +608,12 @@ body.kz-art #kyaraProfileOverlay .cp-action {
   padding: 6px 8px !important;
   border: 1px solid #38343d !important;
   border-radius: 6px !important;
-  background: #17151a !important;
   color: #eae5ec !important;
   font: 800 8px/1.25 Manrope,sans-serif !important;
   text-align: center;
 }
 body.kz-art #kyaraProfileOverlay .cp-action.primary {
   border-color: #a88c4f !important;
-  background: linear-gradient(135deg,#efd18c,#c69c4e) !important;
   color: #17130b !important;
 }
 body.kz-art #kyaraProfileOverlay .cp-action:hover,
