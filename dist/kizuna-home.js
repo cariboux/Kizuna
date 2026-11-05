@@ -23,14 +23,13 @@
     const scene=document.createElement('div');scene.className='ka-lobby-scene';
     scene.innerHTML=`<header class="ka-lobby-intro"><p class="ka-lobby-eyebrow">KIZUNA REBIRTH <span>絆</span></p><h1>Un monde.<br><em>Mille liens.</em></h1><p class="rb-welcome">La prochaine rencontre<br>pourrait tout changer.</p></header><aside class="ka-lobby-companion" aria-label="Mon personnage favori"><div class="ka-companion-label"><span>À TES CÔTÉS</span><button id="kaFavouriteSettings" type="button" aria-haspopup="dialog" aria-label="Personnaliser mon personnage favori">＋</button></div><div id="kaFavouriteStage"></div><p id="kaFavouriteReaction" class="ka-favourite-reaction" role="status" hidden></p></aside><div class="ka-lobby-invocation"></div><nav class="rb-lobby-destinations" aria-label="Activités du lobby"><button type="button" data-kg-go="nexus"><span class="rb-place rb-tree" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M24 42V18m0 14L12 20m12 6 12-12M24 42l-7 3m7-3 7 3"/><path d="m24 3 7 9-7 9-7-9Zm-12 9 7 8-7 8-7-8Zm24-8 7 9-7 9-7-9Z"/></svg></span><span><small>FAIS GRANDIR TES LIENS</small><strong>Nexus</strong></span><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6h12v12"/></svg></b></button><button type="button" data-kg-go="daily"><span class="rb-place rb-gift" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22h36v19H6Zm0 0v-9h36v9M24 13v28M4 22h40"/><path d="M24 13C10 14 10 1 17 4c4 1 7 9 7 9Zm0 0c14 1 14-12 7-9-4 1-7 9-7 9Z"/></svg></span><span><small>TON RENDEZ-VOUS</small><strong>Cadeaux</strong></span><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6h12v12"/></svg></b></button><button type="button" data-rb-activities><span class="rb-place rb-quest" aria-hidden="true">✦</span><span><small>L’AVENTURE CONTINUE</small><strong>Activités</strong></span><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6h12v12"/></svg></b></button></nav>`;
     layout.before(scene);scene.querySelector('.ka-lobby-invocation').append(featured);
-    // Keep the original account-backed progress controls available on demand.
-    const journal=document.createElement('details');journal.className='rb-journal';
-    journal.innerHTML='<summary>Mon carnet de collection</summary>';journal.append(progress);scene.after(journal);
+    // Remove the redundant home-only collection drawer; the dedicated Collection page remains.
+    progress.remove();
     layout.remove();
     featured.querySelector('.kg-lobby-seal').textContent='LE PORTAIL EST OUVERT';
     const featuredButton=$('kzFeaturedOpen');if(featuredButton)featuredButton.innerHTML='Ouvrir un booster <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6h12v12"/></svg>';
-    // Discovery previews remain in the catalogue; the lobby spotlights one pack.
-    const news=$('kzHome').querySelector('.kz-home-news');if(news){const drawer=document.createElement('details');drawer.className='rb-journal';drawer.innerHTML='<summary>Découvrir le catalogue</summary>';news.before(drawer);drawer.append(news);}
+    // Remove the duplicate home discovery drawer; the full catalogue remains in the Wiki tab.
+    const news=$('kzHome').querySelector('.kz-home-news');news?.remove();
   }
 
   function ownCards(snapshot=window.KizunaGame?.getSnapshot?.()) {
