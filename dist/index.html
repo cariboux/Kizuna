@@ -3137,6 +3137,17 @@ function cpCloseProfile(){
   if(onProfileRoute&&hasRouteState){history.back();return;}
   if(onProfileRoute){history.replaceState(history.state, '', location.pathname+location.search);}
 }
+function cpReturnLabel(source){
+  const labels={
+    booster:'Retour aux cartes du booster',
+    market:'Retour au Marché',
+    collection:'Retour à la Collection',
+    universes:'Retour aux univers',
+    home:'Retour à l’accueil',
+    wiki:'Retour au Wiki'
+  };
+  return labels[source]||'Retour au catalogue';
+}
 function cpRelatedMarkup(card,r){
   const series=String(card.series||'').trim().toLocaleLowerCase('fr');
   const related=LOCAL_CARDS.filter(c=>String(c.id)!==String(card.id)&&series&&String(c.series||'').trim().toLocaleLowerCase('fr')===series).slice(0,6);
@@ -3144,7 +3155,7 @@ function cpRelatedMarkup(card,r){
   return `<section class="cp-panel"><div class="cp-section-id">04 · EXPLORATION</div><h2 class="cp-section-title">Autres personnages de ${esc(card.series||'cet univers')}</h2><div class="cp-related-grid">${related.map(c=>{const cr=rarityFor(c);const owned=ownInfo(c.id).count>0;return `<button class="cp-related-card" type="button" data-cp-related="${esc(String(c.id))}" aria-label="Ouvrir la fiche de ${esc(c.name)}"><img loading="lazy" decoding="async" draggable="false" src="${esc(c.image||'')}" alt=""><span><span class="cp-related-name">${esc(c.name||'Personnage')}</span><span class="cp-related-rarity">${esc(cr.name)} · ${owned?'Possédée':'À découvrir'}</span></span></button>`}).join('')}</div></section>`;
 }
 function cpLockedMarkup(card,source,info,r){
-  const back=source==='booster'?'Retour aux cartes du booster':source==='market'?'Retour au Marché':'Retour au Wiki';
+  const back=cpReturnLabel(source);
   const index=String(card.rank||0).padStart(4,'0')+'/'+String(LOCAL_CARDS.length).padStart(4,'0');
   return `<div class="cp-main">
     <section class="cp-panel"><div class="cp-section-id">ACCÈS RESTREINT · ${esc(r.name.toUpperCase())}</div><h2 class="cp-section-title">Fiche verrouillée</h2>
@@ -3162,7 +3173,7 @@ function cpLockedMarkup(card,source,info,r){
     <div class="cp-actions"><button class="cp-action primary" type="button" data-cp-action="boosters">Débloquer dans un booster</button><button class="cp-action" type="button" data-cp-action="return">${back}</button></div></div></div></aside>`;
 }
 function cpOwnedMarkup(card,source,info,r,data,loading){
-  const back=source==='booster'?'Retour aux cartes du booster':source==='market'?'Retour au Marché':'Retour au Wiki';
+  const back=cpReturnLabel(source);
   const desc=cpCleanDescription(data?.description||'');
   const paras=desc.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
   const overview=paras.length?cpFormatParagraphs(paras.slice(0,2).join('\n\n')):`<p>Cette fiche s’appuie sur les informations disponibles dans le catalogue KIZUNA : ${esc(card.name)} apparaît dans l’univers <strong>${esc(card.series||'Univers inconnu')}</strong>.</p>`;
@@ -3173,6 +3184,9 @@ function cpOwnedMarkup(card,source,info,r,data,loading){
   const metadata=[['Univers',card.series||'—'],['Nom japonais',data?.name?.native||card.native||'Non renseigné'],['Genre',data?.gender||({M:'Masculin',F:'Féminin'}[card.g]||'Non renseigné')],['Âge',data?.age||'Non renseigné'],['Naissance',cpBirth(data)],['Type sanguin',data?.bloodType||'Non renseigné'],['Favoris AniList',Number.isFinite(Number(data?.favourites??card.fav))?fmt(Number(data?.favourites??card.fav)):'Non renseigné'],['Source',card.sourceId?'AniList':'Catalogue local']];
   const metadataRows=metadata.map(([k,v])=>`<div class="cp-meta-row"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('');
   const obtained=info.since?new Date(info.since).toLocaleDateString('fr-FR'):'Date inconnue';
+  const inspectAction='<button class="cp-action" type="button" data-kz-profile-inspect="'+esc(String(card.id))+'">Examiner la carte</button>';
+  const awakeningAction=card.rarity==='Mythique'?'<button class="cp-action" type="button" data-km-open="'+esc(String(card.id))+'">Éveil mythique</button>':'';
+
   return `<div class="cp-main">
     <section class="cp-panel"><div class="cp-section-id">01 · APERÇU</div><h2 class="cp-section-title">À propos</h2><div class="cp-copy">${overview}</div>${loading?'<div class="cp-loading">Chargement des informations détaillées…</div>':''}</section>
     <section class="cp-panel"><div class="cp-section-id">02 · HISTOIRE</div><h2 class="cp-section-title">Histoire</h2><div class="cp-note" style="margin-bottom:11px">${esc(card.name)} · ${esc(card.series||'Univers inconnu')} · Fiche issue du catalogue de personnages.</div><div class="cp-copy">${history}</div></section>
@@ -3183,7 +3197,7 @@ function cpOwnedMarkup(card,source,info,r,data,loading){
     <div><div class="cp-tags" style="margin-top:0"><span class="cp-tag">${esc(r.name)}</span><span class="cp-tag">Possédée ×${fmt(info.count)}</span></div>
     <div class="cp-card-stats"><div class="cp-mini-stat"><span>POW</span><b>${Number(card.pow)||'—'}</b></div><div class="cp-mini-stat"><span>AURA</span><b>${Number(card.aura)||'—'}</b></div></div>
     <div class="cp-meta-list">${metadataRows}<div class="cp-meta-row"><span>Première obtention</span><b>${esc(obtained)}</b></div><div class="cp-meta-row"><span>Numéro</span><b>#${String(card.rank||0).padStart(4,'0')}</b></div></div>
-    <div class="cp-actions"><button class="cp-action primary" type="button" data-cp-action="return">${back}</button><button class="cp-action" type="button" data-cp-action="boosters">Voir les boosters <span class="ik-arrow-glyph" aria-hidden="true">↗</span></button></div></div></div></aside>`;
+    <div class="cp-actions"><button class="cp-action primary" type="button" data-cp-action="return">${back}</button>${inspectAction}${awakeningAction}<button class="cp-action" type="button" data-cp-action="boosters">Voir les boosters <span class="ik-arrow-glyph" aria-hidden="true">↗</span></button></div></div></div></aside>`;
 }
 function openCharacterProfile(card,source='wiki',options={}){
   if(!card)return;
@@ -3196,7 +3210,7 @@ function openCharacterProfile(card,source='wiki',options={}){
     history.replaceState({...current,kyaraProfileRoute:true,kyaraProfileCardId:String(card.id),kyaraProfileSource:source},'',location.href);
   }
   const root=cpOverlay(),info=ownInfo(card.id),r=rarityFor(card),token=++kyaraProfileToken;
-  root.style.setProperty('--cp-accent',r.color||'#c7c7d0');root.dataset.source=source;root.dataset.cardId=String(card.id);if($('cpBreadcrumbName'))$('cpBreadcrumbName').textContent=card.name||'Fiche personnage';if($('cpReturnTop'))$('cpReturnTop').textContent=source==='booster'?'Retour aux cartes du booster':source==='market'?'Retour au Marché':'Retour au Wiki';
+  root.style.setProperty('--cp-accent',r.color||'#c7c7d0');root.dataset.source=source;root.dataset.cardId=String(card.id);if($('cpBreadcrumbName'))$('cpBreadcrumbName').textContent=card.name||'Fiche personnage';if($('cpReturnTop'))$('cpReturnTop').textContent=cpReturnLabel(source);
   $('cpTitle').textContent=card.name||'Personnage';$('cpNative').textContent=card.native||card.series||'';$('cpWatermark').textContent='#'+String(card.rank||0).padStart(4,'0');document.title=(card.name||'Personnage')+' · KIZUNA';root.scrollTop=0;
   $('cpKicker').textContent=info.count?'KIZUNA · FICHE PERSONNAGE':'KIZUNA · DOSSIER VERROUILLÉ';
   $('cpTags').innerHTML=`<span class="cp-tag">${esc(r.name)}</span><span class="cp-tag">${esc(card.series||'Univers inconnu')}</span><span class="cp-tag">${info.count?'Possédée ×'+fmt(info.count):'Non obtenue'}</span>`;

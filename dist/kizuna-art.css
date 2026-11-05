@@ -101,3 +101,37 @@ body.theme-kizuna.kz-game.kz-art .topline{z-index:50}
 html[data-kz-motion=reduced] body.kz-art *,html[data-kz-motion=reduced] body.kz-art *:before,html[data-kz-motion=reduced] body.kz-art *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 /* Adventure is a complete destination; legacy wiki/tutorial sections belong to their own routes. */
 body.kz-art[data-tab="adventure"] #mainContent>section:not(#kzAdventurePage){display:none!important}
+
+/* Card dossier — reference profile layout in the KIZUNA night-sky palette. */
+body.theme-kizuna.kz-art #kyaraProfileOverlay{background:radial-gradient(ellipse at 12% 0%,#1a46632b,transparent 38%),radial-gradient(ellipse at 95% 25%,#4e92751b,transparent 42%),#071522;color:#f1f0e6}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-topbar{background:#0b1d2c;border-bottom-color:#35546a}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-back,
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-close{background:#11283a;border-color:#527184;color:#f2eedb}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-back:hover,
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-close:hover{border-color:var(--cp-accent);box-shadow:0 0 16px color-mix(in srgb,var(--cp-accent) 28%,transparent)}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-hero{border-bottom-color:#476276;background:repeating-linear-gradient(132deg,#ffffff04 0 3px,transparent 3px 11px),radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--cp-accent) 13%,transparent),transparent 58%),linear-gradient(180deg,#142d42,#0d2031)}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-title{color:#f3efdf}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-native,
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-breadcrumb{color:#9ab5c1}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-breadcrumb b{color:#e8e4d6}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-panel{border-color:#35566a;border-radius:9px 15px 9px 9px;background:linear-gradient(145deg,#142c40f5,#0d2030f5);box-shadow:0 10px 28px #0004,inset 0 1px #ffffff08}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-section-title{color:#f1eddf}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-copy{color:#bacbd0}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-note{border-color:color-mix(in srgb,var(--cp-accent) 34%,#426173);background:color-mix(in srgb,var(--cp-accent) 6%,#102639);color:#d4e0dd}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-table th,
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-table td{border-bottom-color:#365367;color:#c2d0d1}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-side{border-color:color-mix(in srgb,var(--cp-accent) 42%,#46657a);background:linear-gradient(155deg,#18364bf5,#0d2030f5);box-shadow:0 15px 40px #0006,0 0 30px color-mix(in srgb,var(--cp-accent) 8%,transparent)}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-card-art{background:#091a28;border-color:var(--cp-accent);box-shadow:0 0 0 3px #ffffff08,0 0 23px color-mix(in srgb,var(--cp-accent) 17%,transparent)}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-mini-stat{border-color:#3b5b70;background:#102739}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-mini-stat span,
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-meta-row span{color:#93aebb}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-mini-stat b,
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-meta-row b{color:#f0eee3}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-meta-list{border-top-color:#456275}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-meta-row{border-bottom-color:#29475a}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-action{border-color:#45677a;background:#132e42;color:#e9eee4}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-action.primary{border-color:#a8cfb9;background:linear-gradient(135deg,#8ed4bd,#d9c58c);color:#0b1b25}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-action:hover{border-color:var(--cp-accent);filter:brightness(1.07)}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-related-card{border-color:#36556a;background:#102739;color:#eef0e7}
+body.theme-kizuna.kz-art #kyaraProfileOverlay .cp-related-card:hover{background:#18364a;border-color:var(--cp-accent)}
+

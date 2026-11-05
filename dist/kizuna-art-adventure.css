@@ -334,15 +334,3 @@ body.kz-art #kzAdventurePage .ka-constellation-universe{padding:0 0 13px;color:#
  body.kz-art #kzAdventurePage .ka-constellation-switcher{flex-basis:100%;max-width:none}
  body.kz-art #kzAdventurePage .ka-constellation-universe{padding:0 0 5px}
 }
-/* Mission diary — frame the mission board with the supplied shrine artwork. */
-body.kz-art #kzAdventurePage .kac-mission-scene{position:relative;isolation:isolate;min-height:900px;width:100%;margin:0;padding:clamp(26px,3vw,46px) clamp(12px,2.4vw,34px) 56px;overflow:hidden;border:1px solid #b99f6b3d;border-top:2px solid #b99f6b66;background-color:#091725;background-image:linear-gradient(180deg,#06121c35 0%,#07152245 45%,#071522b8 100%),url('assets/rebirth/kizuna-mission-stage.webp');background-size:100% auto;background-position:center top;background-repeat:no-repeat;box-shadow:0 18px 55px #0004}
-body.kz-art #kzAdventurePage .kac-mission-scene:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 32%,#0b1a2860,transparent 72%),linear-gradient(180deg,transparent 46%,#07152278 100%)}
-body.kz-art #kzAdventurePage .kac-mission-scene-inner{position:relative;z-index:1;width:min(1360px,100%);margin:0 auto}
-body.kz-art #kzAdventurePage .kac-mission-scene .ka-journal-hero.kac-journal{background:linear-gradient(110deg,#102637ed,#152b37ed 60%,#172b34e8)!important;border-color:#d5bd796d;border-left-color:#dfc77f;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #ffffff0b,0 18px 38px #02091373}
-body.kz-art #kzAdventurePage .kac-mission-scene .kac-mission-toolbar{padding:12px 15px;border:1px solid #90b3b447;border-radius:7px 16px 7px 7px;background:#0b1b29dc;backdrop-filter:blur(7px);box-shadow:0 10px 25px #0003}
-body.kz-art #kzAdventurePage .kac-mission-scene .ka-mission-section{padding:18px 18px 20px;margin-top:27px;border:1px solid #92b5b32d;border-radius:7px 18px 7px 7px;background:#091a28bd;backdrop-filter:blur(5px)}
-body.kz-art #kzAdventurePage .kac-mission-scene .kac-quest{background:linear-gradient(115deg,#183343ed,#102634ed);border-color:#aabfae55;box-shadow:0 9px 22px #0004}
-body.kz-art #kzAdventurePage .kac-mission-scene .kac-quest[data-quest-state="ready"]{background:linear-gradient(115deg,#24483fed,#19343aed);border-color:#83d9bd90}
-body.kz-art #kzAdventurePage .kac-mission-scene .kac-quest[data-quest-state="claimed"]{background:linear-gradient(110deg,#142c36ed,#10212ded)}
-@media(max-width:760px){body.kz-art #kzAdventurePage .kac-mission-scene{min-height:760px;margin:0 -8px;padding:18px 10px 36px;background-size:auto 900px;background-position:center top}body.kz-art #kzAdventurePage .kac-mission-scene .ka-mission-section{padding:14px 10px 16px;margin-top:19px}body.kz-art #kzAdventurePage .kac-mission-scene .kac-mission-toolbar{padding:9px 10px}}
-
