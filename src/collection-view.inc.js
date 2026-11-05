@@ -46,7 +46,7 @@ function collectionToggleCard(id,button){
   const flipped=card.classList.toggle('flipped');
   card.querySelector('.ff')?.setAttribute('aria-hidden',String(flipped));
   card.querySelector('.fb')?.setAttribute('aria-hidden',String(!flipped));
-  card.querySelectorAll('.fb a').forEach(link=>link.tabIndex=flipped?0:-1);
+  card.querySelectorAll('.fb a,.fb button').forEach(link=>link.tabIndex=flipped?0:-1);
   if(button){button.setAttribute('aria-pressed',String(flipped));button.textContent=flipped?'Recto':'Verso';}
   return flipped;
 }
@@ -150,10 +150,21 @@ function renderCollection(){
   $('colGrid').innerHTML=visible.map(card=>{
     const count=m[card.id]||0,reserved=status.reserved[card.id]||0,wanted=status.wanted.has(String(card.id));
     const stateLabel=count?(count>1?'Doublon · '+count+' disponibles':'Possédée'):reserved?'Réservée':'Manquante';
-    const faces=cardMarkup(card,{flip:true,count,since:first[card.id]||0}).replace('<div class="ff">','<div class="ff" aria-hidden="false">').replace('<div class="fb">','<div class="fb" aria-hidden="true">').replace('<a href=','<a tabindex="-1" href=');
+    const faces=cardMarkup(card,{flip:true,count,since:first[card.id]||0}).replace('<div class="ff">','<div class="ff" aria-hidden="false">').replace('<div class="fb">','<div class="fb" aria-hidden="true">').replace('<a href=','<a tabindex="-1" href=').replace('<button type="button" class="kz-card-profile-link"','<button type="button" tabindex="-1" class="kz-card-profile-link"');
     const badges='<div class="kz-col-status"><span class="kz-col-badge '+(count?'is-owned':reserved?'is-reserved':'is-missing')+'">'+stateLabel+'</span>'+(reserved&&count?'<span class="kz-col-badge is-reserved">'+reserved+' réservée'+(reserved>1?'s':'')+'</span>':'')+(wanted?'<span class="kz-col-badge is-wanted">Recherchée</span>':'')+'</div>';
     return '<article class="col-item-unit" data-rarity="'+esc(LET[card.rarity]||'C')+'" style="--slot-rarity:'+rarityFor(card).color+'"><div class="ka-card-register"><span>N° '+String(card.rank).padStart(4,'0')+'</span><span>'+esc(card.rarity)+'</span></div><div class="col-cell '+(count?'owned':reserved?'reserved':'miss')+(count&&window.KizunaExperience?.isNew(card.id)?' kg-new-slot':'')+'" data-colcard="'+esc(card.id)+'" tabindex="0" role="button" aria-label="Ouvrir la fiche de '+esc(card.name)+' · '+stateLabel+'">'+(count>1?'<b class="cx">×'+count+'</b>':'')+faces+(!count&&!reserved?'<span class="missing-lock"><i aria-hidden="true">◇</i>À DÉCOUVRIR</span>':'')+'</div>'+badges+(window.KizunaMythic?.badge(card)||'')+'<div class="kz-col-actions"><button class="kz-col-view" type="button" data-col-open="'+esc(card.id)+'" aria-label="Voir la fiche de '+esc(card.name)+'">Fiche</button><details class="kd-card-more"><summary aria-label="Actions de la carte">•••</summary><div><button class="kz-col-flip" type="button" data-col-flip="'+esc(card.id)+'" aria-pressed="false" aria-label="Retourner la carte '+esc(card.name)+'">Verso</button>'+(card.rarity==='Mythique'?'<button type="button" data-km-open="'+esc(card.id)+'">Éveil</button>':'')+(count?'<button class="col-market-sell-btn" type="button" data-col-market-open="'+esc(card.id)+'">Vendre</button>':'')+'</div></details></div></article>';
   }).join('')||(detail&&!active.cards.length?'<div class="col-empty"><b>Un album à construire.</b>Aucune carte n’a encore été ajoutée à cet album.</div>':!state.owned.length&&ownership==='own'&&!query&&COL.rar==='all'&&universe==='all'?'<div class="col-empty"><b>Le début d’une collection.</b>Ouvre un booster pour rencontrer tes premiers personnages.<button type="button" class="soft-btn primary" data-ka-boosters>✦ Ouvrir un booster</button></div>':'<div class="col-empty"><b>Aucune carte avec ces filtres.</b>Essaie une autre rareté, un autre univers ou réinitialise les filtres.</div>');
 }
 
 window.addEventListener('kizuna:mythic-change',()=>{if(document.body.dataset.tab==='col')renderCollection();});
+
+// Keyboard equivalent of selecting the card itself; the separate Fiche button
+// continues to open the character dossier directly.
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Enter'&&event.key!==' ')return;
+  const tile=event.target instanceof Element?event.target.closest('#collection [data-colcard]'):null;
+  if(!tile||event.target.closest('button,a,summary,input,select'))return;
+  event.preventDefault();
+  const card=LOCAL_CARDS.find(row=>String(row.id)===String(tile.dataset.colcard));
+  if(card)openCardViewer(card);
+});
