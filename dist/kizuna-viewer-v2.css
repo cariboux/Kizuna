@@ -12,3 +12,29 @@ body.theme-kizuna #kyaraProfileOverlay .kz-profile-enlarge{margin-top:18px;color
 .kz-price-empty{border:1px dashed #57556e;border-radius:10px;padding:22px;color:#b7b4c9;line-height:1.7}
 @media(max-width:600px){body.theme-kizuna #detailBackdrop.kz-card-viewer{padding:12px}body.theme-kizuna #detailBackdrop.kz-card-viewer>.modal{padding:16px;max-height:calc(100dvh - 24px)}.kz-viewer-head h2{font-size:23px}.kz-viewer-stage{padding-bottom:12px}body.theme-kizuna #detailBackdrop.kz-card-viewer .bigcard{width:min(265px,100%)}body.theme-kizuna #detailBackdrop.kz-card-viewer .bigcard.kz-zoomed{width:100%}}
 @media(prefers-reduced-motion:reduce){body.theme-kizuna #detailBackdrop.kz-card-viewer .bigcard{transition:none}}
+
+
+/* Keep the card-back profile action visually consistent after using a real button. */
+body .tback .bf .kz-card-profile-link{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-height:28px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--c,var(--kz-violet-light,#c4a4ff));
+  font:800 clamp(9px,.9vw,11px)/1.4 var(--font,Manrope,sans-serif);
+  text-align:left;
+  cursor:pointer;
+}
+body .tback .bf .kz-card-profile-link:hover{
+  color:var(--kz-gold,#d9b86f);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+body .tback .bf .kz-card-profile-link:focus-visible{
+  outline:2px solid var(--c,#c4a4ff);
+  outline-offset:4px;
+}
