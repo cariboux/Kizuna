@@ -4,7 +4,7 @@ body.theme-kizuna #marketPage .km-head{padding:25px;border:1px solid #554563;bac
 body.theme-kizuna #marketPage .km-workspace{background:#171929;border:1px solid #514563;border-radius:16px;padding:22px}
 body.theme-kizuna #marketPage .km-stat{background:#1b1c30;border-color:#4f455f;padding:18px}
 body.theme-kizuna #marketPage .km-stat small{font-size:11px;color:#c1b6d0}
-body.theme-kizuna #marketPage .km-tabs button{font-size:12px;padding:12px 15px}
+body.theme-kizuna #marketPage .km-tabs button{padding:12px 15px}
 body.theme-kizuna #marketPage .km-local-notice{background:#1d1d2a;border-color:#584e69}
 body.theme-kizuna #marketPage .km-local-notice p{font-size:11px;color:#c4bbd2}
 body.theme-kizuna #marketPage .km-shell{border-color:#4f455e;border-radius:18px;background:#171929;overflow:hidden}

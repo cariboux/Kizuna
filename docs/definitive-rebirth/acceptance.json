@@ -1,0 +1,485 @@
+{
+  "passed": true,
+  "sizes": [
+    [
+      "desktop",
+      1920,
+      1080
+    ],
+    [
+      "laptop",
+      1366,
+      768
+    ],
+    [
+      "tablet",
+      768,
+      1024
+    ],
+    [
+      "mobile",
+      390,
+      844
+    ]
+  ],
+  "checks": [
+    {
+      "size": "desktop",
+      "route": "home",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 0
+    },
+    {
+      "size": "desktop",
+      "route": "boosts",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 0
+    },
+    {
+      "size": "desktop",
+      "route": "col",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 0
+    },
+    {
+      "size": "desktop",
+      "route": "nexus",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 0
+    },
+    {
+      "size": "desktop",
+      "route": "market",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 0
+    },
+    {
+      "size": "desktop",
+      "route": "wiki",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 13
+    },
+    {
+      "size": "desktop",
+      "route": "universes",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "profile",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "community",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "rank",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "constellations",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "missions",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "journey",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "awakening",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "sanctuary",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "desktop",
+      "route": "events",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "home",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "boosts",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "col",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "nexus",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "market",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "wiki",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "universes",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "profile",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "community",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "rank",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "constellations",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "missions",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "journey",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "awakening",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "sanctuary",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "laptop",
+      "route": "events",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "home",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "boosts",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "col",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "nexus",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "market",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "wiki",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "universes",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "profile",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "community",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "rank",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "constellations",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "missions",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "journey",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "awakening",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "sanctuary",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "tablet",
+      "route": "events",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "home",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "boosts",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "col",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "nexus",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "market",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "wiki",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "universes",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "profile",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "community",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "rank",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "constellations",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "missions",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "journey",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "awakening",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "sanctuary",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    },
+    {
+      "size": "mobile",
+      "route": "events",
+      "overflow": false,
+      "missingLocal": [],
+      "fallbacks": 48
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Some external AniList portraits are unavailable in this environment; explicit illustration-unavailable fallbacks are shown."
+  ],
+  "authenticatedRemote": false,
+  "fixtureStorage": "disposable browser context only",
+  "emptyStateNavigation": {
+    "constellationsToCollection": true,
+    "collectionToBoosters": true
+  }
+}

@@ -59,6 +59,7 @@ const fs=require('node:fs');
  await page.setViewportSize({width,height});
  for(const tab of ['home','boosts','col','nexus','market']){
  await page.click('.kz-shell-nav [data-tab='+tab+']');await page.waitForTimeout(100);
+ if(!await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)){console.log('OVERFLOW',await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,nodes:[...document.querySelectorAll('body *')].filter(n=>{const r=n.getBoundingClientRect();return r.width&&r.right>innerWidth}).slice(0,15).map(n=>({tag:n.tagName,id:n.id,c:String(n.className),right:n.getBoundingClientRect().right,display:getComputedStyle(n).display,visibility:getComputedStyle(n).visibility}))})));await page.screenshot({path:'outputs/overflow-debug.png'});}
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' '+tab+' overflow');
  if(tab==='home'||tab==='boosts')await page.screenshot({path:'outputs/rebirth/test-'+name+'-'+tab+'.png'});
  }

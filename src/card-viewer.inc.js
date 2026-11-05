@@ -7,7 +7,7 @@ function kzViewerUpdate(){
   viewer.querySelector('.ff')?.setAttribute('aria-hidden',String(kzViewerBack));viewer.querySelector('.fb')?.setAttribute('aria-hidden',String(!kzViewerBack));
   viewer.querySelectorAll('.fb a').forEach(link=>link.tabIndex=kzViewerBack?0:-1);
   if(flip){flip.textContent=kzViewerBack?'Voir le recto':'Voir le verso';flip.setAttribute('aria-pressed',String(kzViewerBack));}
-  if(zoom){zoom.textContent=kzViewerZoom?'Taille normale':'Agrandir';zoom.setAttribute('aria-pressed',String(kzViewerZoom));}
+  if(zoom){zoom.textContent='Illustration entière';zoom.removeAttribute('aria-pressed');}
   if($('kzViewerStatus'))$('kzViewerStatus').textContent=(kzViewerBack?'Verso':'Recto')+' · '+(kzViewerZoom?'Agrandissement activé':'Taille normale');
 }
 openDetail=function(card){
@@ -24,13 +24,21 @@ openDetail=function(card){
   root.classList.add('open');document.body.style.overflow='hidden';kzViewerUpdate();
   $('viewerClose').addEventListener('click',()=>closeBackdrop('detailBackdrop'));
   $('kzViewerFlip').addEventListener('click',()=>{kzViewerBack=!kzViewerBack;kzViewerUpdate();});
-  $('kzViewerZoom').addEventListener('click',()=>{kzViewerZoom=!kzViewerZoom;kzViewerUpdate();});
+  $('kzViewerZoom').addEventListener('click',()=>{
+    let art=$('kdArtwork');if(!art){art=document.createElement('dialog');art.id='kdArtwork';document.body.append(art);}
+    art.setAttribute('aria-label','Illustration entière de '+card.name);
+    art.innerHTML='<p>'+esc(card.name)+'</p><button type="button" class="soft-btn" data-ui-kind="compact">Fermer ×</button><img src="'+esc(card.image)+'" alt="'+esc(card.name)+'" referrerpolicy="no-referrer">';
+    const close=()=>{art.close();$('kzViewerZoom')?.focus({preventScroll:true});};
+    art.querySelector('img').addEventListener('error',function(){if(this.dataset.unavailable)return;this.dataset.unavailable='true';this.src='assets/rebirth/card-unavailable.svg';art.querySelector('p').textContent=card.name+' · illustration indisponible';});
+    art.querySelector('button').onclick=close;art.oncancel=event=>{event.preventDefault();close();};art.showModal();
+  });
   $('cardViewer').addEventListener('click',event=>{if(event.target.closest('a,button'))return;event.preventDefault();event.stopPropagation();kzViewerBack=!kzViewerBack;kzViewerUpdate();});
   $('viewerClose').focus({preventScroll:true});
 };
 const kzViewerPriorClose=closeBackdrop;
 closeBackdrop=function(id){const restore=id==='detailBackdrop'&&$('detailBackdrop')?.classList.contains('open');kzViewerPriorClose(id);if($('kyaraProfileOverlay')?.classList.contains('open'))document.body.style.overflow='hidden';if(restore&&kzViewerReturn?.isConnected){kzViewerReturn.focus({preventScroll:true});kzViewerReturn=null;}};
 document.addEventListener('keydown',event=>{
+  if($('kdArtwork')?.open){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').close();$('kzViewerZoom')?.focus({preventScroll:true});}else if(event.key==='Tab'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').querySelector('button').focus();}return;}
   const root=$('detailBackdrop');if(!root?.classList.contains('open')||!root.classList.contains('kz-card-viewer'))return;
   if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();closeBackdrop('detailBackdrop');return;}
   if(event.key==='Tab'){const nodes=kzViewerFocusable($('detailContent'));if(!nodes.length)return;const first=nodes[0],last=nodes.at(-1);if(event.shiftKey&&(document.activeElement===first||!nodes.includes(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!nodes.includes(document.activeElement))){event.preventDefault();first.focus();}}

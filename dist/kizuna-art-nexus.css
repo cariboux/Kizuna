@@ -83,9 +83,8 @@ body.kz-art .knx-detail dt,body.kz-art .knx-confirm dt{color:#adc3ce}
 body.kz-art .knx-detail dd,body.kz-art .knx-confirm dd{color:#f2e7ce}
 body.kz-art .knx-detail dl>div:first-child dd{color:#ffda80;font-size:14px}
 body.kz-art .knx-detail-note{color:#adc2cd;font-size:10px}
-body.kz-art .knx-primary{background:linear-gradient(115deg,#ffe5a5,#e9b957);color:#172732;border:1px solid #ffe7af;border-radius:12px 3px 12px 3px;box-shadow:0 3px 0 #9f702c55;min-height:44px}
-body.kz-art .knx-secondary{background:#193647;border-color:#6d99a7;color:#d9f0e9;border-radius:10px 3px 10px 3px;min-height:44px}
-body.kz-art .knx-secondary:not(:disabled):hover{background:#284b5a}
+body.kz-art .knx-primary{min-height:44px}
+body.kz-art .knx-secondary{min-height:44px}
 body.kz-art .knx-list{background:linear-gradient(#102733e0,#081924e8);padding:15px;max-height:594px}
 body.kz-art .knx-list h2{font-size:24px}
 body.kz-art .knx-list button{border-color:#6d9a9f44;background:#122d39;border-radius:12px 3px 12px 3px;color:#eff8ee;padding:12px}
