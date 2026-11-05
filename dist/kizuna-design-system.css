@@ -1,0 +1,29 @@
+/* Kizuna interface contract: four controls, shared type/spacing, explicit interaction states. */
+body.theme-kizuna.kz-art{--rf-ink:#0b172a;--rf-panel:#10263b;--rf-edge:#95bfcd50;--rf-muted:#b9ccda;--rf-gold:#f7ce80;--rf-teal:#80ecd9;--kd-body:Manrope,system-ui,sans-serif;--kd-display:Rajdhani,system-ui,sans-serif;--kd-text:15px;--kd-small:12px;--kd-title:clamp(28px,3.2vw,42px);--kd-space:8px;font-family:var(--kd-body);font-size:var(--kd-text);line-height:1.6;color:#e7eff4}
+body.kz-art h1,body.kz-art h2,body.kz-art h3{font-family:var(--kd-display);line-height:1.1;letter-spacing:-.015em}body.kz-art :is(h1,h2,h3,p){text-wrap:pretty}body.kz-art :is(button,a,summary){-webkit-tap-highlight-color:transparent}body.kz-art button{font-family:var(--kd-display)}
+body.theme-kizuna.kz-art button[data-ui-kind]{--ui-light:#8bb8c9;position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;box-sizing:border-box;padding:10px 18px!important;border:1px solid #7a9bb399!important;border-radius:13px 3px 13px 3px!important;background:linear-gradient(155deg,#31526a,#152c44 65%)!important;box-shadow:inset 0 1px #dbf4ff55,inset 0 -3px #060f244d,0 3px 0 #050e1e,0 6px 10px #0003!important;color:#e9f5fa!important;font:600 17px/1.15 var(--kd-display)!important;letter-spacing:.01em!important;text-transform:none;cursor:pointer;transition:transform .16s,filter .16s,box-shadow .16s;overflow:visible;text-shadow:none}
+body.theme-kizuna.kz-art button[data-ui-kind]:after{content:none;display:none}
+body.theme-kizuna.kz-art button[data-ui-kind]:before{animation:none;transform:none;content:'';position:absolute;pointer-events:none;left:11px;top:-1px;width:28px;height:2px;background:var(--ui-light);box-shadow:0 0 9px var(--ui-light);opacity:.9}
+body.theme-kizuna.kz-art :is(button[data-ui-kind=hero],#kzFeaturedOpen[data-ui-kind]){--ui-light:#fff7ca;min-height:54px;padding:13px 24px!important;border-color:#ffe3a1!important;background:linear-gradient(150deg,#fff0ba,#eebc63 70%,#d89b4a)!important;color:#17243b!important;box-shadow:inset 0 1px #fff9,inset 0 -3px #c08941,0 4px 0 #855b2e,0 8px 24px #e8b65a24!important;font-size:20px!important;font-weight:700!important}
+body.theme-kizuna.kz-art button[data-ui-kind=tab]{box-shadow:none!important;border:0!important;border-bottom:2px solid #557389!important;border-radius:8px 8px 0 0!important;background:#1a3148!important;color:#bdd2e1!important;min-height:46px;padding:10px 18px!important}
+body.theme-kizuna.kz-art button[data-ui-kind=tab]:before{display:none}
+body.theme-kizuna.kz-art button[data-ui-kind=compact]{padding:8px 12px!important;min-width:44px;min-height:44px;font-size:16px!important;border-radius:8px 2px!important;box-shadow:inset 0 1px #dbf4ff33,0 2px #050e1e!important}
+body.theme-kizuna.kz-art button[data-ui-kind]:is(.active,.on,[aria-pressed=true],[aria-selected=true]){background:linear-gradient(150deg,#2b5f6a,#193e52)!important;color:#aaf8e4!important;border-color:#82e2cd!important;box-shadow:inset 0 -3px #80e2cc,0 0 15px #8debd812!important}
+body.theme-kizuna.kz-art button[data-ui-kind][aria-busy=true]{cursor:progress;filter:saturate(.4)}
+body.theme-kizuna.kz-art button[data-ui-kind][aria-busy=true]:after{content:'';display:block;position:static;width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:kd-spin .7s linear infinite}
+body.theme-kizuna.kz-art button[data-ui-kind][data-success=true]{--ui-light:#9dffca;border-color:#9dffca!important;background:#174c42!important;color:#c2ffe1!important}
+@media(hover:hover){body.theme-kizuna.kz-art button[data-ui-kind]:not(:disabled):hover{filter:brightness(1.17);transform:translateY(-2px);border-color:var(--ui-light)!important}}
+body.theme-kizuna.kz-art button[data-ui-kind]:not(:disabled):active{transform:translateY(2px);box-shadow:inset 0 2px 8px #0004!important}
+body.theme-kizuna.kz-art button:disabled{opacity:.5!important;cursor:not-allowed!important;filter:saturate(.25);transform:none!important;box-shadow:none!important}
+body.theme-kizuna.kz-art :is(button,a,summary,input,select):focus-visible{outline:3px solid #a2f3e2!important;outline-offset:4px!important}
+body.theme-kizuna.kz-art :is(input[type=search],input[type=number],select,.col-input){min-height:44px;box-sizing:border-box;max-width:100%;padding:10px 13px!important;border:1px solid #86abc06b!important;border-radius:7px!important;background:#0a1c30!important;color:#edf5f8!important;font:400 14px/1.4 var(--kd-body)!important}
+body.kz-art input::placeholder{color:#b1c7d6!important}body.kz-art summary{cursor:pointer}body.kz-art :is(dialog,.knx-confirm,.ka-dialog){border:1px solid #a3d4de80;border-radius:18px 4px;background:linear-gradient(145deg,#253e55,#0c1c30);color:#f4f4eb;box-shadow:0 24px 100px #000a;max-width:calc(100vw - 24px)}body.kz-art dialog::backdrop{background:#050e20ce;backdrop-filter:blur(5px)}
+body.kz-art .rf-fold{border:0;border-top:1px solid #91b8c533;border-radius:0;background:transparent;margin:8px 0}
+body.kz-art .rf-fold>summary{padding:10px 4px;font-size:14px;min-height:46px}body.kz-art .rf-fold>summary small{font-size:12px}body.kz-art .rf-fold-body{padding:12px 0}
+body.kz-art :is(.ka-kicker,.kp-kicker,.col-eyebrow,.km-eyebrow,.knx-kicker){font-family:var(--kd-body);font-size:12px!important;letter-spacing:.12em!important;line-height:1.5}
+body.kz-art :is(.ka-intro,.ka-note,.knx-header p,.km-title-group p,.col-desc){font-size:14px!important;line-height:1.65!important}
+body.kz-art [hidden]{display:none!important}
+@keyframes kd-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){body.theme-kizuna.kz-art button[data-ui-kind]{transition:none}body.theme-kizuna.kz-art button[data-ui-kind][aria-busy=true]:after{animation:none}}
+
+body.kz-art .kd-symbol{font-family:system-ui,sans-serif;font-weight:400;line-height:1;display:inline-block}

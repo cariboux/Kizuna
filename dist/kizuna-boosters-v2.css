@@ -3,8 +3,7 @@ body.theme-kizuna #revealBackdrop.kr-mode { padding:0!important; background:#080
 body.theme-kizuna #revealBackdrop.kr-mode .reveal-modal { width:100%!important; max-width:none!important; height:auto!important; max-height:none!important; min-height:100dvh; margin:0!important; padding:0!important; border:0!important; border-radius:0!important; background:#0d0e18!important; overflow:visible!important; box-shadow:none!important; }
 body.theme-kizuna #kyaraRevealRoot { position:relative; width:100%; min-height:100dvh; height:auto!important; color:#f5f2fa; background:radial-gradient(ellipse at 50% 44%,#785ce014,transparent 57%),#0d0e18!important; isolation:isolate; }
 body.theme-kizuna #kyaraRevealRoot::before,body.theme-kizuna #kyaraRevealRoot::after { pointer-events:none; }
-body.theme-kizuna #kyaraRevealRoot .kr-close { position:fixed; top:20px; right:22px; width:44px; height:44px; z-index:12; border:1px solid #56516c; border-radius:50%; background:#171929f2; color:#f5f2fa; font-size:25px; box-shadow:none; }
-body.theme-kizuna #kyaraRevealRoot .kr-close:hover { background:#302744; border-color:#d9b86f; }
+body.theme-kizuna #kyaraRevealRoot .kr-close { position:fixed; top:20px; right:22px; width:44px; height:44px; z-index:12; border:1px solid #56516c; font-size:25px; box-shadow:none; }
 body.theme-kizuna #kyaraRevealRoot :is(button,a):focus-visible { outline:2px solid #d9b86f!important; outline-offset:5px; }
 body.theme-kizuna #kyaraRevealRoot .kr-eyebrow { color:#d9b86f!important; font:700 10px/1.7 var(--font); letter-spacing:.2em; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-shell { display:grid!important; grid-template-columns:minmax(270px,1fr) minmax(320px,440px); grid-template-rows:auto 1fr; align-items:center; gap:15px 65px; max-width:1070px; min-height:100dvh; margin:auto; padding:60px 35px 45px!important; background:none!important; }
@@ -17,32 +16,31 @@ body.theme-kizuna #kyaraRevealRoot .kr-pack-aura { position:absolute; inset:14%;
 body.theme-kizuna #kyaraRevealRoot .kr-pack-art { display:block; position:relative; width:230px; height:325px; padding:0; border:0; border-radius:12px; background:transparent; transform:rotate(-5deg); cursor:pointer; touch-action:pan-x; appearance:none; animation:kz-pack-enter .6s both!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-art:disabled { opacity:1; cursor:default; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-art:hover:not(:disabled) { transform:rotate(-2deg) translateY(-5px); }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-foil { display:flex; position:absolute; inset:0; flex-direction:column; align-items:center; border:1px solid #d9b86f88; border-radius:11px; overflow:hidden; background:linear-gradient(125deg,#262336 0%,#161726 47%,#352d46 100%); box-shadow:inset 0 0 0 7px #171929,inset 0 0 0 8px #d9b86f33,0 26px 40px #0006; }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-foil { display:flex; position:absolute; inset:0; flex-direction:column; align-items:center; border:1px solid #d9b86f88; overflow:hidden; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-foil::after { content:''; position:absolute; inset:0; background:linear-gradient(110deg,transparent 30%,#fff1 45%,transparent 60%); pointer-events:none; }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-brand { position:static; margin:31px 0 11px; color:#d9b86f; letter-spacing:.22em; font:750 11px/1.5 var(--font); }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-mark { position:static; transform:none; width:117px; height:117px; display:grid; place-items:center; margin:0; color:#d9b86f; font-size:70px; }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-brand { position:static; margin:31px 0 11px; letter-spacing:.22em; font:750 11px/1.5 var(--font); }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-mark { position:static; transform:none; width:117px; height:117px; display:grid; place-items:center; margin:0; font-size:70px; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-mark .booster-logo { width:117px!important; height:117px!important; filter:none!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-copy { position:static; display:block; padding:9px 12px; text-align:center; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-copy strong { display:block; font:600 27px/1.05 var(--display); color:#f5f2fa; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-copy small { display:block; color:#b9abc6; font-size:7px; letter-spacing:.19em; margin-top:7px; }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-cardcount { position:static; transform:none; color:#d9b86f; font-size:7px; letter-spacing:.05em; border-top:1px solid #d9b86f33; padding-top:12px; margin-top:3px; }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-crimp { position:absolute; left:0; right:0; height:13px; opacity:.5; background:repeating-linear-gradient(90deg,#d9b86f55 0 1px,transparent 1px 4px); }.kr-pack-crimp.top{top:0}.kr-pack-crimp.bottom{bottom:0}
+body.theme-kizuna #kyaraRevealRoot .kr-pack-cardcount { position:static; transform:none; font-size:7px; letter-spacing:.05em; padding-top:12px; margin-top:3px; }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-crimp { position:absolute; left:0; right:0; height:13px; opacity:.5; }.kr-pack-crimp.top{top:0}.kr-pack-crimp.bottom{bottom:0}
 body.theme-kizuna #kyaraRevealRoot .kr-pack-shard { display:none; }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-tear-line { top:33px; border-color:#d9b86f; }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-tear-line { top:33px; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-controls { width:100%; max-width:none; padding:26px 0; margin:0; text-align:center; }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-hint { color:#f5f2fa; font:500 27px/1.2 var(--display); margin:0 0 25px; }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-hint { font:500 27px/1.2 var(--display); margin:0 0 25px; }
 body.theme-kizuna #kyaraRevealRoot .kr-quantity-options { display:grid; width:100%; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin:0; }
-body.theme-kizuna #kyaraRevealRoot .kr-quantity-options button { min-width:0; min-height:72px; padding:11px; border:1px solid #464159; border-radius:10px; background:#171929; color:#e8e3f3; box-shadow:none; }
-body.theme-kizuna #kyaraRevealRoot .kr-quantity-options button.selected { background:#785ce022; border-color:#bba9ff; box-shadow:inset 0 -2px #bba9ff; }
+body.theme-kizuna #kyaraRevealRoot .kr-quantity-options button { min-width:0; min-height:72px; padding:11px; border:1px solid #464159; box-shadow:none; }
 body.theme-kizuna #kyaraRevealRoot .kr-quantity-options b { display:block; font-size:22px; color:inherit; }.kr-quantity-options small{display:block;margin-top:4px}
 .kz-reveal-settings { display:flex; justify-content:center; gap:8px; margin:16px 0 19px; flex-wrap:wrap; }
 .kz-reveal-settings button { min-height:40px; background:transparent; color:#beb7cf; border:1px solid #39354a; border-radius:30px; padding:8px 12px; font-size:10px; }
 .kz-reveal-settings button b { margin-left:5px; color:#f5f2fa; }.kz-reveal-settings button[aria-pressed="true"] { color:#e5d09b; border-color:#a68c56; background:#d9b86f0a; }
-body.theme-kizuna #kyaraRevealRoot .kr-open-cta { flex-direction:column; gap:4px; width:100%; min-height:64px; padding:13px 20px; border:1px solid #bba9ff; border-radius:10px; background:#785ce0!important; color:#fff!important; box-shadow:0 8px 30px #785ce024; }
+body.theme-kizuna #kyaraRevealRoot .kr-open-cta { flex-direction:column; gap:4px; width:100%; min-height:64px; padding:13px 20px; border:1px solid #bba9ff; background:#785ce0!important; color:#fff!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-open-cta b { font-size:16px; display:block; }.kr-open-cta small{display:block;margin-top:4px}
 body.theme-kizuna #kyaraRevealRoot .kr-open-cta small,body.theme-kizuna #kyaraRevealRoot .kr-pack-foot { color:#ddd4f3; font-size:10px; }
 .kz-reveal-guarantee { color:#a5a5b9; font-size:10px; line-height:1.8; max-width:330px; margin:10px auto 18px; }
-body.theme-kizuna #kyaraRevealRoot .kr-pack-change { background:none; border:0; color:#d9b86f; text-decoration:underline; text-underline-offset:4px; padding:10px; min-height:44px; font-size:11px; }
+body.theme-kizuna #kyaraRevealRoot .kr-pack-change { background:none; border:0; text-decoration:underline; text-underline-offset:4px; padding:10px; min-height:44px; font-size:11px; }
 body.theme-kizuna #kyaraRevealRoot.kr-pack-tearing .kr-pack-art { animation:kz-pack-tear .72s both!important; }
 body.theme-kizuna #kyaraRevealRoot.kr-pack-tearing .kr-pack-foil { box-shadow:inset 0 0 0 7px #171929,0 0 45px #d9b86f38; }
 body.theme-kizuna #kyaraRevealRoot .kr-opening-shell { display:flex; flex-direction:column; width:min(1100px,100%); min-height:100dvh; margin:auto; padding:26px 34px 25px; background:none; }
@@ -52,13 +50,12 @@ body.theme-kizuna #kyaraRevealRoot .kr-open-center { flex:1; position:relative; 
 body.theme-kizuna #kyaraRevealRoot .kr-card-stack { width:218px; margin:0; isolation:isolate; }
 body.theme-kizuna #kyaraRevealRoot .kr-stack-layer { border:1px solid #5a4e71; border-radius:14px; background:#171929; box-shadow:none; }.kr-stack-layer.layer-3{transform:rotate(-7deg)}.kr-stack-layer.layer-2{transform:rotate(5deg)}
 body.theme-kizuna #kyaraRevealRoot .kr-current-card { position:relative; display:block; width:100%; padding:0; border:0; background:none; border-radius:13px; box-shadow:0 16px 45px #0008; animation:kz-card-arrive .38s both; }
-body.theme-kizuna #kyaraRevealRoot .kr-current-card .tcard { width:100%; transform:none!important; }
 body.theme-kizuna #kyaraRevealRoot[data-rarity="R"] .kr-current-card { animation:kz-card-arrive .4s both,kz-card-light .65s both; }
 body.theme-kizuna #kyaraRevealRoot[data-rarity="E"] .kr-current-card { animation:kz-card-arrive .45s both,kz-card-light .85s both; }
 body.theme-kizuna #kyaraRevealRoot[data-rarity="L"] .kr-current-card { animation:kz-card-arrive .5s both,kz-card-light 1s both; }
 body.theme-kizuna #kyaraRevealRoot[data-rarity="M"] .kr-current-card { animation:kz-mythic-arrive .65s both,kz-card-light 1.2s both; }
 body.theme-kizuna #kyaraRevealRoot.kr-card-leaving .kr-current-card { animation:kz-card-leave .14s both!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-new-badge { background:#d9b86f; color:#191622; font-size:8px; font-weight:800; padding:5px 9px; border:0; border-radius:4px; box-shadow:none; z-index:3; }
+body.theme-kizuna #kyaraRevealRoot .kr-new-badge { font-size:8px; font-weight:800; padding:5px 9px; border:0; box-shadow:none; z-index:3; }
 body.theme-kizuna #kyaraRevealRoot .kr-card-caption { position:relative; margin:23px 0 14px; text-align:center; }
 body.theme-kizuna #kyaraRevealRoot .kr-card-caption>span { color:var(--kr-rarity); background:none; font-size:11px; letter-spacing:.15em; text-transform:uppercase; }
 body.theme-kizuna #kyaraRevealRoot .kr-card-caption h1 { color:#f5f2fa; font:600 clamp(27px,4vw,40px)/1.15 var(--display); margin:7px 0; }.kr-card-caption p{color:#a5a5b9!important}
@@ -76,19 +73,19 @@ body.theme-kizuna #kyaraRevealRoot .kr-key-hint { margin:12px 0 0; font-size:9px
 .kz-reveal-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-shell { display:block; width:min(1100px,100%); min-height:100dvh; margin:auto; padding:58px 32px 36px!important; background:none; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-heading { text-align:center; margin:0 0 24px; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-heading h1 { color:#f5f2fa; font:600 clamp(30px,5vw,50px)/1.1 var(--display); margin:12px 0; }
+body.theme-kizuna #kyaraRevealRoot .kr-finale-heading h1 { color:#f5f2fa; font:600 clamp(30px,5vw,50px)/1.1 var(--display); }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-heading p { color:#b8b0c7; font-size:12px; }
-body.theme-kizuna #kyaraRevealRoot .kr-new-count { display:inline-block; margin:6px 0 0; padding:7px 12px; background:#d9b86f12; color:#e1c68d; border:1px solid #d9b86f38; border-radius:30px; font-size:10px; }
+body.theme-kizuna #kyaraRevealRoot .kr-new-count { display:inline-block; margin:6px 0 0; padding:7px 12px; border:1px solid #d9b86f38; font-size:10px; }
 .kz-summary-rarities { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 18px; margin:0 0 27px; }.kz-summary-rarities span{display:inline-flex;align-items:center;gap:6px;color:#c8c1d4;font-size:10px}.kz-summary-rarities i{width:6px;height:6px;border-radius:50%;background:var(--tier)}.kz-summary-rarities b{color:var(--tier)}
 body.theme-kizuna #kyaraRevealRoot .kr-finale-fan.kz-summary-grid { display:grid!important; grid-template-columns:repeat(5,minmax(0,1fr))!important; gap:23px 14px!important; width:100%!important; max-width:none!important; padding:10px 0 28px!important; margin:0!important; overflow:visible!important; perspective:none; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-card { width:100%!important; max-width:none!important; min-width:0; margin:0!important; padding:0; border:0; border-radius:12px; background:none; transform:none!important; position:relative; box-shadow:none; animation:none!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-card.is-best { filter:none; }.kr-finale-card .tcard{width:100%}
+body.theme-kizuna #kyaraRevealRoot .kr-finale-card.is-best { filter:none; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-card:hover { transform:translateY(-3px)!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-card .kr-new-badge { position:absolute; top:-8px; left:9px; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-actions { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; width:100%; margin:8px 0 0; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-actions button { flex:0 1 auto; min-height:44px; padding:11px 16px; border:1px solid #514762; border-radius:8px; background:#171929; color:#e9e0f7; font-size:11px; }
+body.theme-kizuna #kyaraRevealRoot .kr-finale-card .kr-new-badge { position:absolute; left:9px; }
+body.theme-kizuna #kyaraRevealRoot .kr-finale-actions { display:flex; flex-wrap:wrap; justify-content:center; }
+body.theme-kizuna #kyaraRevealRoot .kr-finale-actions button { flex:0 1 auto; min-height:44px; border:1px solid #514762; border-radius:8px; background:#171929; color:#e9e0f7; font-size:11px; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-actions .kr-open-again { background:#785ce0; color:#fff; border-color:#bba9ff; }.kr-finale-actions .kr-open-again small{display:none!important}
-body.theme-kizuna #kyaraRevealRoot .kr-finale-note { color:#a5a5b9; font-size:10px; text-align:center; line-height:1.7; margin:20px 0 0; }
+body.theme-kizuna #kyaraRevealRoot .kr-finale-note { text-align:center; line-height:1.7; }
 /* Neutralize the former global opening palette and compact recap rules. */
 body.theme-kizuna #kyaraRevealRoot[data-phase] { background:radial-gradient(ellipse at 50% 44%,#785ce014,transparent 57%),#0d0e18!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-close { border-color:#56516c!important; border-radius:50%!important; background:#171929f2!important; color:#f5f2fa!important; }
@@ -109,10 +106,6 @@ body.theme-kizuna #kyaraRevealRoot .kr-pack-hint { color:#f5f2fa!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-pack-change { color:#d9b86f!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-new-badge { background:#d9b86f!important; color:#191622!important; border-radius:4px!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-new-count { background:#d9b86f12!important; color:#e1c68d!important; border-color:#d9b86f38!important; border-radius:30px!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-card .tcard .th { min-height:29px!important; padding:6px!important; font-size:11px!important; gap:4px!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-card .tcard .bd { width:20px!important; height:20px!important; line-height:20px!important; font-size:9px!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-card .tcard .ts { padding:5px 6px!important; font-size:9px!important; }
-body.theme-kizuna #kyaraRevealRoot .kr-finale-card .tcard .tp { padding:6px!important; font-size:10px!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-card .kr-new-badge { top:-8px!important; padding:4px 7px!important; font-size:8px!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-heading h1 { font-size:clamp(30px,5vw,50px)!important; line-height:1.1!important; margin:12px 0!important; }
 body.theme-kizuna #kyaraRevealRoot .kr-finale-actions { gap:9px!important; width:100%!important; margin:8px 0 0!important; }

@@ -24,9 +24,9 @@ body.kz-art main{min-width:0;padding-bottom:30px}
 body.kz-art #colAlbumDetail{scroll-margin-top:92px}
 @media(min-width:761px) and (max-width:1100px){body.kz-art #colAlbumDetail{scroll-margin-top:148px}}
 @media(max-width:760px){body.kz-art #colAlbumDetail{scroll-margin-top:82px}}
-body.kz-art :is(.primary-btn,.kz-btn-primary,.ka-btn-primary,.kza-button-primary){background:linear-gradient(110deg,#ffe5a2,#e9b84f)!important;color:#16232c!important;border:1px solid #ffe4a0!important;border-radius:var(--art-radius)!important;box-shadow:0 4px 0 #966a294f!important;font-weight:800;min-height:44px;transition:filter .18s,transform .18s}
+body.kz-art :is(.primary-btn,.kz-btn-primary,.ka-btn-primary,.kza-button-primary){min-height:44px;transition:filter .18s,transform .18s}
 body.kz-art :is(.primary-btn,.kz-btn-primary,.ka-btn-primary,.kza-button-primary):hover:not(:disabled){filter:brightness(1.08);transform:translateY(-2px)}
-body.kz-art :is(.soft-btn,.ghost-btn,.kza-button-secondary){border:1px solid #7894a45c!important;background:#152739!important;color:#ecf5f2!important;border-radius:12px 4px 12px 4px!important;min-height:42px}
+body.kz-art :is(.soft-btn,.ghost-btn,.kza-button-secondary){min-height:42px}
 body.kz-art :is(.primary-btn,.soft-btn,.ghost-btn):active:not(:disabled){transform:translateY(1px)}
 .kza-eyebrow{font-size:10px;font-weight:800;letter-spacing:.19em;color:var(--art-accent);text-transform:uppercase}
 .kza-progress{height:5px;background:#fff1;border-radius:10px;overflow:hidden}.kza-progress>i{display:block;height:100%;background:var(--art-accent)}
@@ -37,7 +37,7 @@ body.kz-art :is(.primary-btn,.soft-btn,.ghost-btn):active:not(:disabled){transfo
 body.kz-art .kg-celebration{background:linear-gradient(110deg,#132c37,#183d3b)!important;border:1px solid #ffe4a077!important;border-left:4px solid var(--art-gold)!important;color:var(--art-paper);border-radius:var(--art-radius)!important;box-shadow:0 15px 70px #0009!important}
 body.kz-art .kz-notice-dialog{background:linear-gradient(145deg,#193644,#101b2d);border-color:#91b8aa66;border-radius:var(--art-radius)}
 /* Navigation: instrument rail on desktop, a compact dock on touch screens. */
-body.theme-kizuna.kz-game.kz-art .topline{position:sticky;top:0;height:76px!important;min-height:76px!important;background:#080f1bed!important;border-bottom:1px solid var(--art-line)!important;backdrop-filter:blur(20px);z-index:1000}
+body.theme-kizuna.kz-game.kz-art .topline{position:sticky;top:0;height:76px!important;min-height:76px!important;background:#080f1bed!important;border-bottom:1px solid var(--art-line)!important}
 body.theme-kizuna.kz-game.kz-art .top-inner{height:76px!important;min-height:76px!important;width:calc(100% - 48px)!important;max-width:none!important;padding:0!important;gap:20px!important;flex-wrap:nowrap!important}
 body.theme-kizuna.kz-game.kz-art .brand-logo{width:142px!important;min-width:100px;flex-shrink:0}
 body.kz-art .kza-header-context{font:700 13px Rajdhani,sans-serif;text-transform:uppercase;letter-spacing:.16em;color:#a2b8c8;padding-left:22px;border-left:1px solid #64778a4f;white-space:nowrap}

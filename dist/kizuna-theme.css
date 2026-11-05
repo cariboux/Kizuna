@@ -44,10 +44,6 @@ body.theme-kizuna .hero-area { background: transparent !important; border-color:
 body.theme-kizuna :is(.eyebrow, .section-kicker, .section-kicker-small) { color: #4ce7fa; letter-spacing: 1.6px; }
 body.theme-kizuna .text-link { color: #c1b6ce; }
 body.theme-kizuna .text-link:hover { color: #f15acb; }
-body.theme-kizuna :is(.primary-btn, .soft-btn, .secondary-btn) { border-radius: 3px; }
-body.theme-kizuna .primary-btn { background: #4ce7fa; color: #061419; box-shadow: 0 0 27px #4ce7fa18; }
-body.theme-kizuna :is(.soft-btn, .secondary-btn) { color: #dfd8eb; background: #171421; border-color: #3c334d; }
-body.theme-kizuna :is(.soft-btn, .secondary-btn):hover { border-color: #f15acb88; background: #262034; }
 body.theme-kizuna :is(.col-input, .select-input, input[type="search"], select, textarea) { color: #ebe6f4; border-color: #3c334d; background-color: #14111d !important; border-radius: 3px; }
 body.theme-kizuna .ik-arrow-glyph {
   background: #1b1323 !important;
@@ -234,19 +230,8 @@ body.theme-kizuna .hero .primary-btn,
 body.theme-kizuna .hero .secondary-btn {
   min-height: 46px;
   padding: 12px 18px;
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: 700;
 }
-body.theme-kizuna .hero .primary-btn {
-  border: 1px solid #87f2fd77;
-  background: #4ce7fa;
-  color: #061419;
-  box-shadow: 0 0 27px #4ce7fa18;
-}
-body.theme-kizuna .hero .primary-btn:hover { background: #8af2fc; box-shadow: 0 0 32px #4ce7fa38; filter: none; }
-body.theme-kizuna .hero .secondary-btn { background: #171421; border-color: #3c334d; color: #d8c5e2; box-shadow: none; }
-body.theme-kizuna .hero .secondary-btn:hover { background: #262034; border-color: #f15acb88; }
+body.theme-kizuna .hero .primary-btn:hover { filter: none; }
 body.theme-kizuna .hero-note { color: #7e788f; margin-top: 22px; font-size: 10px; font-weight: 500; }
 body.theme-kizuna .hero-note > span:first-child { color: #f15acb; font-size: 14px; }
 body.theme-kizuna .hero #heroStack {
@@ -425,8 +410,8 @@ body.theme-kizuna #boosters .kb-cap { color: #927f9e; font: 600 8px var(--font);
 body.theme-kizuna #boosters .kb-odds-note { color: #a4a2b6; font: 400 9px/1.7 var(--font); margin: 12px 0 0; }
 body.theme-kizuna #boosters .kb-row { grid-template-columns: 76px minmax(0, 1fr) 43px; font-size: 9px; margin-top: 11px; }
 body.theme-kizuna #boosters .kb-row em { color: #b7a5c3; font-size: 9px; }
-body.theme-kizuna #boosters .kb-open { border: 1px solid #87f2fd77; border-radius: 3px; background: #4ce7fa !important; color: #061419 !important; box-shadow: 0 0 22px #4ce7fa12 !important; padding: 13px 10px; font-size: 13px; margin-top: 20px; }
-body.theme-kizuna #boosters .kb-open span { font-size: 8px; padding-left: 9px; border-color: #06141940; }
+body.theme-kizuna #boosters .kb-open { padding: 13px 10px; margin-top: 20px; }
+body.theme-kizuna #boosters .kb-open span { padding-left: 9px; }
 body.theme-kizuna #boosters .kb-multi { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 body.theme-kizuna #boosters .kb-multi button { border-color: #51335a; border-radius: 3px; background: #17101e; color: #ddc6e8; font-size: 10px; padding: 10px 6px; }
 body.theme-kizuna #boosters .kb-multi button:hover { border-color: #f15acb; background: #26182d; }
@@ -536,8 +521,7 @@ body.theme-kizuna .toast { background: #17101f; color: #bceff7; border: 1px soli
   body.theme-kizuna .hero p { font-size: 12px !important; max-width: 340px !important; line-height: 1.9; }
   body.theme-kizuna .hero .hero-buttons { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 24px; }
   body.theme-kizuna .hero .primary-btn,
-  body.theme-kizuna .hero .secondary-btn { min-height: 44px; justify-content: space-between; padding: 12px 16px; font-size: 11px; }
-  body.theme-kizuna .hero .secondary-btn { background: transparent; }
+  body.theme-kizuna .hero .secondary-btn { min-height: 44px; justify-content: space-between; padding: 12px 16px; }
   body.theme-kizuna .hero-note { font-size: 9px; margin-top: 17px; }
   body.theme-kizuna .hero #heroStack { width: 100% !important; height: 355px !important; padding: 0; margin: 16px 0 0; }
   body.theme-kizuna #heroStack::before { font-size: 240px; top: 45px; }

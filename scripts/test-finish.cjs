@@ -18,7 +18,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  await go('col');
  const collectionFold=page.locator('[data-rf-fold=collection-filters]');
  assert.equal(await collectionFold.evaluate(n=>n.open),false);
- await collectionFold.locator('summary').focus();await page.keyboard.press('Enter');
+ await collectionFold.locator(':scope > summary').focus();await page.keyboard.press('Enter');
  await page.selectOption('#colOwn','all');await page.fill('#colSearch','Naruto');
  await page.waitForFunction(()=>document.querySelectorAll('#colGrid [data-colcard]').length>0);
  assert.ok((await page.locator('#colCount').innerText()).includes('30 cartes'));
@@ -35,6 +35,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  await page.click('[data-market-rarity="Rare"]');assert.ok(await page.locator('[data-market-rarity="Rare"]').evaluate(n=>n.classList.contains('active')));
  await page.click('#marketFiltersReset');assert.equal(await page.inputValue('#marketPriceMin'),'');
  for(const view of ['sell','auction','trade','activity','buy']){
+  if(view==='auction')await page.click('[data-market-view=buy]');
   await page.click('[data-market-view='+view+']');
   assert.equal(await page.getAttribute('[data-market-view='+view+']','aria-selected'),'true');
   assert.ok(await page.locator('#market'+view[0].toUpperCase()+view.slice(1)+'View').isVisible());
@@ -79,7 +80,8 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
   for(const route of ['col','market','nexus','wiki','universes','profile','community','rank','constellations','missions','journey','sanctuary','awakening','events']){
    await page.evaluate(t=>['constellations','missions','journey','sanctuary','awakening','events'].includes(t)?KizunaAdventure.navigate(t):KizunaGame.showTab(t),route);
    await page.waitForTimeout(80);
-   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' '+route+' overflow');
+   if(!await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)){console.log('OVERFLOW',await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,nodes:[...document.querySelectorAll('body *')].filter(n=>{const r=n.getBoundingClientRect();return r.width&&r.right>innerWidth}).slice(0,15).map(n=>({tag:n.tagName,id:n.id,c:String(n.className),right:n.getBoundingClientRect().right,display:getComputedStyle(n).display,visibility:getComputedStyle(n).visibility}))})));await page.screenshot({path:'outputs/overflow-debug.png'});}
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' '+route+' overflow');
    if(name==='mobile'&&route==='nexus'){
     await page.click('#knxBranchProgress [data-kn-branch-select=destin]');assert.match(await page.locator('#knxDetail').innerText(),/Suis les rencontres/);
     await page.screenshot({path:'outputs/finish/after-mobile-nexus-detail.png'});
@@ -89,13 +91,13 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  // Isolated renderer fixture: these synthetic values validate UI states, never the remote service.
  const fixture=await browser.newPage({viewport:{width:1440,height:1000}});
  fixture.on('pageerror',e=>errors.push('fixture: '+e.message));
- await fixture.route('**/__nexus_fixture',route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html><head><link rel="stylesheet" href="kizuna-nexus.css"><link rel="stylesheet" href="kizuna-art-nexus.css"><link rel="stylesheet" href="kizuna-finish.css"></head><body class="theme-kizuna kz-game kz-art" data-tab="nexus"><main></main><script>
+ await fixture.route('**/__nexus_fixture',route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="kizuna-nexus.css"><link rel="stylesheet" href="kizuna-art-nexus.css"><link rel="stylesheet" href="kizuna-scenes.css"></head><body class="theme-kizuna kz-game kz-art" data-tab="nexus"><main></main><script>
  window.fixtureCalls=[];
  const branches=['invocation','destin','resonance','collection','prestige'];
  const state={stateRevision:1,serverNow:Date.now(),level:3,xp:120,levelFloor:100,nextLevelXp:200,unlocked:['invocation_1'],preferences:{priorityCardIds:[]},bonuses:{},daily:{available:0,claimed:false},rewards:[],nodes:branches.flatMap(branch=>Array.from({length:5},(_,i)=>({id:branch+'_'+(i+1),branch,tier:i+1,name:'Fixture '+branch+' '+(i+1),description:'Effet de test du rendu uniquement.',enabled:i<4,cost:branch==='prestige'?600:100,requiredLevel:1,prerequisites:i?[branch+'_'+i]:[]})))};
  window.KizunaGame={getSnapshot:()=>({cards:[],owned:[],chakra:500,stock:{}})};
  window.KizunaAccount={getSnapshot:()=>({user:{id:'test-only'},loading:false}),nexusRequest:async(action)=>{fixtureCalls.push(action);if(action!=='get')throw Error('Unexpected mutation');return state;},economyRequest:async()=>{fixtureCalls.push('mutation');throw Error('Unexpected mutation');}};
- </script><script src="kizuna-nexus.js"></script><script src="kizuna-finish.js"></script></body></html>`}));
+ </script><script src="kizuna-nexus.js"></script><script src="kizuna-ui.js"></script></body></html>`}));
  await fixture.goto((process.env.KIZUNA_TEST_URL||'http://127.0.0.1:8000')+'/__nexus_fixture');
  await fixture.waitForFunction(()=>KizunaNexus.getSnapshot().loaded);
  assert.equal(await fixture.locator('#knxNodes [data-kn-node]').count(),25);
@@ -112,6 +114,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  await fixture.click('#knxList [data-kn-node=destin_5]');assert.equal(await fixture.locator('#knxDetail [data-kn-action=buy]').count(),0);
  await fixture.setViewportSize({width:390,height:844});await fixture.click('[data-kn-view=tree]');
  await fixture.click('#knxBranchProgress [data-kn-branch-select=destin]');
+ await fixture.waitForFunction(()=>document.querySelector('#knxNodes [data-kn-node=destin_1]').getBoundingClientRect().width>=44);
  assert.ok((await fixture.locator('#knxNodes [data-kn-node=destin_1]').boundingBox()).width>=44,'mobile branch focus must enlarge the real node');
  await fixture.close();
  assert.deepEqual(errors,[]);
