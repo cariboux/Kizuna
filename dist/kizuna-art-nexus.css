@@ -1,4 +1,7 @@
 /* Phase C — a living tree and a reward altar. All states come from the Nexus module. */
+/* The SVG tree and grove below are the original pre-Rebirth artwork (db6e977).
+   Keep presentation here; purchases, prerequisites and bonuses come from the current server state. */
+/* Readability and touch refinements are scoped to the original tree, below. */
 body.kz-art #kzNexusPage{--knx-color:#91cfff;--kanx-wood:#6b9684;color:var(--art-paper,#fff5dc)}
 body.kz-art .knx-wrap{padding-top:26px;padding-bottom:54px}
 body.kz-art .knx-header{gap:22px;margin-bottom:18px}
@@ -198,3 +201,23 @@ body.kz-art .knx-receipt{background:#17333e;color:#f4ecd4;border-color:#8badae80
 @media(prefers-reduced-motion:reduce){body.kz-art #kzNexusPage *,body.kz-art #kzNexusPage *::before,body.kz-art #kzNexusPage *::after{animation:none!important;transition:none!important}body.kz-art .knx-gallery-grid>button:hover{transform:none}}
 html[data-kz-motion="reduced"] body.kz-art #kzNexusPage *,html[data-kz-motion="reduced"] body.kz-art #kzNexusPage *::before,html[data-kz-motion="reduced"] body.kz-art #kzNexusPage *::after{animation:none!important;transition:none!important}
 html[data-kz-motion="reduced"] body.kz-art .knx-gallery-grid>button:hover{transform:none}
+
+/* Original tree: modest spacing, readable selection and retained discovery controls. */
+body.kz-art #kzNexusPage .knx-viewport{height:640px}
+body.kz-art #kzNexusPage .knx-branch-label{padding:6px 10px;min-width:140px;min-height:78px;border:1px solid transparent;border-radius:12px 3px;background:transparent;color:var(--knx-color);cursor:pointer;z-index:2}
+body.kz-art #kzNexusPage .knx-branch-label small{display:block;font-size:max(13px,calc(10px / var(--knx-scale,1)))}
+body.kz-art #kzNexusPage .knx-branch-label:is(:hover,:focus-visible){background:#102a32d9;border-color:var(--knx-color)}
+body.kz-art #kzNexusPage .knx-branch-label[aria-pressed=true]{text-shadow:0 0 16px var(--knx-color),0 2px 5px #000}
+body.kz-art #kzNexusPage .knx-node[data-dimmed=true]{opacity:.72}
+body.kz-art #kzNexusPage .knx-node:is(:hover,:focus-visible,.is-selected){opacity:1}
+body.kz-art #kzNexusPage .knx-node{transition:opacity .2s,background .18s,border-color .18s,box-shadow .18s}
+body.kz-art #kzNexusPage .kanx-node-name{font-size:max(14px,calc(12px / var(--knx-scale,1)));white-space:normal;max-width:calc(220px / var(--knx-scale,1))}
+body.kz-art #kzNexusPage .knx-node-caption{display:none}
+body.kz-art #kzNexusPage .knx-detail{scroll-margin-block:90px;overflow-wrap:anywhere}
+body.kz-art #kzNexusPage .knx-detail h2{line-height:1.15}
+body.kz-art #kzNexusPage .knx-detail p{font-size:14px;line-height:1.7}
+body.kz-art #kzNexusPage .knx-detail dl>div{font-size:13px}
+body.kz-art #kzNexusPage :is(.knx-detail-note,.knx-state-pill,.knx-atlas-footer,.knx-atlas-footer p){font-size:12px}
+body.kz-art #kzNexusPage .knx-detail .rf-discovery-note{font-size:12px;color:#b5c6d4;padding-top:14px;border-top:1px solid #a5c8cf30}
+@media(max-width:900px){body.kz-art #kzNexusPage .knx-viewport{height:570px}}
+@media(max-width:600px){body.kz-art #kzNexusPage .knx-viewport{height:400px}body.kz-art #kzNexusPage .knx-atlas-toolbar{flex-wrap:wrap;row-gap:8px}body.kz-art #kzNexusPage .knx-atlas-toolbar>div:first-child{width:100%}body.kz-art #kzNexusPage .knx-zoom{margin:auto}body.kz-art #kzNexusPage .knx-detail{position:relative;top:auto}body.kz-art #kzNexusPage .knx-branch-label{font-size:max(23px,calc(12px / var(--knx-scale,1)));min-height:60px}body.kz-art #kzNexusPage .knx-branch-label :is(b,small){display:none}}

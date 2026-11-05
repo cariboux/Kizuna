@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "remoteWrites": 0,
+  "fixtureOnly": true,
+  "states": [
+    "virgin",
+    "partial",
+    "complete",
+    "rewards"
+  ],
+  "sizes": 4,
+  "purchase": "cancel + accepted response",
+  "errors": []
+}

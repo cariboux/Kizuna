@@ -1,0 +1,43 @@
+{
+  "fixtureOnly": true,
+  "remoteWrites": 0,
+  "tests": [
+    {
+      "name": "verify-nexus",
+      "passed": true,
+      "output": "{\"nodes\":\"25 from server, only five tier I purchasable\",\"mutations\":\"confirmation, cancellation, atomic replies, no optimistic balance, daily claim once\",\"benefits\":\"five priorities preserve wishlist + market links; gallery; frame; recycle remainder\",\"races\":\"stale read and mutation ignored across revisions and accounts\",\"navigation\":\"no page scroll; stable tree buttons; pan, pinch, zoom and accessible list\",\"accessibility\":\"escaped text, focus preservation, reduced motion, mobile layout\",\"errors\":[]}",
+      "error": ""
+    },
+    {
+      "name": "verify-nexus-lot2",
+      "passed": true,
+      "output": "{\"nodes\":\"all 25 server-enabled, sequential requirements and real level\",\"rewards\":\"daily +25, weekly 2 special packs, unique +1000 and 5 packs, completed album +100 and 1 pack; repeated clicks guarded\",\"stats\":\"recorded totals, real rarity weights, both pity counters and pool fallback explanation\",\"destiny\":\"20 priorities, actual listings and advanced filtering preserve wishlist\",\"archive\":\"pagination, duplicates/missing/series, sort, search focus, saved preferences\",\"cosmetics\":\"fragments 20/50/100, confirmed cost, ownership/equip separation, full awakening prestige only\",\"adminPauses\":\"zero rewards state disabled, existing priorities retained, zero fragment gain preserves shop access, discontinued aura removable\",\"identity\":\"late mutation cannot restore another account rewards, aura, title or statistics\",\"errors\":[]}",
+      "error": ""
+    },
+    {
+      "name": "verify-nexus-lot3",
+      "passed": true,
+      "output": "{\"tree\":\"five growing branches, distinct Prestige and all-25 forms\",\"celebrations\":\"fresh matching purchase only; no replay, reload or stale identity effects; finite particles\",\"rewards\":\"daily + weekly + album availability on home/nav/profile\",\"mobile\":\"initial overview and branch navigation; no page scroll\",\"accessibility\":\"focus retained after purchase, reduced-motion readable confirmation\",\"performance\":\"stable 25-node DOM, coalesced repeated updates\",\"css\":\"parsed; actual browser layout remains separate\",\"errors\":[]}",
+      "error": ""
+    },
+    {
+      "name": "verify-art-nexus",
+      "passed": true,
+      "output": "{\"tree\":\"25 actual nodes, curved prerequisite links, real cross-branch changes\",\"altar\":\"real daily, weekly and album availability\",\"rewardEffects\":\"success only, no pending/failure/replay/wrong-period/reload effect; survives final rendering\",\"guards\":\"duplicate click and stale identity ignored; no optimistic currency or inventory\",\"accessibility\":\"no page scroll; reduced-motion text without effects or sound\",\"css\":\"parsed; browser layout checked separately\",\"errors\":[]}",
+      "error": ""
+    },
+    {
+      "name": "verify-nexus-account",
+      "passed": true,
+      "output": "{\"discordOnlyUI\":\"passed\",\"oauthPKCE\":\"passed\",\"authorizeUrlValidated\":\"passed\",\"previewCanonicalHandoff\":\"passed\",\"callbackExchange\":\"passed\",\"callbackCancelAndExpiry\":\"passed\",\"usernameBeforeCreation\":\"passed\",\"invalidAndTakenUsername\":\"passed\",\"verifiedServerBootstrap\":\"passed\",\"legacySessions\":\"preserved\",\"existingCollectionAndProfile\":\"preserved\",\"metadataCannotEscalate\":\"passed\",\"adminFromProtectedTable\":\"passed\",\"moderatorPermissions\":\"passed\",\"revokedStaffRole\":\"passed\",\"catalogueAuth\":\"passed\",\"forbiddenClearsAdmin\":\"passed\",\"accountIsolation\":\"passed\",\"guestImport\":\"explicit\",\"optimisticConflict\":\"passed\",\"rewardsFlushBeforeClaim\":\"passed\",\"rewardsRevisionAndIdempotency\":\"passed\",\"rewardsConflictAndAccountSwitch\":\"passed\",\"busyGameDefersRewards\":\"passed\",\"freeStockAboveTenCloudSaveAndReload\":\"25 and 100 preserved\",\"freeStockCapacity\":\"10 to 13; initial balance stays 3; legacy free stock up to 103 retained\",\"catalogueLoadOrder\":\"passed\",\"timestamps\":\"preserved\",\"adventureSaveBeforeClaim\":\"passed\",\"adventureConflictAndAccountSwitch\":\"passed\",\"privacyRevocationDuringConflict\":\"passed\"}\n{\"nexusReadsNeverApplyWallet\":true,\"nexusReadAccountIsolation\":true,\"nexusUsesPersistentIntents\":true}",
+      "error": ""
+    },
+    {
+      "name": "verify-nexus-boosters",
+      "passed": true,
+      "output": "{\"capacity103DuringLoad\":true,\"weeklyUsesExistingInvocation\":true,\"cancelNoSpend\":true,\"weeklyOnlyStock\":true,\"doubleClickSafe\":true,\"ascendingRarity\":true,\"earnedResonanceAnimation\":true,\"identityCleared\":true}",
+      "error": ""
+    }
+  ],
+  "passed": true
+}
