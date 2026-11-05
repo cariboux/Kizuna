@@ -1,0 +1,829 @@
+/* KIZUNA Market · visual hierarchy and responsive layout only.
+   Listing, payment, auction, exchange and history logic stays in its existing modules. */
+body.kz-art #marketPage{
+  --km-ink:#091a2b;
+  --km-surface:#10263a;
+  --km-surface-strong:#142f45;
+  --km-line:#426174;
+  --km-muted:#a9c0cf;
+  --km-paper:#edf4f5;
+  --km-cyan:#65ead7;
+  --km-gold:#f0cf87;
+}
+body.kz-art #marketPage .wrap{
+  width:min(1320px,calc(100% - 48px))!important;
+  max-width:1320px!important;
+}
+body.kz-art #marketPage .km-head{
+  min-height:190px!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:24px!important;
+  padding:26px 28px!important;
+  margin:0 0 16px!important;
+  border:1px solid #a9c6c65a!important;
+  border-radius:8px 24px 8px 24px!important;
+  background:
+    linear-gradient(90deg,#07192deF 0%,#0c2139d9 52%,#0b1c2b66 100%),
+    url('assets/rebirth/bazar.webp') 55% 44%/cover!important;
+  box-shadow:0 18px 45px #02091266,inset 0 1px #ffffff12!important;
+}
+body.kz-art #marketPage .km-title-group{max-width:700px;min-width:0}
+body.kz-art #marketPage .km-title-group .section-kicker{
+  display:block!important;
+  margin:0 0 8px!important;
+  color:var(--km-cyan)!important;
+  font-size:9px!important;
+  font-weight:900;
+  letter-spacing:.2em;
+}
+body.kz-art #marketPage #marketTitle{
+  margin:0 0 9px!important;
+  color:#fff4d9!important;
+  font:700 clamp(32px,4.1vw,52px)/.98 Rajdhani,Manrope,sans-serif!important;
+  letter-spacing:-.035em!important;
+  text-shadow:0 3px 18px #061222b3;
+}
+body.kz-art #marketPage .km-title-group p{
+  max-width:580px;
+  margin:0!important;
+  color:#c4d5df!important;
+  font-size:11px!important;
+  line-height:1.7;
+}
+body.kz-art #marketPage .km-wallet{
+  flex:0 0 210px!important;
+  width:210px;
+  max-width:100%;
+  box-sizing:border-box;
+  padding:14px 16px!important;
+  border:1px solid #e5c98c70!important;
+  border-left:3px solid var(--km-gold)!important;
+  border-radius:6px 14px 6px 14px!important;
+  background:linear-gradient(145deg,#142d41ed,#0a1a2ceF)!important;
+  box-shadow:0 12px 28px #020a1455,inset 0 1px #ffffff12!important;
+}
+body.kz-art #marketPage .km-wallet>span{
+  color:#b2c3ca!important;
+  font-size:8px!important;
+  letter-spacing:.16em;
+}
+body.kz-art #marketPage .km-wallet strong{
+  margin:5px 0 2px!important;
+  color:#fff0ca!important;
+  font:700 29px/1 Rajdhani,Manrope,sans-serif!important;
+  letter-spacing:0;
+}
+body.kz-art #marketPage .km-wallet strong i{color:var(--km-gold)!important;font-size:16px}
+body.kz-art #marketPage .km-wallet>small{color:#91aab8!important;font-size:8px!important;letter-spacing:.03em}
+body.kz-art #marketPage .km-local-notice{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  margin:0 0 12px!important;
+  padding:11px 14px!important;
+  border:1px solid #4b7b8777!important;
+  border-left:3px solid var(--km-cyan)!important;
+  border-radius:6px 11px 6px 11px!important;
+  background:linear-gradient(100deg,#123044e8,#0c2134db)!important;
+  color:var(--km-paper);
+}
+body.kz-art #marketPage .km-notice-mark{
+  flex:0 0 22px;
+  width:22px;height:22px;
+  display:grid;place-items:center;
+  border:1px solid #65ead77c;
+  border-radius:50%;
+  background:#123d4a;
+  color:var(--km-cyan);
+  font-size:11px;font-weight:900;
+}
+body.kz-art #marketPage .km-local-notice strong{
+  display:block;
+  color:#a9f0e3!important;
+  font-size:9px!important;
+  letter-spacing:.09em;
+}
+body.kz-art #marketPage .km-local-notice p{
+  margin:3px 0 0!important;
+  color:#b9cbd5!important;
+  font-size:9px!important;
+  line-height:1.6;
+}
+body.kz-art #marketPage .km-market-collection-link{
+  display:flex!important;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  margin:0 0 16px!important;
+  padding:10px 13px!important;
+  border:1px solid #536a7780!important;
+  border-radius:6px 10px 6px 10px!important;
+  background:linear-gradient(100deg,#12283b,#0d1f32)!important;
+  color:#adc2cf!important;
+  font-size:9px!important;
+}
+body.kz-art #marketPage .km-market-collection-link b{
+  display:block;
+  margin-bottom:2px;
+  color:#f0d69d!important;
+  font-size:10px!important;
+}
+body.kz-art #marketPage .km-market-collection-link .km-action{
+  flex:0 0 auto;
+  min-height:36px!important;
+  padding:8px 12px!important;
+  border:1px solid #d7b977!important;
+  border-radius:5px!important;
+  background:linear-gradient(120deg,#e9d39f,#c5a66d)!important;
+  color:#182536!important;
+  font-size:9px!important;
+  font-weight:900;
+}
+body.kz-art #marketPage .km-workspace{
+  padding:15px 16px 17px!important;
+  border:1px solid #3a596b!important;
+  border-radius:8px 18px 8px 18px!important;
+  background:linear-gradient(145deg,#10283bF2,#0a1a2beF)!important;
+  box-shadow:0 16px 38px #020a1450,inset 0 1px #ffffff09!important;
+}
+body.kz-art #marketPage .km-toolbar{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  flex-wrap:wrap!important;
+  gap:12px!important;
+  padding:0 0 13px!important;
+  border-bottom:1px solid #5a778855!important;
+}
+body.kz-art #marketPage .km-tabs{
+  display:flex!important;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:5px!important;
+  min-width:0;
+  padding:4px!important;
+  border:1px solid #3e5c70!important;
+  border-radius:7px!important;
+  background:#091a2c!important;
+}
+body.kz-art #marketPage .km-tabs>button,
+body.kz-art #marketPage .kd-market-secondary>button{
+  min-height:36px!important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:8px 11px!important;
+  border:1px solid transparent!important;
+  border-radius:5px!important;
+  background:transparent!important;
+  color:#b6c9d4!important;
+  font:700 9px/1.25 Manrope,sans-serif!important;
+  white-space:nowrap;
+  transition:background .16s,border-color .16s,color .16s,transform .16s;
+}
+body.kz-art #marketPage .km-tabs>button:hover,
+body.kz-art #marketPage .kd-market-secondary>button:hover{
+  border-color:#648697!important;
+  background:#17354a!important;
+  color:#f0f7f7!important;
+}
+body.kz-art #marketPage .km-tabs>button.active,
+body.kz-art #marketPage .km-tabs>button[aria-selected="true"],
+body.kz-art #marketPage .kd-market-secondary>button.active,
+body.kz-art #marketPage .kd-market-secondary>button[aria-selected="true"]{
+  border-color:#78c9c2!important;
+  background:linear-gradient(135deg,#1b4956,#16374a)!important;
+  color:#d5fff2!important;
+  box-shadow:inset 0 1px #ffffff18,0 3px 10px #02091244;
+}
+body.kz-art #marketPage .km-tabs button span{
+  display:inline-grid;
+  place-items:center;
+  min-width:18px;
+  min-height:18px;
+  padding:0 5px;
+  border:1px solid #5b8290;
+  border-radius:999px;
+  background:#0b2234;
+  color:#bfe9e5;
+  font-size:8px;
+  line-height:1;
+}
+body.kz-art #marketPage .kd-market-secondary{
+  display:flex!important;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:5px!important;
+  margin-left:0!important;
+}
+body.kz-art #marketPage .km-controls{
+  display:flex!important;
+  flex:1 1 320px!important;
+  justify-content:flex-end!important;
+  align-items:center;
+  gap:8px!important;
+  min-width:min(100%,320px)!important;
+}
+body.kz-art #marketPage .km-search{
+  display:flex!important;
+  align-items:center;
+  flex:1 1 230px!important;
+  min-width:150px!important;
+  max-width:360px!important;
+  min-height:38px;
+  padding:0 11px!important;
+  border:1px solid #46667a!important;
+  border-radius:6px!important;
+  background:#081a2b!important;
+  color:#8faebd!important;
+}
+body.kz-art #marketPage .km-search>span{
+  display:block!important;
+  flex:0 0 auto;
+  font-size:18px!important;
+  color:#75cfc9!important;
+}
+body.kz-art #marketPage .km-search input{
+  min-height:36px!important;
+  padding:7px 0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#f0f5f5!important;
+  font-size:10px!important;
+  box-shadow:none!important;
+}
+body.kz-art #marketPage .km-search input::placeholder{color:#86a1b0!important}
+body.kz-art #marketPage .km-controls select{
+  flex:0 0 150px;
+  width:150px;
+  max-width:150px!important;
+  min-height:38px!important;
+  padding:7px 10px!important;
+  border:1px solid #46667a!important;
+  border-radius:6px!important;
+  background:#0c2135!important;
+  color:#e1eef1!important;
+  font-size:9px!important;
+}
+body.kz-art #marketPage .km-filterbar{
+  display:grid!important;
+  gap:10px;
+  margin:12px 0 0!important;
+  padding:11px 0 12px!important;
+  border:0!important;
+  border-bottom:1px solid #45657966!important;
+  background:transparent!important;
+}
+body.kz-art #marketPage .km-rarity-filters{
+  display:flex!important;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px!important;
+}
+body.kz-art #marketPage .km-rarity-filters button{
+  min-height:29px!important;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 9px!important;
+  border:1px solid #3c5b6d!important;
+  border-radius:5px!important;
+  background:#0d2235!important;
+  color:#c1d1db!important;
+  font:700 8px/1.2 Manrope,sans-serif!important;
+}
+body.kz-art #marketPage .km-rarity-filters button.active,
+body.kz-art #marketPage .km-rarity-filters button[aria-pressed="true"]{
+  border-color:#8ed5ce!important;
+  background:#174050!important;
+  color:#e0fff5!important;
+  box-shadow:inset 0 1px #ffffff12;
+}
+body.kz-art #marketPage .km-rarity-filters button i{
+  width:6px;height:6px;flex:0 0 6px;
+  border-radius:50%;
+  background:var(--dot,#b8b5c2);
+  box-shadow:0 0 8px color-mix(in srgb,var(--dot,#b8b5c2) 40%,transparent);
+}
+body.kz-art #marketPage .km-filter-controls{
+  display:flex!important;
+  align-items:end;
+  flex-wrap:wrap;
+  gap:8px!important;
+}
+body.kz-art #marketPage .km-filter-controls label{
+  display:grid;
+  gap:4px;
+  min-width:100px;
+  color:#9fb4c2!important;
+  font-size:8px!important;
+  font-weight:800;
+  letter-spacing:.04em;
+}
+body.kz-art #marketPage .km-filter-controls label select,
+body.kz-art #marketPage .km-filter-controls label input{
+  box-sizing:border-box;
+  width:100%;
+  min-height:34px!important;
+  padding:6px 8px!important;
+  border:1px solid #3e6075!important;
+  border-radius:5px!important;
+  background:#091d30!important;
+  color:#e4eff1!important;
+  font-size:9px!important;
+}
+body.kz-art #marketPage .km-filter-controls .km-filter-toggle,
+body.kz-art #marketPage .km-filter-controls .km-filter-reset{
+  min-height:34px!important;
+  padding:7px 9px!important;
+  border:1px solid #46677b!important;
+  border-radius:5px!important;
+  background:#102b40!important;
+  color:#c1d3dc!important;
+  font:700 8px/1.2 Manrope,sans-serif!important;
+}
+body.kz-art #marketPage .km-filter-controls .km-filter-toggle[aria-pressed="true"]{
+  border-color:#8bd6c7!important;
+  background:#19424a!important;
+  color:#dcfff0!important;
+}
+body.kz-art #marketPage .km-filter-controls .km-filter-reset{
+  border-color:#7e7160!important;
+  background:#292a2a!important;
+  color:#ead9b9!important;
+}
+body.kz-art #marketPage .km-view{padding-top:15px!important}
+body.kz-art #marketPage .km-view-head{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  flex-wrap:wrap;
+  gap:9px 14px!important;
+  margin:0 0 12px!important;
+}
+body.kz-art #marketPage .km-view-head h2{
+  margin:0!important;
+  color:#f2eadb!important;
+  font:700 clamp(20px,2.2vw,27px)/1.05 Rajdhani,Manrope,sans-serif!important;
+  letter-spacing:-.015em;
+}
+body.kz-art #marketPage .km-view-head p{
+  margin:4px 0 0!important;
+  color:#9db4c1!important;
+  font-size:9px!important;
+  line-height:1.5;
+}
+body.kz-art #marketPage .km-view-count{
+  min-height:25px;
+  display:inline-flex;
+  align-items:center;
+  padding:5px 9px!important;
+  border:1px solid #547587!important;
+  border-radius:5px!important;
+  background:#0c2638!important;
+  color:#bde5e1!important;
+  font-size:8px!important;
+  font-weight:800;
+}
+body.kz-art #marketPage .km-listings,
+body.kz-art #marketPage .km-sell-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(218px,1fr))!important;
+  align-items:stretch;
+  gap:15px!important;
+}
+body.kz-art #marketPage .km-listing,
+body.kz-art #marketPage .km-sell-card{
+  min-width:0;
+  display:flex!important;
+  flex-direction:column;
+  border:1px solid color-mix(in srgb,var(--mk-rarity,#7193a4) 42%,#2b4a60)!important;
+  border-radius:7px 13px 7px 13px!important;
+  background:linear-gradient(155deg,#143047f2,#0b1e30f5)!important;
+  box-shadow:0 9px 22px #020a1455,inset 0 1px #ffffff0b!important;
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+  overflow:hidden;
+}
+body.kz-art #marketPage .km-listing:hover,
+body.kz-art #marketPage .km-sell-card:hover{
+  border-color:color-mix(in srgb,var(--mk-rarity,#8fcfc5) 80%,#f1d29a)!important;
+  box-shadow:0 15px 30px #020a1477,0 0 18px color-mix(in srgb,var(--mk-rarity,#8fcfc5) 15%,transparent)!important;
+  transform:translateY(-3px);
+}
+body.kz-art #marketPage .km-card-art{
+  position:relative;
+  display:block;
+  width:100%;
+  aspect-ratio:4/4.25!important;
+  padding:0!important;
+  border:0!important;
+  border-bottom:1px solid color-mix(in srgb,var(--mk-rarity,#8196a5) 45%,#3d5a6d)!important;
+  border-radius:0!important;
+  background:radial-gradient(ellipse at 50% 28%,#31526a,#10253a 72%)!important;
+  overflow:hidden;
+  text-align:left;
+}
+body.kz-art #marketPage .km-card-art img{
+  display:block;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 22%;
+  transform:scale(1.001);
+  transition:transform .28s;
+}
+body.kz-art #marketPage .km-listing:hover .km-card-art img,
+body.kz-art #marketPage .km-sell-card:hover .km-card-art img{
+  transform:scale(1.045);
+}
+body.kz-art #marketPage .km-card-art:after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,#07182a15 0%,transparent 38%,#07182aee 100%);
+  pointer-events:none;
+}
+body.kz-art #marketPage .km-rarity{
+  position:absolute;z-index:2;top:10px;left:10px;
+  min-width:25px;min-height:24px;
+  display:grid;place-items:center;
+  padding:4px 7px!important;
+  border:1px solid var(--mk-rarity,#9fb4bf)!important;
+  border-radius:5px!important;
+  background:#071827eF!important;
+  color:var(--mk-rarity,#dce5e8)!important;
+  font-size:8px!important;font-weight:950;
+  box-shadow:0 4px 11px #0008;
+}
+body.kz-art #marketPage .km-art-name{
+  position:absolute;z-index:2;left:11px;right:11px;bottom:10px;
+  color:#fff6e7!important;
+  font:700 18px/1.05 Rajdhani,Manrope,sans-serif!important;
+  text-shadow:0 2px 8px #000;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+body.kz-art #marketPage .km-listing-body,
+body.kz-art #marketPage .km-sell-body{
+  display:flex!important;
+  flex:1 1 auto;
+  flex-direction:column;
+  gap:7px!important;
+  min-width:0;
+  padding:11px 11px 12px!important;
+}
+body.kz-art #marketPage .km-series{
+  display:block;
+  min-height:29px;
+  color:#b5c8d1!important;
+  font-size:8px!important;
+  line-height:1.5;
+  overflow:hidden;
+}
+body.kz-art #marketPage .km-price-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:1px!important;
+  padding-top:8px!important;
+  border-top:1px solid #54708455!important;
+}
+body.kz-art #marketPage .km-price{
+  color:#f4d493!important;
+  font:700 20px/1 Rajdhani,Manrope,sans-serif!important;
+  white-space:nowrap;
+}
+body.kz-art #marketPage .km-price i{color:#f2d292!important;font-size:11px}
+body.kz-art #marketPage .km-seller{
+  min-width:0;
+  color:#93aabb!important;
+  font-size:8px!important;
+  line-height:1.3;
+  white-space:normal;
+  text-align:right;
+}
+body.kz-art #marketPage .km-mode-chip{
+  display:flex!important;
+  align-items:flex-start;
+  gap:6px;
+  margin:1px 0 0!important;
+  color:#a9c3d0!important;
+  font-size:8px!important;
+  line-height:1.4;
+}
+body.kz-art #marketPage .km-mode-chip i{
+  width:6px;height:6px;flex:0 0 6px;
+  margin-top:3px;border-radius:50%;
+  background:var(--mk-rarity,var(--km-cyan));
+}
+body.kz-art #marketPage .km-trade-demand{
+  display:flex;align-items:center;gap:8px;
+  min-width:0;
+  margin-top:4px!important;
+  padding:8px!important;
+  border:1px solid #42677a!important;
+  border-radius:6px!important;
+  background:#0c2134!important;
+}
+body.kz-art #marketPage .km-trade-demand-content{min-width:0;flex:1}
+body.kz-art #marketPage .km-trade-demand-label{
+  display:block;margin-bottom:5px;
+  color:#a7c2cf!important;
+  font-size:7px!important;font-weight:900;letter-spacing:.12em;
+}
+body.kz-art #marketPage .km-listing-actions{
+  display:flex;
+  align-items:stretch;
+  gap:6px;
+  margin-top:auto!important;
+  padding-top:6px;
+}
+body.kz-art #marketPage .km-action{
+  min-width:0;
+  min-height:36px!important;
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  padding:8px 10px!important;
+  border:1px solid #668797!important;
+  border-radius:5px!important;
+  background:#14374d!important;
+  color:#dcecf0!important;
+  font:800 9px/1.25 Manrope,sans-serif!important;
+  text-align:center;
+  white-space:normal;
+}
+body.kz-art #marketPage .km-action.primary{
+  border-color:#c5b07a!important;
+  background:linear-gradient(120deg,#e8d29c,#c5a96c)!important;
+  color:#142536!important;
+}
+body.kz-art #marketPage .km-action:hover:not(:disabled){
+  border-color:#b6e6df!important;
+  filter:brightness(1.07);
+}
+body.kz-art #marketPage .km-action:disabled{
+  opacity:.45!important;
+  cursor:not-allowed;
+  filter:grayscale(.5);
+}
+body.kz-art #marketPage .km-bid-control{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:6px;
+  width:100%;
+  min-width:0;
+}
+body.kz-art #marketPage .km-bid-input{
+  width:100%;min-width:0;min-height:36px!important;
+  border:1px solid #44667c!important;border-radius:5px!important;
+  background:#081a2b!important;color:#f2f0e8!important;
+  padding:7px 8px!important;font-size:9px!important;
+}
+body.kz-art #marketPage .km-empty{
+  min-height:170px!important;
+  padding:25px!important;
+  border:1px dashed #597a8b!important;
+  border-radius:8px 16px 8px 16px!important;
+  background:radial-gradient(ellipse at 50% 0,#1e4a5b66,transparent 70%),#10283beF!important;
+  color:#aec3ce!important;
+}
+body.kz-art #marketPage .km-empty strong{
+  color:#f1e2bd!important;
+  font:700 21px/1.1 Rajdhani,Manrope,sans-serif!important;
+}
+body.kz-art #marketPage .km-empty p{
+  color:#aec3ce!important;
+  font-size:9px!important;line-height:1.6;
+}
+body.kz-art #marketPage .km-history{
+  margin-top:16px!important;
+  padding:15px!important;
+  border:1px solid #38596d!important;
+  border-radius:8px 17px 8px 17px!important;
+  background:linear-gradient(145deg,#10283b,#0a1d30)!important;
+}
+body.kz-art #marketPage .km-history-row,
+body.kz-art #marketPage .km-my-operation{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+  padding:11px 12px!important;
+  border:1px solid #38566b!important;
+  border-radius:6px!important;
+  background:#0d2235!important;
+}
+body.kz-art #marketPage .km-history-row strong,
+body.kz-art #marketPage .km-my-operation strong{
+  display:block;color:#eaf1ef!important;font-size:10px!important;
+}
+body.kz-art #marketPage .km-history-row small,
+body.kz-art #marketPage .km-my-operation small{
+  display:block;margin-top:4px;color:#a9bdc8!important;font-size:8px!important;line-height:1.5;
+}
+body.kz-art #marketPage .km-history-amount,
+body.kz-art #marketPage .km-my-operation .amount{
+  color:#f1d18e!important;font-size:10px!important;font-weight:900;white-space:nowrap;
+}
+body.kz-art #marketPage .km-history-amount.debit{color:#f49b91!important}
+body.kz-art #marketPage .km-history-empty{
+  padding:22px;
+  border:1px dashed #436579;border-radius:7px;
+  color:#a8bdc9;text-align:center;font-size:9px;
+}
+body.kz-art #marketPage .km-own-row{
+  display:grid;
+  grid-template-columns:58px minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  margin-bottom:8px;
+  padding:9px!important;
+  border:1px solid #426178!important;
+  border-radius:6px 11px 6px 11px!important;
+  background:#10283b!important;
+}
+body.kz-art #marketPage .km-own-row img{
+  width:58px;height:77px;
+  object-fit:cover;
+  border:1px solid var(--rarity,#7897a8);
+  border-radius:4px;
+}
+body.kz-art #marketPage .km-own-row b{
+  display:block;color:#f2e9d5!important;font-size:10px!important;
+}
+body.kz-art #marketPage .km-own-row small{
+  display:block;margin-top:4px;color:#aec0ca!important;font-size:8px!important;line-height:1.5;
+}
+body.kz-art #marketPage .km-own-actions{
+  display:flex;flex-wrap:wrap;gap:5px;
+}
+body.kz-art #marketPage :is(.km-history,.km-workspace,.km-local-notice,.km-listing,.km-sell-card,.km-own-row) {
+  min-width:0;
+}
+body.kz-art #marketPage :is(button,input,select):focus-visible{
+  outline:3px solid #87e8d9!important;
+  outline-offset:3px!important;
+}
+body.kz-art #kyaraAuctionBackdrop .kyara-auction-modal{
+  width:min(1020px,calc(100vw - 32px))!important;
+  max-height:92dvh!important;
+  border:1px solid #5a7e91!important;
+  border-radius:8px 20px 8px 20px!important;
+  background:linear-gradient(145deg,#122c41,#091b2d)!important;
+  color:#edf4f3!important;
+  box-shadow:0 28px 90px #020912cc!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-head{
+  padding:14px 18px!important;
+  border-bottom:1px solid #4b6e81!important;
+  background:#10283c!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-head h2{
+  color:#f3e5c4!important;
+  font:700 22px/1.1 Rajdhani,Manrope,sans-serif!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-close{
+  min-height:36px;width:36px;
+  border-color:#54758a!important;
+  background:#0b2034!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-card{
+  border-radius:6px!important;
+  background:#0b1e31!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-summary{
+  border-color:#456579!important;
+  border-radius:7px!important;
+  background:#0c2236!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-status{
+  border-color:#5a9d8d!important;
+  border-radius:5px!important;
+  background:#123d3b!important;
+  color:#9af0d3!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-bid-row input{
+  min-height:40px;
+  border-color:#4d7085!important;
+  border-radius:5px!important;
+  background:#081b2d!important;
+  color:#f1f1eb!important;
+}
+body.kz-art #kyaraAuctionBackdrop .ka-bid-row button,
+body.kz-art #kyaraAuctionBackdrop .ka-buy-now{
+  min-height:40px;
+  border:1px solid #d9bf82!important;
+  border-radius:5px!important;
+  background:linear-gradient(120deg,#ebd5a2,#c2a267)!important;
+  color:#102438!important;
+}
+@media(max-width:1050px){
+  body.kz-art #marketPage .km-listings,
+  body.kz-art #marketPage .km-sell-grid{
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr))!important;
+    gap:12px!important;
+  }
+}
+@media(max-width:760px){
+  body.kz-art #marketPage .wrap{width:calc(100% - 28px)!important}
+  body.kz-art #marketPage .km-head{
+    display:flex!important;
+    align-items:stretch!important;
+    flex-direction:column!important;
+    gap:14px!important;
+    padding:18px!important;
+    min-height:0!important;
+  }
+  body.kz-art #marketPage .km-wallet{
+    display:flex!important;
+    align-items:center;
+    gap:8px 12px;
+    flex-wrap:wrap;
+    width:max-content;
+    flex:0 1 auto!important;
+    padding:9px 12px!important;
+  }
+  body.kz-art #marketPage .km-wallet>span{flex-basis:100%}
+  body.kz-art #marketPage .km-wallet strong{margin:0!important;font-size:24px!important}
+  body.kz-art #marketPage .km-wallet>small{display:block!important}
+  body.kz-art #marketPage .km-toolbar{align-items:stretch!important}
+  body.kz-art #marketPage .km-tabs{width:100%;box-sizing:border-box}
+  body.kz-art #marketPage .km-tabs>button{flex:1 1 auto;min-width:0}
+  body.kz-art #marketPage .kd-market-secondary{margin-left:0!important}
+  body.kz-art #marketPage .km-controls{
+    flex:1 1 100%!important;
+    min-width:0!important;
+    width:100%;
+    justify-content:stretch!important;
+  }
+  body.kz-art #marketPage .km-search{max-width:none!important;min-width:0!important}
+  body.kz-art #marketPage .km-controls select{flex:0 0 145px}
+  body.kz-art #marketPage .km-market-collection-link{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:9px;
+  }
+  body.kz-art #marketPage .km-filter-controls label{flex:1 1 130px}
+  body.kz-art #marketPage .km-own-row{
+    grid-template-columns:48px minmax(0,1fr);
+  }
+  body.kz-art #marketPage .km-own-row img{width:48px;height:64px}
+  body.kz-art #marketPage .km-own-actions{grid-column:2}
+}
+@media(max-width:520px){
+  body.kz-art #marketPage .km-workspace{padding:10px!important}
+  body.kz-art #marketPage .km-tabs{gap:3px!important}
+  body.kz-art #marketPage .km-tabs>button,
+  body.kz-art #marketPage .kd-market-secondary>button{
+    min-height:34px!important;
+    padding:7px 8px!important;
+    font-size:8px!important;
+  }
+  body.kz-art #marketPage .km-controls{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 112px;
+    gap:6px!important;
+  }
+  body.kz-art #marketPage .km-controls select{
+    width:112px;max-width:112px!important;min-width:0;
+    padding-inline:6px!important;font-size:8px!important;
+  }
+  body.kz-art #marketPage .km-listings,
+  body.kz-art #marketPage .km-sell-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:9px!important;
+  }
+  body.kz-art #marketPage .km-listing-body,
+  body.kz-art #marketPage .km-sell-body{padding:8px!important}
+  body.kz-art #marketPage .km-art-name{font-size:15px!important}
+  body.kz-art #marketPage .km-series{font-size:7px!important}
+  body.kz-art #marketPage .km-price{font-size:16px!important}
+  body.kz-art #marketPage .km-seller{font-size:7px!important}
+  body.kz-art #marketPage .km-listing-actions .km-action{
+    min-height:34px!important;padding:7px 6px!important;font-size:8px!important;
+  }
+  body.kz-art #marketPage .km-rarity-filters{gap:4px!important}
+  body.kz-art #marketPage .km-rarity-filters button{padding:5px 7px!important;font-size:7px!important}
+  body.kz-art #marketPage .km-filter-controls label{flex:1 1 calc(50% - 8px);min-width:0}
+  body.kz-art #marketPage .km-filter-controls .km-filter-toggle,
+  body.kz-art #marketPage .km-filter-controls .km-filter-reset{flex:1 1 auto}
+  body.kz-art #marketPage .km-view-head{align-items:flex-start!important}
+  body.kz-art #marketPage .km-history{padding:10px!important}
+  body.kz-art #kyaraAuctionBackdrop .ka-body{grid-template-columns:1fr!important;gap:12px!important;padding:12px!important}
+  body.kz-art #kyaraAuctionBackdrop .ka-card{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:start}
+  body.kz-art #kyaraAuctionBackdrop .ka-card img{width:92px;height:128px;aspect-ratio:auto}
+  body.kz-art #kyaraAuctionBackdrop .ka-card-info{padding:8px}
+}
+@media(max-width:360px){
+  body.kz-art #marketPage .km-listings,
+  body.kz-art #marketPage .km-sell-grid{grid-template-columns:1fr!important}
+  body.kz-art #marketPage .km-controls{grid-template-columns:1fr}
+  body.kz-art #marketPage .km-controls select{width:100%;max-width:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  body.kz-art #marketPage *{animation:none!important;transition:none!important}
+}
