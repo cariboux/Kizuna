@@ -24,8 +24,22 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
  await page.waitForSelector('#kyaraProfileOverlay.open #cpLayout .cp-side');
  assert.equal(await page.locator('#kyaraProfileOverlay #cpReturnTop').innerText(),'Retour à la Collection');
  assert.equal(await page.locator('#detailBackdrop').evaluate(node=>node.classList.contains('open')),false,'a card click opens the dossier, not the old centered viewer');
+ assert.equal(await page.locator('#kyaraProfileOverlay .cp-market-panel').count(),1,'card dossier includes the market history panel');
  await page.keyboard.press('Escape');
  await page.waitForFunction(()=>!document.querySelector('#kyaraProfileOverlay')?.classList.contains('open'));
+ const lockedCardId=await page.evaluate(()=>{
+  const snapshot=window.KizunaGame.getSnapshot(),owned=new Set((snapshot.owned||[]).map(copy=>String(copy.id)));
+  const card=(snapshot.cards||[]).find(item=>!owned.has(String(item.id)));
+  if(!card)return null;
+  openCharacterProfile(card,'wiki');
+  return String(card.id);
+ });
+ if(lockedCardId){
+  await page.waitForSelector('#kyaraProfileOverlay.open .cp-card-art.is-locked');
+  assert.equal(await page.locator('#kyaraProfileOverlay .cp-market-panel').count(),1,'locked dossier includes the market history panel');
+  assert.ok(await page.locator('#kyaraProfileOverlay .cp-question').isVisible(),'locked portrait is masked with a question mark');
+  await page.keyboard.press('Escape');
+ }
  const collectionFold=page.locator('[data-rf-fold=collection-filters]');
  assert.equal(await collectionFold.evaluate(n=>n.open),false);
  await collectionFold.locator(':scope > summary').focus();await page.keyboard.press('Enter');

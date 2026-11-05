@@ -1796,7 +1796,22 @@ body[data-tab="market"] #marketPage .wrap{width:min(1180px,calc(100% - 36px))}
 const LOCAL_CARDS=[];
 const CHARACTER_ART=window.IKKAKU_ARTWORK||{};
 function classifyCatalogue(){const policy=window.KizunaRarity,ranking=policy.rankAlbumMythics(LOCAL_CARDS,sharedAlbumDefinitions);let changed=false;for(const card of LOCAL_CARDS){const rarity=policy.rarityFromPopularity(card.fav,card.sourceId,ranking),tier=TIER[rarity],fingerprint=hash(card.id),pow=tier[0]+fingerprint%tier[1],aura=pow-tier[2]+(fingerprint>>3)%3;if(card.rarity!==rarity||card.pow!==pow||card.aura!==aura)changed=true;card.rarity=rarity;card.pow=pow;card.aura=aura;}return changed;}
-function applyCatalogueArtwork(){for(const card of LOCAL_CARDS){const art=CHARACTER_ART[card.name+'|'+card.series];if(art){card.image=art.image;card.sourceId=art.sourceId||card.sourceId;}const policy=window.KizunaRarity;if(policy){const source=String(card.sourceId||''),fav=Object.hasOwn(policy.retainedPopularity,source)?policy.retainedPopularity[source]:card.fav;card.fav=policy.favouriteCount(fav);}}classifyCatalogue();}
+let kzPortraitManifestRef=null;
+let kzPortraitIndex=new Map();
+function kzPortraitForCard(card,data){
+  const manifest=window.KizunaMythicArt?.manifest;
+  if(Array.isArray(manifest)&&manifest!==kzPortraitManifestRef){
+    kzPortraitManifestRef=manifest;kzPortraitIndex=new Map();
+    for(const row of manifest){
+      const match=String(row?.source||'').match(/^https:\/\/anilist\.co\/character\/(\d+)$/);
+      if(match&&row.portraitLocal===true&&typeof row.image==='string'&&/^assets\/portraits\/anilist-\d+\.png$/.test(row.image))kzPortraitIndex.set(match[1],row.image);
+    }
+  }
+  const local=kzPortraitIndex.get(String(card?.sourceId||''));
+  if(local&&card&&card.image!==local){if(!card.imageFallback&&card.image)card.imageFallback=card.image;card.image=local;}
+  return local||card?.image||data?.image?.large||'';
+}
+function applyCatalogueArtwork(){for(const card of LOCAL_CARDS){const art=CHARACTER_ART[card.name+'|'+card.series];if(art){card.image=art.image;card.sourceId=art.sourceId||card.sourceId;}kzPortraitForCard(card);const policy=window.KizunaRarity;if(policy){const source=String(card.sourceId||''),fav=Object.hasOwn(policy.retainedPopularity,source)?policy.retainedPopularity[source]:card.fav;card.fav=policy.favouriteCount(fav);}}classifyCatalogue();}
 document.addEventListener('error',event=>{const img=event.target;if(img instanceof HTMLImageElement&&img.getAttribute('src')?.startsWith('assets/portraits/')&&!img.dataset.portraitFallback){img.dataset.portraitFallback='1';img.src=makeLocalPortrait(img.alt,'',0);}},true);
 
 const SEED_LIST = `
@@ -2147,7 +2162,7 @@ function ownInfo(id){let count=0,since=0;state.owned.forEach(o=>{if(o.id===id){c
 function backMarkup(c,info){const L=LET[c.rarity]||'C',r=rarityFor(c),k=info||ownInfo(c.id);const date=k.since?new Date(k.since).toLocaleDateString('fr-FR'):'Pas encore';return `<div class="tback" data-r="${L}" style="--rarity:${r.color};--c:${r.color}"><div class="bt"><span style="color:${r.color}">${r.name}</span><i>#${String(c.rank).padStart(4,'0')}/${String(LOCAL_CARDS.length).padStart(4,'0')}</i></div><h3>${esc(c.name)}</h3>${c.native?`<p class="nat">${esc(c.native)}</p>`:''}<p class="ser">${esc(c.series)}</p><div class="bg"><div><small>POW</small><b>${c.pow}</b></div><div><small>AURA</small><b>${c.aura}</b></div><div><small>Exemplaires dans ta collection</small><b>${fmt(k.count)}</b></div><div><small>Premier obtenu</small><b>${date}</b></div></div><div class="bf"><a href="${c.sourceId?'https://anilist.co/character/'+esc(c.sourceId):'#'}" ${c.sourceId?'target="_blank" rel="noopener"':'aria-disabled="true" title="Carte du catalogue local"'}>${c.sourceId?'Voir la fiche du perso':'Base locale intégrée'}</a><span class="cp">×${k.count}</span></div></div>`}
 function cardMarkup(c,o){
  o=o||{};const L=LET[c.rarity]||'C',r=rarityFor(c);
- const front=`<div class="tcard kd-card" data-kz-card-id="${esc(c.id)}" data-r="${L}" style="--rarity:${r.color};--c:${r.color}"><div class="ti"><img draggable="false" src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer"><div class="pt" aria-hidden="true"></div></div><div class="kd-card-caption"><div class="th"><span>${esc(c.name)}</span><b class="bd" title="${esc(r.name)}">${esc(r.name)}</b></div><div class="ts">${esc(c.series)}</div><div class="kd-card-edition"><span>${esc(r.name)}</span><i>N° ${String(c.rank).padStart(4,'0')}</i></div></div></div>`;
+ const front=`<div class="tcard kd-card" data-kz-card-id="${esc(c.id)}" data-r="${L}" style="--rarity:${r.color};--c:${r.color}"><div class="ti"><img draggable="false" src="${esc(kzPortraitForCard(c))}" data-kz-fallback="${esc(c.imageFallback||'')}" alt="${esc(c.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer"><div class="pt" aria-hidden="true"></div></div><div class="kd-card-caption"><div class="th"><span>${esc(c.name)}</span><b class="bd" title="${esc(r.name)}">${esc(r.name)}</b></div><div class="ts">${esc(c.series)}</div><div class="kd-card-edition"><span>${esc(r.name)}</span><i>N° ${String(c.rank).padStart(4,'0')}</i></div></div></div>`;
  if(!o.flip)return front;
  return `<div class="fcard"><div class="fin"><div class="ff">${front}</div><div class="fb">${backMarkup(c,{count:o.count||0,since:o.since||0})}</div></div></div>`;
 }
@@ -3091,7 +3106,7 @@ function cpBirth(data){
 async function cpFetchProfile(card){
   if(!card.sourceId||!/^\d+$/.test(String(card.sourceId)))return null;
   const id=String(card.sourceId);if(kyaraProfileCache.has(id))return kyaraProfileCache.get(id);
-  const query='query($id:Int){Character(id:$id){id name{full native} description(asHtml:false) gender age dateOfBirth{year month day} bloodType favourites media(sort:POPULARITY_DESC,perPage:12){nodes{id title{english romaji} type format}}}}';
+  const query='query($id:Int){Character(id:$id){id name{full native} image{large} description(asHtml:false) gender age dateOfBirth{year month day} bloodType favourites media(sort:POPULARITY_DESC,perPage:12){nodes{id title{english romaji} type format}}}}';
   try{
     const response=await fetch('https://graphql.anilist.co',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({query,variables:{id:Number(id)}})});
     if(!response.ok)throw new Error('Source indisponible');
@@ -3152,7 +3167,7 @@ function cpRelatedMarkup(card,r){
   const series=String(card.series||'').trim().toLocaleLowerCase('fr');
   const related=LOCAL_CARDS.filter(c=>String(c.id)!==String(card.id)&&series&&String(c.series||'').trim().toLocaleLowerCase('fr')===series).slice(0,6);
   if(!related.length)return `<section class="cp-panel"><div class="cp-section-id">04 · EXPLORATION</div><h2 class="cp-section-title">Continuer l’exploration</h2><div class="cp-note">D’autres fiches apparaîtront ici lorsque des personnages de cet univers seront disponibles dans le catalogue local.</div></section>`;
-  return `<section class="cp-panel"><div class="cp-section-id">04 · EXPLORATION</div><h2 class="cp-section-title">Autres personnages de ${esc(card.series||'cet univers')}</h2><div class="cp-related-grid">${related.map(c=>{const cr=rarityFor(c);const owned=ownInfo(c.id).count>0;return `<button class="cp-related-card" type="button" data-cp-related="${esc(String(c.id))}" aria-label="Ouvrir la fiche de ${esc(c.name)}"><img loading="lazy" decoding="async" draggable="false" src="${esc(c.image||'')}" alt=""><span><span class="cp-related-name">${esc(c.name||'Personnage')}</span><span class="cp-related-rarity">${esc(cr.name)} · ${owned?'Possédée':'À découvrir'}</span></span></button>`}).join('')}</div></section>`;
+  return `<section class="cp-panel"><div class="cp-section-id">04 · EXPLORATION</div><h2 class="cp-section-title">Autres personnages de ${esc(card.series||'cet univers')}</h2><div class="cp-related-grid">${related.map(c=>{const cr=rarityFor(c);const owned=ownInfo(c.id).count>0;return `<button class="cp-related-card" type="button" data-cp-related="${esc(String(c.id))}" aria-label="Ouvrir la fiche de ${esc(c.name)}"><img loading="lazy" decoding="async" draggable="false" src="${esc(kzPortraitForCard(c)||'')}" data-kz-fallback="${esc(c.imageFallback||'')}" alt=""><span><span class="cp-related-name">${esc(c.name||'Personnage')}</span><span class="cp-related-rarity">${esc(cr.name)} · ${owned?'Possédée':'À découvrir'}</span></span></button>`}).join('')}</div></section>`;
 }
 function cpLockedMarkup(card,source,info,r){
   const back=cpReturnLabel(source);
@@ -3165,8 +3180,9 @@ function cpLockedMarkup(card,source,info,r){
     <section class="cp-panel"><div class="cp-section-id">01 · APERÇU</div><h2 class="cp-section-title">Informations disponibles</h2><div class="cp-copy"><p><strong>${esc(card.name)}</strong> appartient à l’univers <strong>${esc(card.series||'Univers inconnu')}</strong>.</p><p>Cette page reste consultable même si tu ne possèdes pas encore la carte. Les informations de collection et les statistiques de base restent visibles ; le dossier biographique détaillé se débloque à l’obtention.</p></div><div class="cp-card-stats"><div class="cp-mini-stat"><span>POW</span><b>${Number(card.pow)||'—'}</b></div><div class="cp-mini-stat"><span>AURA</span><b>${Number(card.aura)||'—'}</b></div></div></section>
     <section class="cp-panel"><div class="cp-section-id">02 · HISTOIRE</div><h2 class="cp-section-title">Dossier biographique</h2><div class="cp-note">🔒 L’histoire complète, les informations avancées et les apparitions détaillées seront accessibles lorsque tu obtiendras cette carte.</div></section>
     ${cpRelatedMarkup(card,r)}
+    ${typeof kaMarketProfilePanel==='function'?kaMarketProfilePanel(card,r):''}
   </div>
-  <aside class="cp-side"><div class="cp-side-inner"><div class="cp-card-art is-locked"><img src="${esc(card.image)}" alt="Aperçu verrouillé de ${esc(card.name)}" draggable="false"><span class="cp-card-name">${esc(card.name)}</span><span class="cp-card-rarity">${esc(LET[card.rarity]||'C')}</span><span class="cp-question" aria-hidden="true">?</span><span class="cp-card-index">#${index}</span></div>
+  <aside class="cp-side"><div class="cp-side-inner"><div class="cp-card-art is-locked"><img src="${esc(kzPortraitForCard(card))}" data-kz-fallback="${esc(card.imageFallback||'')}" alt="Aperçu verrouillé de ${esc(card.name)}" draggable="false" loading="eager" fetchpriority="high" decoding="async"><span class="cp-card-name">${esc(card.name)}</span><span class="cp-card-rarity">${esc(LET[card.rarity]||'C')}</span><span class="cp-question" aria-hidden="true">?</span><span class="cp-card-index">#${index}</span></div>
     <div><div class="cp-tags" style="margin-top:0"><span class="cp-tag">${esc(r.name)}</span><span class="cp-tag">Non obtenue</span></div>
     <div class="cp-card-stats"><div class="cp-mini-stat"><span>POW</span><b>${Number(card.pow)||'—'}</b></div><div class="cp-mini-stat"><span>AURA</span><b>${Number(card.aura)||'—'}</b></div></div>
     <div class="cp-meta-list"><div class="cp-meta-row"><span>Univers</span><b>${esc(card.series||'—')}</b></div><div class="cp-meta-row"><span>Numéro</span><b>${index}</b></div><div class="cp-meta-row"><span>Collection</span><b>Non possédée</b></div></div>
@@ -3192,8 +3208,9 @@ function cpOwnedMarkup(card,source,info,r,data,loading){
     <section class="cp-panel"><div class="cp-section-id">02 · HISTOIRE</div><h2 class="cp-section-title">Histoire</h2><div class="cp-note" style="margin-bottom:11px">${esc(card.name)} · ${esc(card.series||'Univers inconnu')} · Fiche issue du catalogue de personnages.</div><div class="cp-copy">${history}</div></section>
     <section class="cp-panel"><div class="cp-section-id">03 · APPARITIONS</div><h2 class="cp-section-title">Univers et œuvres associés</h2><table class="cp-table"><thead><tr><th>Type</th><th>Œuvre</th></tr></thead><tbody>${appearanceRows}</tbody></table></section>
     ${cpRelatedMarkup(card,r)}
+    ${typeof kaMarketProfilePanel==='function'?kaMarketProfilePanel(card,r):''}
   </div>
-  <aside class="cp-side"><div class="cp-side-inner"><div class="cp-card-art"><img src="${esc(card.image)}" alt="Carte de ${esc(card.name)}" draggable="false"><span class="cp-card-name">${esc(card.name)}</span><span class="cp-card-rarity">${esc(LET[card.rarity]||'C')}</span><span class="cp-card-index">#${String(card.rank||0).padStart(4,'0')}/${String(LOCAL_CARDS.length).padStart(4,'0')}</span></div>
+  <aside class="cp-side"><div class="cp-side-inner"><div class="cp-card-art"><img src="${esc(kzPortraitForCard(card,data))}" data-kz-fallback="${esc(card.imageFallback||'')}" alt="Carte de ${esc(card.name)}" draggable="false" loading="eager" fetchpriority="high" decoding="async"><span class="cp-card-name">${esc(card.name)}</span><span class="cp-card-rarity">${esc(LET[card.rarity]||'C')}</span><span class="cp-card-index">#${String(card.rank||0).padStart(4,'0')}/${String(LOCAL_CARDS.length).padStart(4,'0')}</span></div>
     <div><div class="cp-tags" style="margin-top:0"><span class="cp-tag">${esc(r.name)}</span><span class="cp-tag">Possédée ×${fmt(info.count)}</span></div>
     <div class="cp-card-stats"><div class="cp-mini-stat"><span>POW</span><b>${Number(card.pow)||'—'}</b></div><div class="cp-mini-stat"><span>AURA</span><b>${Number(card.aura)||'—'}</b></div></div>
     <div class="cp-meta-list">${metadataRows}<div class="cp-meta-row"><span>Première obtention</span><b>${esc(obtained)}</b></div><div class="cp-meta-row"><span>Numéro</span><b>#${String(card.rank||0).padStart(4,'0')}</b></div></div>
