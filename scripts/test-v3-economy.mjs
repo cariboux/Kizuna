@@ -1,0 +1,77 @@
+import {PGlite} from '@electric-sql/pglite';
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+process.on('uncaughtException',error=>{console.error(error.message,error.where||'');process.exit(1);});
+const db=new PGlite();
+const actor='10000000-0000-4000-8000-000000000001';
+const other='10000000-0000-4000-8000-000000000002';
+const sql=await readFile(new URL('../supabase/proposals/20261109_kizuna_v3.sql',import.meta.url),'utf8');
+await db.exec(`create role anon;create role authenticated;create schema auth;create schema kizuna_private;
+create table auth.users(id uuid primary key);insert into auth.users values('${actor}'),('${other}');
+create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('test.uid',true),'')::uuid$$;
+create table public.kizuna_admins(user_id uuid primary key);insert into public.kizuna_admins values('${actor}');
+create table public.kizuna_cards(id text primary key,card jsonb not null);
+create table public.kizuna_boosters(id uuid primary key,name text not null,description text not null,card_ids text[] not null,published boolean not null,updated_at timestamptz default now());
+create table public.kizuna_player_states(user_id uuid primary key,snapshot jsonb,revision bigint default 0);
+create function kizuna_private.kizuna_economy(text,jsonb,uuid) returns jsonb language sql as $$select '{}'::jsonb /* kizuna_private.v3_draw_weights */$$;
+create function kizuna_private.econ_level(r text) returns integer language sql immutable as $$select array_position(array['Commun','Peu commune','Rare','Épique','Légendaire','Mythique'],r)$$;
+create function kizuna_private.nexus_weekly_definition() returns uuid language sql as $$select null::uuid$$;
+set test.uid='${actor}';`);
+await db.exec(sql);
+await db.exec(await readFile(new URL('../supabase/proposals/20261109_kizuna_v3_quote.sql',import.meta.url),'utf8'));
+const query=async(sql,params=[]) => (await db.query(sql,params)).rows;
+const call=async(action,payload={})=>(await query('select public.kizuna_v3_admin($1,$2::jsonb) result',[action,JSON.stringify(payload)]))[0].result;
+const weights=async(min,bm='relative',bb=0,fm='relative',fb=0,cap=100)=>(await query('select kizuna_private.v3_weights($1,$2,$3,$4,$5,$6) w',[min,bm,bb,fm,fb,cap]))[0].w;
+let checks=0;
+for(const min of [1,2,3]){assert.deepEqual(await weights(min),[600,230,125,42,2,1]);checks++;}
+assert.equal((await weights(1,'relative',10))[5],1100);checks++;
+assert.equal((await weights(1,'points',0.1))[5],2000);checks++;
+assert.equal((await weights(1,'relative',10,'relative',10))[5],1210);checks++;
+assert.equal((await weights(1,'points',2,'points',2,1))[5],10000);checks++;
+assert.deepEqual(await weights(6,'relative',10),[0,0,0,0,0,1000000]);checks++;
+for(const min of [1,2,3]){
+ const w=await weights(min,'relative',15,'points',0.2,3);
+ assert.equal(w.reduce((a,b)=>a+b,0),1000000);assert.ok(w.every(x=>Number.isInteger(x)&&x>=0));assert.ok(w.slice(0,min-1).every(x=>x===0));checks++;
+ // Seeded Monte Carlo: repeatable statistical regression, six standard deviations.
+ const observed=Array(6).fill(0),N=100000;let seed=3100+min;
+ for(let i=0;i<N;i++){seed=(seed*48271)%2147483647;let roll=seed/2147483647*1000000;for(let t=0;t<6;t++){if(roll<w[t]){observed[t]++;break;}roll-=w[t];}}
+ for(let t=0;t<6;t++){const p=w[t]/1000000;assert.ok(Math.abs(observed[t]/N-p)<=6*Math.sqrt(p*(1-p)/N)+1/N);}checks++;
+}
+let state=await call('get');assert.equal(state.live.fortune.enabled,false);assert.ok(state.live.fortune.levels.every(x=>x.cost===null&&x.bonus===null));checks++;
+const malformed=structuredClone(state.draft);malformed.fortune.model=null;
+await assert.rejects(call('save',{revision:state.revision,config:malformed}),/V3_INVALID_FORTUNE/);checks++;
+await assert.rejects(call('save',{revision:0,config:state.draft}),/REVISION_CONFLICT/);checks++;
+const config=structuredClone(state.draft);config.fortune.enabled=true;
+state=await call('save',{revision:state.revision,config});
+await assert.rejects(call('preview',{revision:state.revision}),/V3_CAP_REQUIRED/);checks++;
+config.fortune.cap=1;config.fortune.eligible.standard=true;config.fortune.levels=Array.from({length:5},()=>({cost:100,bonus:10}));
+// All values in this file are TEST FIXTURES ONLY. No example is a published balance proposal.
+state=await call('save',{revision:state.revision,config});const preview=await call('preview',{revision:state.revision});
+await assert.rejects(call('publish',{revision:state.revision,hash:'wrong',approved:true}),/PREVIEW_REQUIRED/);checks++;
+state=await call('publish',{revision:state.revision,hash:preview.hash,approved:true});
+assert.equal(state.version,1);checks++;
+const buy=async(payload,snapshot)=>query('select kizuna_private.v3_buy($1,$2::jsonb,$3::jsonb) result',[actor,JSON.stringify(payload),JSON.stringify(snapshot)]);
+await assert.rejects(buy({tier:1,expectedCost:99,version:1},{chakra:500}),/V3_CONFIG_CHANGED/);checks++;
+await assert.rejects(buy({tier:1,expectedCost:100,version:1},{chakra:99}),/INSUFFICIENT_CHAKRA/);checks++;
+let bought=await buy({tier:1,expectedCost:100,version:1},{chakra:500});assert.equal(bought[0].result.snapshot.chakra,400);checks++;
+await assert.rejects(buy({tier:1,expectedCost:100,version:1},{chakra:400}),/FORTUNE_TIER_CHANGED/);checks++;
+assert.equal((await query("select kizuna_private.v3_draw_weights($1,'mix',1) w",[actor]))[0].w[5],1100);checks++;
+assert.deepEqual((await query("select kizuna_private.v3_draw_weights($1,'shonen',1) w",[actor]))[0].w,[600,230,125,42,2,1]);checks++;
+await db.exec(`set test.uid='${other}';set role authenticated;`);
+await assert.rejects(call('get'),/ADMIN_REQUIRED/);checks++;
+await assert.rejects(query('select * from kizuna_private.kizuna_fortune_purchases'),/permission denied/);checks++;
+await assert.rejects(query("select kizuna_private.v3_buy($1,'{}','{}')",[actor]),/permission denied/);checks++;
+await db.exec(`reset role;set test.uid='${actor}';`);
+const rarities=['Commun','Peu commune','Rare','Épique','Légendaire','Mythique'];
+for(let i=0;i<6;i++)await query('insert into public.kizuna_cards values($1,$2)',[String(i+1),JSON.stringify({rarity:rarities[i]})]);
+await query('insert into public.kizuna_player_states values($1,$2)',[actor,JSON.stringify({stock:{pm:249,pl:49}})]);
+const quote=(await query("select public.kizuna_v3_read('quote','{\"booster\":\"mix\"}') q"))[0].q;
+assert.equal(quote.slots[4].Mythique,1);assert.equal(quote.slots[0].Mythique,.0011);checks++;
+const event={id:'30000000-0000-4000-8000-000000000001',name:'Fixture',description:'Test isolé',image:'assets/test.svg',pool:['1','2','3','4','5','6'],source:'stock',price:null,startsAt:'2020-01-01T00:00:00Z',endsAt:'2100-01-01T00:00:00Z',bonusModel:'relative',bonus:10,cap:1,fortuneEligible:true,collectionBonus:0,minLevels:[1,1,1,2,3],enabled:true};
+config.events=[event];config.fortune.eligible.event=true;
+state=await call('save',{revision:state.revision,config});const ep=await call('preview',{revision:state.revision});state=await call('publish',{revision:state.revision,hash:ep.hash,approved:true});
+assert.equal((await query('select kizuna_private.v3_draw_weights($1,$2,1) w',[actor,'staff:'+event.id]))[0].w[5],1210);checks++;
+config.events[0].endsAt='2021-01-01T00:00:00Z';state=await call('save',{revision:state.revision,config});const expired=await call('preview',{revision:state.revision});await call('publish',{revision:state.revision,hash:expired.hash,approved:true});
+await assert.rejects(query('select kizuna_private.v3_draw_weights($1,$2,1)',[actor,'staff:'+event.id]),/BOOSTER_UNAVAILABLE/);checks++;
+assert.equal((await query('select count(*)::integer n from kizuna_private.kizuna_fortune_purchases'))[0].n,1);checks++;
+await db.close();console.log(`PASS: ${checks} checks, 300,000 seeded Monte Carlo draws, isolated PostgreSQL, zero remote writes.`);

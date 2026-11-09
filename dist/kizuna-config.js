@@ -6,7 +6,8 @@
   "supabaseUrl": "https://hxbujmdzidtwmalmqrwt.supabase.co",
   "supabaseKey": "sb_publishable_ateJlp_U1eRYN0qYjcsF1g_OF1AZ6y9",
   "discordEnabled": true,
-  "serverEconomy": true
+  "serverEconomy": true,
+  "v3Economy": false
 };
   window.KIZUNA_CONFIG = Object.freeze({
     ...publicSettings,

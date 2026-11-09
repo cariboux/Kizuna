@@ -390,6 +390,7 @@
   }
   function siteUrl() {
     const url = new URL(window.KIZUNA_CONFIG?.siteUrl || '');
+    if(url.protocol==='http:'&&['localhost','127.0.0.1','[::1]'].includes(url.hostname))throw publicError('Cette prévisualisation locale fonctionne en invité. La connexion Discord doit être testée sur une adresse HTTPS autorisée.',503);
     if (url.protocol !== 'https:' || url.username || url.password) throw publicError('La connexion Discord n’est pas configurée correctement.',503);
     return new URL('/',url);
   }
@@ -586,6 +587,16 @@
     return result.data;
   }
 
+  async function v3Request(kind,action,payload={}) {
+    if(!client||window.KIZUNA_CONFIG?.v3Economy!==true)throw publicError('Le service Kizuna 3.0 attend son installation.',503);
+    if(!['admin','read'].includes(kind))throw publicError('Demande inconnue.');
+    if(kind==='admin'&&(!ready||!currentId||account.loading||account.isAdmin!==true))throw publicError('Cet espace est réservé aux administrateurs.',403);
+    const id=currentId,generation=epoch;
+    const result=await client.rpc('kizuna_v3_'+kind,{p_action:action,p_payload:payload});
+    if(generation!==epoch||id!==currentId||kind==='admin'&&account.isAdmin!==true)throw publicError('Le compte connecté a changé.',401);
+    if(result.error)throw publicError(({ADMIN_REQUIRED:'Accès administrateur requis.',REVISION_CONFLICT:'Le brouillon a changé. Recharge-le avant de continuer.',PREVIEW_REQUIRED:'Vérifie un nouvel aperçu avant publication.',BOOSTER_UNAVAILABLE:'Cette édition n’est pas disponible.',V3_ENGINE_NOT_READY:'Les nouvelles règles attendent leur activation.'})[result.error.message]||'La demande n’a pas abouti. Vérifie les champs requis puis réessaie.',400,result.error.message);
+    return result.data;
+  }
   async function nexusAdminRequest(action,payload={}) {
     if(!client||!ready||!currentId||account.loading||account.isAdmin!==true)throw publicError('Cet espace est réservé aux administrateurs.');
     const id=currentId,myEpoch=epoch;
@@ -651,6 +662,6 @@
     try{return await economyFlight;}finally{economyFlight=null;}
   }
 
-  window.KizunaAccount = {getSnapshot:snapshot,subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},open,signOut,updateProfile,flush,catalogueRequest,staffRequest,claimRewards,adventureRequest,economyRequest,marketInboxRequest,studioRequest,mythicRequest,anomalyRequest,nexusRequest,nexusAdminRequest};
+  window.KizunaAccount = {getSnapshot:snapshot,subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},open,signOut,updateProfile,flush,catalogueRequest,staffRequest,claimRewards,adventureRequest,economyRequest,marketInboxRequest,studioRequest,mythicRequest,anomalyRequest,nexusRequest,nexusAdminRequest,v3Request};
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
 })();

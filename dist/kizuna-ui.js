@@ -22,7 +22,6 @@
     fold(['#marketFilterbar'],'Affiner les annonces','market-filters','Rareté, univers, prix');
     fold(['#marketPage .km-local-notice','#marketPage .km-market-collection-link'],'À propos de ce comptoir','market-help','Marché local · frais de vente : 5 %');
     fold(['#ranking .rank-search-row','#rankList','#ranking .rank-note'],'Détail de mon parcours','ranking-details');
-    fold(['#kzwControls','#v8WikiFilter','#encyclopedia .kzw-help'],'Affiner le catalogue','wiki-filters','Univers, rareté, possession');
     fold(['#universes .ka-entry-links'],'Prolonger l’aventure','universe-links','Constellations, voyages, missions');
     fold(['#kzNexusPage .knx-benefits','#kzNexusPage .knx-rewards'],'Les trésors de mes liens','nexus-rewards','Cadeaux, cadre et récompenses');
     fold(['#kzNexusPage .knx-priorities','#kzNexusPage .knx-statistics'],'Suivre mes rencontres','nexus-priorities','Priorités et statistiques');
@@ -48,7 +47,7 @@
       node.dataset.rfIcon='arrow';node.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>';
     });
     document.querySelectorAll('button:not([data-ui-kind])').forEach(node=>{
-      if(node.matches('.tcard,.fcard,.kpack,.rb-stage-pack,.kg-hero-pack,.ka-companion-card,.knx-node,.knx-branch-label,.ka-star-node,.ka-constellation-tile,.ka-destination,.kz-universe-tile,.kz-discovery-card,[data-colcard],[data-wiki]')||node.closest('.kza-navigation'))return;
+      if(node.matches('.kv3-tile,.tcard,.fcard,.kpack,.rb-stage-pack,.kg-hero-pack,.ka-companion-card,.knx-node,.knx-branch-label,.ka-star-node,.ka-constellation-tile,.ka-destination,.kz-universe-tile,.kz-discovery-card,[data-colcard],[data-wiki]')||node.closest('.kza-navigation'))return;
       // All ordinary interface buttons receive a shared interaction treatment. Artwork tiles and navigation stay untouched.
       node.dataset.uiKind=node.matches('.primary,.primary-btn,.knx-primary,.kb-open,#kzFeaturedOpen')?'hero':node.matches('[data-ka-view],[data-market-view],.col-seg button,.rank-tabs button,.kb-tabs button')?'tab':node.matches('[data-ka-map],[data-kn-zoom],[data-kn-view],.kz-col-view,.kz-col-flip,.kg-binder-controls button')?'compact':'secondary';
     });

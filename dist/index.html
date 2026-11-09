@@ -1657,6 +1657,7 @@ body[data-tab="market"] #marketPage .wrap{width:min(1180px,calc(100% - 36px))}
 <link rel="stylesheet" href="kizuna-cards.css">
 <link rel="stylesheet" href="kizuna-ui-polish.css">
 <link rel="stylesheet" href="kizuna-market-polish.css">
+<link rel="stylesheet" href="kizuna-v3.css?v=3.6">
 </head>
 <body class="theme-kizuna kz-game kz-art" data-tab="home">
 <script>window.addEventListener('error',function(e){try{const status=document.getElementById('localStatusText');if(status)status.textContent='Erreur JS · '+String(e.message||'chargement partiel').slice(0,90);console.error('Erreur application KIZUNA:',e.error||e.message)}catch(_){} });</script>
@@ -1740,7 +1741,7 @@ body[data-tab="market"] #marketPage .wrap{width:min(1180px,calc(100% - 36px))}
 <section class="section" id="collection"><div class="wrap">
 <header class="kd-collection-heading"><div><span class="kd-eyebrow">MON ALBUM · コレクション</span><h1>Ma collection</h1></div>
 <div class="kd-collection-counts"><span><b id="colUnique">0</b> uniques</span><span><b id="colPct">0 %</b> complété</span><span><b id="colDup">0</b> doublons</span><span>◆ <b id="colChakra">0</b></span></div>
-<div class="kd-collection-tools"><button class="soft-btn" id="colRecycle" type="button">Recycler</button><button class="soft-btn" type="button" data-tab="boosts">Ouvrir des boosters <span class="ik-arrow-glyph" aria-hidden="true">↗</span></button><span id="colMsg" role="status"></span></div>
+<div class="kd-collection-tools"><a class="soft-btn" href="#wiki" data-v3-go="wiki">Ouvrir le Wiki ↗</a><button class="soft-btn" id="colRecycle" type="button">Recycler</button><button class="soft-btn" type="button" data-tab="boosts">Ouvrir des boosters <span class="ik-arrow-glyph" aria-hidden="true">↗</span></button><span id="colMsg" role="status"></span></div>
 <div id="colRing" hidden><span id="colRingTxt">0 %</span></div><div class="col-uni" id="colUni"></div></header>
 <div id="collectionMarketListings" class="cm-management" aria-live="polite"></div><div class="kd-collection-toolbar"><div class="kd-collection-search"><input class="col-input" id="colSearch" type="search" placeholder="Rechercher un personnage ou un univers…" autocomplete="off"><div class="col-seg" id="colSeg"><button class="on" data-v="cards" type="button">Cartes</button><button data-v="albums" type="button">Albums</button></div></div>
 <div class="col-chips" id="colChips"></div>
@@ -2075,12 +2076,12 @@ const state={page:1,search:'',sort:'default',items:LOCAL_CARDS,filtered:[],selec
 const sharedAlbumDefinitions=[];
 const BOOST=[
 {id:'mix',title:'Kizuna Mix',desc:'Tous les persos',mark:'混',bg:'linear-gradient(150deg,#ffe46b,#b98a10 55%,#f1c93c)',edge:'#ffe9a0',fg:'#3b2b00',mk:'#ffd23f',glow:'#ffd23f66'},
-{id:'shonen',title:'Shōnen',desc:'Séries d’action',mark:'少',bg:'linear-gradient(150deg,#d9902e,#6b4210 60%,#a8691a)',edge:'#f0b25c',fg:'#3a2205',mk:'#f4a63a',glow:'#f4a63a66',f:c=>c.cats.includes('shonen')},
-{id:'isekai',title:'Isekai',desc:'Un autre monde',mark:'異',bg:'linear-gradient(150deg,#58d4c4,#1b6a66 60%,#3fb0a6)',edge:'#8ff0e2',fg:'#07302d',mk:'#5ee0d0',glow:'#5ee0d066',f:c=>c.cats.includes('isekai')},
-{id:'seinen',title:'Seinen',desc:'Séries adultes',mark:'青',bg:'linear-gradient(150deg,#e4e6ea,#8b9098 60%,#c4c8ce)',edge:'#ffffff',fg:'#23262b',mk:'#e8ebf0',glow:'#ffffff55',f:c=>c.cats.includes('seinen')},
-{id:'shojo',title:'Shōjo',desc:'Séries shōjo',mark:'花',bg:'linear-gradient(150deg,#e7a6c8,#8c4d77 60%,#cf86ad)',edge:'#ffc6e3',fg:'#3b1230',mk:'#ff9ed0',glow:'#ff9ed066',f:c=>c.cats.includes('shojo')},
-{id:'sport',title:'Sport',desc:'Équipes et compétition',mark:'球',bg:'linear-gradient(150deg,#52c785,#1b6a45 60%,#3aa56a)',edge:'#8cf0b8',fg:'#062c19',mk:'#5ee0a0',glow:'#5ee0a066',f:c=>c.cats.includes('sport')},
-{id:'mecha',title:'Mecha',desc:'Robots géants',mark:'機',bg:'linear-gradient(150deg,#9aa0a8,#454a52 60%,#7e848c)',edge:'#cfd4da',fg:'#1d2025',mk:'#c9ced4',glow:'#cfd4da55',f:c=>c.cats.includes('mecha')},
+{id:'shonen',title:'Brasier des Héros',desc:'Séries d’action',mark:'少',bg:'linear-gradient(150deg,#d9902e,#6b4210 60%,#a8691a)',edge:'#f0b25c',fg:'#3a2205',mk:'#f4a63a',glow:'#f4a63a66',f:c=>c.cats.includes('shonen')},
+{id:'isekai',title:'Portail des Mondes',desc:'Un autre monde',mark:'異',bg:'linear-gradient(150deg,#58d4c4,#1b6a66 60%,#3fb0a6)',edge:'#8ff0e2',fg:'#07302d',mk:'#5ee0d0',glow:'#5ee0d066',f:c=>c.cats.includes('isekai')},
+{id:'seinen',title:'Éclipse des Âmes',desc:'Séries adultes',mark:'青',bg:'linear-gradient(150deg,#e4e6ea,#8b9098 60%,#c4c8ce)',edge:'#ffffff',fg:'#23262b',mk:'#e8ebf0',glow:'#ffffff55',f:c=>c.cats.includes('seinen')},
+{id:'shojo',title:'Floraison du Destin',desc:'Séries shōjo',mark:'花',bg:'linear-gradient(150deg,#e7a6c8,#8c4d77 60%,#cf86ad)',edge:'#ffc6e3',fg:'#3b1230',mk:'#ff9ed0',glow:'#ff9ed066',f:c=>c.cats.includes('shojo')},
+{id:'sport',title:'Arène des Légendes',desc:'Équipes et compétition',mark:'球',bg:'linear-gradient(150deg,#52c785,#1b6a45 60%,#3aa56a)',edge:'#8cf0b8',fg:'#062c19',mk:'#5ee0a0',glow:'#5ee0a066',f:c=>c.cats.includes('sport')},
+{id:'mecha',title:'Réacteur Céleste',desc:'Robots géants',mark:'機',bg:'linear-gradient(150deg,#9aa0a8,#454a52 60%,#7e848c)',edge:'#cfd4da',fg:'#1d2025',mk:'#c9ced4',glow:'#cfd4da55',f:c=>c.cats.includes('mecha')},
 {id:'waifus',title:'Waifus',desc:'Personnages féminins',mark:'姫',bg:'linear-gradient(150deg,#f3c0d4,#a55b7c 60%,#e08aae)',edge:'#ffd5e6',fg:'#3a1126',mk:'#ff6fa8',glow:'#ff6fa866',f:c=>c.g==='F'},
 {id:'husbandos',title:'Husbandos',desc:'Personnages masculins',mark:'侍',bg:'linear-gradient(150deg,#232a45,#0d1020 60%,#1a2038)',edge:'#5d6aa8',fg:'#dfe6ff',mk:'#7fa4ff',glow:'#7fa4ff55',f:c=>c.g==='M'}
 ];
@@ -2205,7 +2206,7 @@ function collectionStatus(){
 }
 function resetCollectionFilters(){
   COL.rar='all';COL.limit=60;window.KizunaMythic?.resetFilter();
-  for(const [id,value] of [['colSearch',''],['colUniv','all'],['colOwn','all'],['colSort','num']])if($(id))$(id).value=value;
+  for(const [id,value] of [['colSearch',''],['colUniv','all'],['colOwn','all'],['colSort','rar']])if($(id))$(id).value=value;
   renderCollection();
   $('colSearch')?.focus();
 }
@@ -2221,7 +2222,7 @@ function collectionToggleCard(id,button){
   const flipped=card.classList.toggle('flipped');
   card.querySelector('.ff')?.setAttribute('aria-hidden',String(flipped));
   card.querySelector('.fb')?.setAttribute('aria-hidden',String(!flipped));
-  card.querySelectorAll('.fb a').forEach(link=>link.tabIndex=flipped?0:-1);
+  card.querySelectorAll('.fb a,.fb button').forEach(link=>link.tabIndex=flipped?0:-1);
   if(button){button.setAttribute('aria-pressed',String(flipped));button.textContent=flipped?'Recto':'Verso';}
   return flipped;
 }
@@ -2252,7 +2253,7 @@ function openCollectionAlbum(key){
   if(!entry){resetCollectionAlbum(true);COL.view='albums';renderCollection();return false;}
   if(!COL.albumReturn)COL.albumReturn={query:$('colSearch').value,universe:$('colUniv').value,own:$('colOwn').value,sort:$('colSort').value,rar:COL.rar,limit:COL.limit};
   COL.albumKey=entry.key;COL.view='albums';COL.rar='all';COL.limit=60;
-  $('colSearch').value='';$('colUniv').value='all';$('colOwn').value='all';$('colSort').value='num';
+  $('colSearch').value='';$('colUniv').value='all';$('colOwn').value='all';$('colSort').value='rar';
   document.querySelectorAll('#colSeg button').forEach(button=>button.classList.toggle('on',button.dataset.v==='albums'));
   if(document.body.dataset.tab==='col')renderCollection();else showTab('col');
   $('colAlbumTitle')?.focus({preventScroll:true});
@@ -2325,13 +2326,24 @@ function renderCollection(){
   $('colGrid').innerHTML=visible.map(card=>{
     const count=m[card.id]||0,reserved=status.reserved[card.id]||0,wanted=status.wanted.has(String(card.id));
     const stateLabel=count?(count>1?'Doublon · '+count+' disponibles':'Possédée'):reserved?'Réservée':'Manquante';
-    const faces=cardMarkup(card,{flip:true,count,since:first[card.id]||0}).replace('<div class="ff">','<div class="ff" aria-hidden="false">').replace('<div class="fb">','<div class="fb" aria-hidden="true">').replace('<a href=','<a tabindex="-1" href=');
+    const faces=cardMarkup(card,{flip:true,count,since:first[card.id]||0}).replace('<div class="ff">','<div class="ff" aria-hidden="false">').replace('<div class="fb">','<div class="fb" aria-hidden="true">').replace('<a href=','<a tabindex="-1" href=').replace('<button type="button" class="kz-card-profile-link"','<button type="button" tabindex="-1" class="kz-card-profile-link"');
     const badges='<div class="kz-col-status"><span class="kz-col-badge '+(count?'is-owned':reserved?'is-reserved':'is-missing')+'">'+stateLabel+'</span>'+(reserved&&count?'<span class="kz-col-badge is-reserved">'+reserved+' réservée'+(reserved>1?'s':'')+'</span>':'')+(wanted?'<span class="kz-col-badge is-wanted">Recherchée</span>':'')+'</div>';
     return '<article class="col-item-unit" data-rarity="'+esc(LET[card.rarity]||'C')+'" style="--slot-rarity:'+rarityFor(card).color+'"><div class="ka-card-register"><span>N° '+String(card.rank).padStart(4,'0')+'</span><span>'+esc(card.rarity)+'</span></div><div class="col-cell '+(count?'owned':reserved?'reserved':'miss')+(count&&window.KizunaExperience?.isNew(card.id)?' kg-new-slot':'')+'" data-colcard="'+esc(card.id)+'" tabindex="0" role="button" aria-label="Ouvrir la fiche de '+esc(card.name)+' · '+stateLabel+'">'+(count>1?'<b class="cx">×'+count+'</b>':'')+faces+(!count&&!reserved?'<span class="missing-lock"><i aria-hidden="true">◇</i>À DÉCOUVRIR</span>':'')+'</div>'+badges+(window.KizunaMythic?.badge(card)||'')+'<div class="kz-col-actions"><button class="kz-col-view" type="button" data-col-open="'+esc(card.id)+'" aria-label="Voir la fiche de '+esc(card.name)+'">Fiche</button><details class="kd-card-more"><summary aria-label="Actions de la carte">•••</summary><div><button class="kz-col-flip" type="button" data-col-flip="'+esc(card.id)+'" aria-pressed="false" aria-label="Retourner la carte '+esc(card.name)+'">Verso</button>'+(card.rarity==='Mythique'?'<button type="button" data-km-open="'+esc(card.id)+'">Éveil</button>':'')+(count?'<button class="col-market-sell-btn" type="button" data-col-market-open="'+esc(card.id)+'">Vendre</button>':'')+'</div></details></div></article>';
   }).join('')||(detail&&!active.cards.length?'<div class="col-empty"><b>Un album à construire.</b>Aucune carte n’a encore été ajoutée à cet album.</div>':!state.owned.length&&ownership==='own'&&!query&&COL.rar==='all'&&universe==='all'?'<div class="col-empty"><b>Le début d’une collection.</b>Ouvre un booster pour rencontrer tes premiers personnages.<button type="button" class="soft-btn primary" data-ka-boosters>✦ Ouvrir un booster</button></div>':'<div class="col-empty"><b>Aucune carte avec ces filtres.</b>Essaie une autre rareté, un autre univers ou réinitialise les filtres.</div>');
 }
 
 window.addEventListener('kizuna:mythic-change',()=>{if(document.body.dataset.tab==='col')renderCollection();});
+
+// Keyboard equivalent of selecting the card itself; the separate Fiche button
+// continues to open the character dossier directly.
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Enter'&&event.key!==' ')return;
+  const tile=event.target instanceof Element?event.target.closest('#collection [data-colcard]'):null;
+  if(!tile||event.target.closest('button,a,summary,input,select'))return;
+  event.preventDefault();
+  const card=LOCAL_CARDS.find(row=>String(row.id)===String(tile.dataset.colcard));
+  if(card)openCardViewer(card);
+});
 /* KIZUNA_COLLECTION_VIEW_END */
 function showTab(t,options={}){if($('detailBackdrop')?.classList.contains('open'))closeBackdrop('detailBackdrop');if($('revealBackdrop')?.classList.contains('open'))closeBackdrop('revealBackdrop');document.body.dataset.tab=t;const route={home:'home',boosts:'boosters',universes:'universes',community:'community',col:'collection',market:'marketPage',wiki:'encyclopedia',rank:'ranking',profile:'profile',staff:'staff',adventure:'adventure',nexus:'nexus'}[t];if(route)history.replaceState(null,'',location.pathname+location.search+'#'+route);window.dispatchEvent(new CustomEvent('kizuna:tab-change',{detail:{tab:t}}));document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('active',a.dataset.tab===t));if(t==='wiki')renderWiki($('wikiSearch')?.value||'');if(t==='rank')renderRanking();renderCollection();if(options.scroll!==false)window.scrollTo({top:0,behavior:(window.KizunaExperience?.reduced?.()||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)?'instant':'smooth'})}
 
@@ -2917,7 +2929,7 @@ openDetail = function(card){
   viewer.addEventListener('dragstart',e=>{e.preventDefault();});
   viewer.addEventListener('pointerdown',e=>{
     if(e.button!==0 && e.pointerType==='mouse')return;
-    if(e.target.closest('a'))return;
+    if(e.target.closest('a,button'))return;
     e.preventDefault();down=true;moved=false;sx=e.clientX;sy=e.clientY;
     try{viewer.setPointerCapture(e.pointerId)}catch(_){}
     f.style.transition='none';
@@ -2935,7 +2947,7 @@ openDetail = function(card){
   const release=e=>{if(!down)return;down=false;f.style.transition='transform .22s ease';if(moved){ignoreClickUntil=Date.now()+350;}viewer._downX=undefined;viewer._downY=undefined;};
   viewer.addEventListener('pointerup',release);viewer.addEventListener('pointercancel',release);
   viewer.addEventListener('click',e=>{
-    if(e.target.closest('a'))return;
+    if(e.target.closest('a,button'))return;
     if(Date.now()<ignoreClickUntil||moved){e.preventDefault();e.stopPropagation();moved=false;return;}
     e.preventDefault();e.stopPropagation();f.classList.toggle('flipped');
   });
@@ -3250,7 +3262,8 @@ window.addEventListener('popstate',()=>{
   if(match){cpRestoreProfileRoute();return;}
   cpHideProfile();
 });
-cpRestoreProfileRoute();
+// Deep links must wait until the market, viewer and account bridge are initialized.
+queueMicrotask(cpRestoreProfileRoute);
 const cpOriginalCardsReady=cardsReady;
 cardsReady=function(...args){const result=cpOriginalCardsReady.apply(this,args);cpRestoreProfileRoute();return result;};
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('kyaraProfileOverlay')?.classList.contains('open')&&!$('detailBackdrop')?.classList.contains('open')){e.preventDefault();e.stopImmediatePropagation();cpCloseProfile();}},true);
@@ -3611,7 +3624,7 @@ if(typeof renderKyaraMarket==='function')renderKyaraMarket();
 /* KIZUNA_FEATURE_VIEWS_BEGIN */
 /* KIZUNA artistic invocation · presentation only. The draw/save engine is untouched. */
 const kzRevealPreferenceKey='kizuna_reveal_preferences_v1';
-const kzRevealPreferences=(()=>{try{const value=JSON.parse(localStorage.getItem(kzRevealPreferenceKey)||'{}');return {quick:value.quick===true,sound:value.sound===true};}catch{return {quick:false,sound:false};}})();
+const kzRevealPreferences=(()=>{try{const value=JSON.parse(localStorage.getItem(kzRevealPreferenceKey)||'{}');return {quick:value.quick===true,sound:value.sound!==false};}catch{return {quick:false,sound:true};}})();
 let kzRevealEpoch=0,kzRevealReturnFocus=null,kzRevealQuickPending=false,kzSummonFinish=null;
 const kzReducedMotion=()=>window.KizunaExperience?.reduced?.()||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
 const kzRevealOpen=()=>$('revealBackdrop')?.classList.contains('open');
@@ -3792,7 +3805,7 @@ document.addEventListener('keydown',event=>{
 // Display actual eligible characters; this selection never calls the draw engine.
 function kgBoosterCards(booster){const rows=booster.custom?LOCAL_CARDS.filter(c=>booster.cardIds.has(String(c.id))):LOCAL_CARDS.filter(c=>!booster.f||booster.f(c));return rows.slice().sort((a,b)=>(b.fav||0)-(a.fav||0)||a.rank-b.rank);}
 function kgBoosterArt(card){return card?(window.KizunaMythicArt?.get(card.id)?.levels[1]?.illustration?.image||card.image):'';}
-function kgPackImage(booster){const card=kgBoosterCards(booster)[0];return card?'<img class="kg-pack-image" src="'+esc(kgBoosterArt(card))+'" alt="" width="210" height="295" loading="lazy" decoding="async">':'';}
+function kgPackImage(booster){const edition=window.KizunaV3?.event?.(booster.id);if(edition?.image&&(/^(https:\/\/|assets\/)/.test(edition.image)))return '<img class="kg-pack-image" src="'+esc(edition.image)+'" alt="" width="500" height="750" decoding="async">';if(['shonen','seinen','isekai','shojo','sport','mecha'].includes(booster.id))return '<img class="kg-pack-image" src="assets/boosters-v3/'+booster.id+'.svg" alt="" width="500" height="750" decoding="async">';const card=kgBoosterCards(booster)[0];return card?'<img class="kg-pack-image" src="'+esc(kgBoosterArt(card))+'" alt="" width="210" height="295" loading="lazy" decoding="async">':'';}
 renderPacks=function(){
  const root=$('kGrid');if(!root)return;const left=root.scrollLeft,focused=document.activeElement?.closest('#kGrid .kpack')?.dataset.id;
  root.setAttribute('role','group');root.setAttribute('aria-label','Choisir un booster : parcours les paquets avec les flèches ou Tab');
@@ -3830,7 +3843,7 @@ document.addEventListener('DOMContentLoaded',()=>{renderPacks();kgRenderPackPrev
 
 
 /* KIZUNA Lot 2 · browser of real catalogue entries, independent of economics. */
-const kzwState={query:'',universe:'all',rarity:'all',ownership:'all',sort:'name',limit:60};
+const kzwState={query:'',universe:'all',rarity:'all',ownership:'all',sort:'rarity',limit:60};
 const kzwCollator=new Intl.Collator('fr',{sensitivity:'base',numeric:true});
 const kzwFold=value=>String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/œ/g,'oe').toLocaleLowerCase('fr');
 let kzwSignature='',kzwOptionsSignature='',kzwIdentity=null,kzwQueued=false;
@@ -3844,8 +3857,9 @@ function kzwSetup(){
   // Replace the old two-button filter, including its old event listener.
   $('v8WikiFilter')?.remove();
   const controls=document.createElement('div');controls.id='kzwControls';controls.className='kzw-controls';
-  controls.innerHTML='<label>Univers<select id="kzwUniverse" aria-controls="wikiGrid"><option value="all">Tous les univers</option></select></label><label>Rareté<select id="kzwRarity" aria-controls="wikiGrid"><option value="all">Toutes les raretés</option>'+rarityData.slice().sort((a,b)=>b.level-a.level).map(r=>'<option value="'+esc(r.name)+'">'+esc(r.name)+'</option>').join('')+'</select></label><label>Trier par<select id="kzwSort" aria-controls="wikiGrid"><option value="name">Nom · A à Z</option><option value="popularity">Popularité AniList</option><option value="rarity">Rareté décroissante</option></select></label><button id="kzwReset" class="soft-btn" type="button">Effacer les filtres</button>';
+  controls.innerHTML='<label>Univers<select id="kzwUniverse" aria-controls="wikiGrid"><option value="all">Tous les univers</option></select></label><label>Rareté<select id="kzwRarity" aria-controls="wikiGrid"><option value="all">Toutes les raretés</option>'+rarityData.slice().sort((a,b)=>b.level-a.level).map(r=>'<option value="'+esc(r.name)+'">'+esc(r.name)+'</option>').join('')+'</select></label><label>Trier par<select id="kzwSort" aria-controls="wikiGrid"><option value="name">Nom · A à Z</option><option value="popularity">Popularité AniList</option><option value="rarity" selected>Rareté décroissante</option></select></label><button id="kzwReset" class="soft-btn" type="button">Effacer les filtres</button>';
   tools.append(controls);
+  $('kzwSort').value=kzwState.sort;
   const filters=document.createElement('div');filters.id='v8WikiFilter';filters.className='kzw-ownership';filters.setAttribute('role','group');filters.setAttribute('aria-label','Filtrer selon ma collection');
   filters.innerHTML=[['all','Toutes'],['own','Possédées'],['missing','Manquantes'],['duplicates','Doublons'],['wishlist','Recherchées']].map(([value,label])=>'<button type="button" data-v8-wiki-filter="'+value+'" aria-pressed="'+(value==='all')+'" class="'+(value==='all'?'active':'')+'">'+label+'</button>').join('');
   tools.append(filters);
@@ -3863,9 +3877,9 @@ function kzwSetup(){
   grid?.addEventListener('click',event=>{if(event.target.closest('[data-kzw-reset]')){kzwReset();search?.focus();}});
 }
 function kzwReset(options={}){
-  Object.assign(kzwState,{query:'',universe:'all',rarity:'all',ownership:'all',sort:'name',limit:60});v8WikiFilter='all';kzwSignature='';
+  Object.assign(kzwState,{query:'',universe:'all',rarity:'all',ownership:'all',sort:'rarity',limit:60});v8WikiFilter='all';kzwSignature='';
   if($('wikiSearch'))$('wikiSearch').value='';
-  for(const [id,value] of [['kzwUniverse','all'],['kzwRarity','all'],['kzwSort','name']])if($(id))$(id).value=value;
+  for(const [id,value] of [['kzwUniverse','all'],['kzwRarity','all'],['kzwSort','rarity']])if($(id))$(id).value=value;
   if(options.render!==false&&document.body.dataset.tab==='wiki')renderWiki('');
 }
 function kzwUniverseOptions(){
@@ -3920,62 +3934,103 @@ function kzViewerUpdate(){
   const viewer=$('cardViewer'),flip=$('kzViewerFlip'),zoom=$('kzViewerZoom');if(!viewer)return;
   viewer.classList.toggle('kz-zoomed',kzViewerZoom);viewer.querySelector('.fcard')?.classList.toggle('flipped',kzViewerBack);
   viewer.querySelector('.ff')?.setAttribute('aria-hidden',String(kzViewerBack));viewer.querySelector('.fb')?.setAttribute('aria-hidden',String(!kzViewerBack));
-  viewer.querySelectorAll('.fb a').forEach(link=>link.tabIndex=kzViewerBack?0:-1);
+  viewer.querySelectorAll('.fb a,.fb button').forEach(link=>link.tabIndex=kzViewerBack?0:-1);
   if(flip){flip.textContent=kzViewerBack?'Voir le recto':'Voir le verso';flip.setAttribute('aria-pressed',String(kzViewerBack));}
   if(zoom){zoom.textContent='Illustration entière';zoom.removeAttribute('aria-pressed');}
   if($('kzViewerStatus'))$('kzViewerStatus').textContent=(kzViewerBack?'Verso':'Recto')+' · '+(kzViewerZoom?'Agrandissement activé':'Taille normale');
 }
-openDetail=function(card){
+// Keep the original drag / tilt / flip viewer for direct card clicks.
+const kzInteractiveCardOpen = openDetail;
+function openCardViewer(card){
   if(!card)return;
-  if(!$('detailBackdrop').classList.contains('open'))kzViewerReturn=document.activeElement;
-  state.activeCharacter=card;kzViewerBack=false;kzViewerZoom=false;
-  const info=ownInfo(card.id),rarity=rarityFor(card),root=$('detailBackdrop'),reserved=collectionStatus().reserved[card.id]||0;
-  root.classList.add('kz-card-viewer');root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Carte : '+card.name);root.style.setProperty('--viewer-glow',rarity.color);
-  $('detailTitle').textContent=card.name;$('detailSubtitle').textContent=card.series;
-  const acquired=info.since>0&&Number.isFinite(new Date(info.since).getTime())?new Date(info.since).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
-  const owned=info.count>0?info.count+' exemplaire'+(info.count>1?'s disponibles':' disponible'):reserved?'Exemplaire réservé au marché':'À découvrir dans un booster';
-  $('detailContent').innerHTML='<div class="kz-viewer-head"><div><small>COLLECTION · '+esc(rarity.name)+'</small><h2>'+esc(card.name)+'</h2><p>'+esc(card.series)+'</p></div><button type="button" class="kr-detail-close" id="viewerClose" aria-label="Fermer la carte">×</button></div><div class="ka-viewer-layout"><div class="kz-viewer-stage"><div class="ka-viewer-halo" aria-hidden="true"></div><span class="ka-viewer-seal" aria-hidden="true">KIZUNA<br>COLLECTION</span><div class="bigcard" id="cardViewer">'+cardMarkup(card,{flip:true,count:info.count,since:info.since})+'</div></div><div class="ka-viewer-dossier"><span class="ka-viewer-kicker">FICHE DE COLLECTION</span><p class="ka-viewer-number">N° <strong>'+String(card.rank).padStart(4,'0')+'</strong><span> / '+String(LOCAL_CARDS.length).padStart(4,'0')+'</span></p><p class="ka-viewer-owned">'+esc(owned)+'</p><dl class="ka-viewer-facts"><div><dt>Univers</dt><dd>'+esc(card.series)+'</dd></div><div><dt>Rareté</dt><dd class="ka-viewer-rarity">'+esc(rarity.name)+'</dd></div>'+(card.native?'<div><dt>Nom original</dt><dd>'+esc(card.native)+'</dd></div>':'')+(reserved?'<div><dt>Au marché</dt><dd>'+reserved+' exemplaire'+(reserved>1?'s réservés':' réservé')+'</dd></div>':'')+(acquired?'<div><dt>Première obtention disponible</dt><dd>'+esc(acquired)+'</dd></div>':'')+'</dl><p class="ka-viewer-help">Retourne la carte pour consulter ses caractéristiques. Clique sur l’illustration ou utilise les commandes ci-dessous.</p><div class="kz-viewer-controls"><button class="soft-btn" id="kzViewerFlip" type="button" aria-pressed="false">Voir le verso</button><button class="soft-btn" id="kzViewerZoom" type="button" aria-pressed="false">Agrandir</button></div><p class="kz-viewer-caption" id="kzViewerStatus" role="status"></p></div></div>';
-  if(card.rarity==='Mythique'){const b=document.createElement('button');b.type='button';b.className='soft-btn';b.dataset.kmOpen=card.id;b.textContent='Éveil mythique';$('detailContent').querySelector('.kz-viewer-controls').append(b);}
-  root.classList.add('open');document.body.style.overflow='hidden';kzViewerUpdate();
-  $('viewerClose').addEventListener('click',()=>closeBackdrop('detailBackdrop'));
+  kzViewerReturn=document.activeElement;kzViewerBack=false;kzViewerZoom=false;
+  kzInteractiveCardOpen(card);
+  const root=$('detailBackdrop'),content=$('detailContent'),viewer=$('cardViewer');if(!root||!content||!viewer)return;
+  root.classList.add('kz-card-viewer');root.setAttribute('aria-label','Carte de '+card.name);
+  const head=document.createElement('div');head.className='kz-viewer-head';
+  head.innerHTML='<div><small>'+esc(card.rarity)+'</small><h2>'+esc(card.name)+'</h2><p>'+esc(card.series)+'</p></div>';
+  head.append($('viewerClose'));content.prepend(head);
+  const stage=document.createElement('div');stage.className='kz-viewer-stage';viewer.before(stage);stage.append(viewer);
+  content.querySelector('.detail-hint')?.remove();
+  const controls=document.createElement('div');controls.className='kz-viewer-controls';
+  controls.innerHTML='<button type="button" id="kzViewerFlip">Voir le verso</button><button type="button" id="kzViewerZoom">Illustration entière</button>';
+  content.append(controls);
+  const status=document.createElement('p');status.id='kzViewerStatus';status.className='kz-viewer-caption';status.setAttribute('aria-live','polite');content.append(status);
   $('kzViewerFlip').addEventListener('click',()=>{kzViewerBack=!kzViewerBack;kzViewerUpdate();});
-  $('kzViewerZoom').addEventListener('click',()=>{
-    let art=$('kdArtwork');if(!art){art=document.createElement('dialog');art.id='kdArtwork';document.body.append(art);}
-    art.setAttribute('aria-label','Illustration entière de '+card.name);
-    art.innerHTML='<p>'+esc(card.name)+'</p><button type="button" class="soft-btn" data-ui-kind="compact">Fermer ×</button><img src="'+esc(card.image)+'" alt="'+esc(card.name)+'" referrerpolicy="no-referrer">';
-    const close=()=>{art.close();$('kzViewerZoom')?.focus({preventScroll:true});};
-    art.querySelector('img').addEventListener('error',function(){if(this.dataset.unavailable)return;this.dataset.unavailable='true';this.src='assets/rebirth/card-unavailable.svg';art.querySelector('p').textContent=card.name+' · illustration indisponible';});
-    art.querySelector('button').onclick=close;art.oncancel=event=>{event.preventDefault();close();};art.showModal();
-  });
-  $('cardViewer').addEventListener('click',event=>{if(event.target.closest('a,button'))return;event.preventDefault();event.stopPropagation();kzViewerBack=!kzViewerBack;kzViewerUpdate();});
-  $('viewerClose').focus({preventScroll:true});
+  $('kzViewerZoom').addEventListener('click',event=>kzOpenArtwork(card,event.currentTarget));
+  viewer.addEventListener('click',()=>{kzViewerBack=viewer.querySelector('.fcard').classList.contains('flipped');kzViewerUpdate();});
+  kzViewerUpdate();$('viewerClose').focus({preventScroll:true});
+}
+
+document.addEventListener('click',event=>{
+  const link=event.target.closest('[data-kz-open-profile]');
+  if(!link)return;
+  event.preventDefault();
+  const card=LOCAL_CARDS.find(row=>String(row.id)===String(link.dataset.kzOpenProfile));
+  if(card)openDetail(card);
+});
+openDetail=function(card,source){
+  if(!card)return;
+  const tab=document.body.dataset.tab||'';
+  const origin=source||(
+    tab==='col'||tab==='collection'?'collection':
+    tab==='market'?'market':
+    tab==='boosts'||tab==='booster'?'booster':
+    tab==='universes'||tab==='universe'?'universes':
+    tab==='home'||tab==='lobby'?'home':'wiki'
+  );
+  state.activeCharacter=card;
+  if($('detailBackdrop')?.classList.contains('open'))closeBackdrop('detailBackdrop');
+  openCharacterProfile(card,origin);
 };
+document.addEventListener('error',event=>{
+  const img=event.target;
+  if(!(img instanceof HTMLImageElement)||!img.dataset.kzFallback||img.dataset.kzFallbackUsed)return;
+  img.dataset.kzFallbackUsed='true';
+  img.src=img.dataset.kzFallback;
+},true);
 const kzViewerPriorClose=closeBackdrop;
 closeBackdrop=function(id){const restore=id==='detailBackdrop'&&$('detailBackdrop')?.classList.contains('open');kzViewerPriorClose(id);if($('kyaraProfileOverlay')?.classList.contains('open'))document.body.style.overflow='hidden';if(restore&&kzViewerReturn?.isConnected){kzViewerReturn.focus({preventScroll:true});kzViewerReturn=null;}};
 document.addEventListener('keydown',event=>{
-  if($('kdArtwork')?.open){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').close();$('kzViewerZoom')?.focus({preventScroll:true});}else if(event.key==='Tab'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').querySelector('button').focus();}return;}
+  if($('kdArtwork')?.open){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').close();}else if(event.key==='Tab'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').querySelector('button').focus();}return;}
   const root=$('detailBackdrop');if(!root?.classList.contains('open')||!root.classList.contains('kz-card-viewer'))return;
   if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();closeBackdrop('detailBackdrop');return;}
   if(event.key==='Tab'){const nodes=kzViewerFocusable($('detailContent'));if(!nodes.length)return;const first=nodes[0],last=nodes.at(-1);if(event.shiftKey&&(document.activeElement===first||!nodes.includes(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!nodes.includes(document.activeElement))){event.preventDefault();first.focus();}}
 },true);
 
-// Catalogue data are always available. Live AniList enrichment stays in the staff workflow.
-cpFetchProfile=async function(){return null;};
+// Owned character dossiers may enrich the local catalogue with public AniList biography and appearance data.
 const kzOriginalProfileOpen=openCharacterProfile;
 openCharacterProfile=function(card,source='wiki',options={}){
   if(!$('kyaraProfileOverlay')?.classList.contains('open'))kzProfileReturn=document.activeElement;
   kzOriginalProfileOpen(card,source,options);
   const root=$('kyaraProfileOverlay');if(!root)return;
+  if($('cpKicker'))$('cpKicker').textContent='KIZUNA · FICHE PERSONNAGE';
   root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Fiche de '+card.name);
-  root.querySelectorAll('[data-kz-profile-inspect]').forEach(node=>node.remove());
-  const button=document.createElement('button');button.type='button';button.className='soft-btn kz-profile-enlarge';button.textContent='Examiner la carte';button.dataset.kzProfileInspect=String(card.id);
-  root.querySelector('.cp-hero-inner > div')?.append(button);
 };
+
+// Catalogue artwork is public, even before ownership. Inventory and biography
+// unlocks are distinct; this view never fabricates an owned copy.
+if(typeof cpLockedMarkup==='function')cpLockedMarkup=function(card,source,info,r){
+ const back=cpReturnLabel(source);
+ return `<div class="cp-main"><section class="cp-panel"><div class="cp-section-id">01 · CATALOGUE</div><h2 class="cp-section-title">À la rencontre de ${esc(card.name)}</h2><div class="cp-copy"><p>${esc(card.name)} appartient à l’univers <strong>${esc(card.series)}</strong>.</p><p>Cette carte ne fait pas encore partie de ta collection. Tu peux découvrir son illustration, sa rareté et ses liens.</p></div><div class="cp-actions"><button class="cp-action primary" type="button" data-cp-action="boosters">Voir les boosters</button><button class="cp-action" type="button" data-cp-action="return">${esc(back)}</button></div></section>${cpRelatedMarkup(card,r)}${kaMarketProfilePanel(card,r)}</div><aside class="cp-side"><div class="cp-side-inner"><div class="cp-card-art"><img src="${esc(kzPortraitForCard(card))}" alt="Illustration de ${esc(card.name)}" data-kz-fallback="${esc(card.imageFallback||'')}" decoding="async"><span class="cp-card-name">${esc(card.name)}</span><span class="cp-card-rarity">${esc(LET[card.rarity]||'C')}</span></div><div class="cp-tags"><span class="cp-tag">${esc(r.name)}</span><span class="cp-tag">Non obtenue</span></div><div class="cp-actions"><button class="cp-action" type="button" data-kv3-art="${esc(card.id)}">Illustration entière</button>${card.rarity==='Mythique'?'<button class="cp-action" type="button" data-km-open="'+esc(card.id)+'">Découvrir ses Éveils</button>':''}</div></div></aside>`;
+};
+// The original implementation already includes the market panel. An older wrapper
+// added it a second time to owned dossiers.
+if(typeof kaBaseOwnedMarkup==='function')cpOwnedMarkup=kaBaseOwnedMarkup;
+function kzOpenArtwork(card,button){
+ const dialog=document.createElement('dialog');dialog.id='kdArtwork';dialog.className='kv3-artwork-dialog';dialog.setAttribute('aria-label','Illustration de '+card.name);
+ dialog.innerHTML='<button type="button" aria-label="Fermer l’illustration">×</button><img src="'+esc(kzPortraitForCard(card))+'" alt="'+esc(card.name)+'">';document.body.append(dialog);
+ dialog.querySelector('button').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{dialog.remove();button.focus();},{once:true});dialog.showModal();
+}
+document.addEventListener('click',event=>{
+ const button=event.target.closest('[data-kv3-art]');if(!button)return;
+ const card=LOCAL_CARDS.find(c=>String(c.id)===button.dataset.kv3Art);if(card)kzOpenArtwork(card,button);
+});
 const kzOriginalProfileHide=cpHideProfile;
 cpHideProfile=function(){const open=$('kyaraProfileOverlay')?.classList.contains('open');kzOriginalProfileHide();if(open&&kzProfileReturn?.isConnected){kzProfileReturn.focus({preventScroll:true});kzProfileReturn=null;}};
-document.addEventListener('click',event=>{const button=event.target.closest('[data-kz-profile-inspect]');if(!button)return;const card=LOCAL_CARDS.find(row=>String(row.id)===button.dataset.kzProfileInspect);if(card)openDetail(card);});
+document.addEventListener('click',event=>{const button=event.target.closest('[data-kz-profile-inspect]');if(!button)return;const card=LOCAL_CARDS.find(row=>String(row.id)===button.dataset.kzProfileInspect);if(card)openCardViewer(card);});
 document.addEventListener('keydown',event=>{
-  const root=$('kyaraProfileOverlay');if(!root?.classList.contains('open')||$('detailBackdrop')?.classList.contains('open'))return;
+  const root=$('kyaraProfileOverlay');if($('kdArtwork')?.open||!root?.classList.contains('open')||$('detailBackdrop')?.classList.contains('open'))return;
   if(event.key==='Tab'){const nodes=kzViewerFocusable(root),first=nodes[0],last=nodes.at(-1);if(!first)return;if(event.shiftKey&&(document.activeElement===first||!root.contains(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!root.contains(document.activeElement))){event.preventDefault();first.focus();}}
 },true);
 
@@ -3986,7 +4041,17 @@ kaMarketProfilePanel=function(card,r){
   const w=actual.filter(row=>row.at>=week),m=actual.filter(row=>row.at>=month),visible=actual.filter(row=>row.at>=cutoff);
   const median=rows=>rows.length?fmt(kaMedian(rows.map(row=>row.value)))+' ◆':'—';
   const chart=visible.length>=2?kaChartSvg(visible,r?.color||'#d9b86f',165):'<p class="kz-price-empty">'+(visible.length?'Une vente enregistrée sur cette période. Le graphique apparaîtra à partir de deux ventes.':'Aucune vente enregistrée sur cette période.')+'</p>';
-  return '<section class="cp-panel cp-market-panel"><div class="cp-section-id">MARCHÉ · HISTORIQUE LOCAL</div><div class="cp-market-title-row"><h2 class="cp-section-title">Ventes constatées</h2><div class="ka-range-toggle" role="group" aria-label="Période du graphique">'+[7,30].map(days=>'<button type="button" data-ka-range="'+days+'" data-ka-range-card="'+esc(card.id)+'" class="'+(kyaraMarketChartRange===days?'active':'')+'" aria-pressed="'+(kyaraMarketChartRange===days)+'">'+days+' j</button>').join('')+'</div></div><div class="cp-market-stats"><div><span>Médiane 7 j</span><b>'+median(w)+'</b></div><div><span>Médiane 30 j</span><b>'+median(m)+'</b></div><div><span>Ventes 30 j</span><b>'+fmt(m.length)+'</b></div></div>'+chart+'<p class="cp-market-foot">Transactions enregistrées dans ton espace de jeu. Les prix demandés dans les annonces ne sont pas des ventes conclues.</p><div class="cp-market-actions"><button class="cp-action primary" type="button" data-cp-market-list="'+esc(card.id)+'">Voir les annonces</button><button class="cp-action" type="button" data-cp-toggle-wishlist="'+esc(card.id)+'">'+(kyaraMarketWishlistIds.includes(String(card.id))?'Retirer de mes envies':'Ajouter à mes envies')+'</button></div></section>';
+  return '<section class="cp-panel cp-market-panel"><div class="cp-section-id">MARCHÉ · HISTORIQUE DES PRIX</div><div class="cp-market-title-row"><h2 class="cp-section-title">Cote de la carte</h2><div class="ka-range-toggle" role="group" aria-label="Période du graphique">'+[7,30].map(days=>'<button type="button" data-ka-range="'+days+'" data-ka-range-card="'+esc(card.id)+'" class="'+(kyaraMarketChartRange===days?'active':'')+'" aria-pressed="'+(kyaraMarketChartRange===days)+'">'+days+' j</button>').join('')+'</div></div><div class="cp-market-stats"><div><span>Médiane 7 j</span><b>'+median(w)+'</b></div><div><span>Médiane 30 j</span><b>'+median(m)+'</b></div><div><span>Ventes 30 j</span><b>'+fmt(m.length)+'</b></div></div>'+chart+'<p class="cp-market-foot">Transactions enregistrées dans ton espace de jeu. Les prix demandés dans les annonces ne sont pas des ventes conclues.</p><div class="cp-market-actions"><button class="cp-action primary" type="button" data-cp-market-list="'+esc(card.id)+'">Voir les annonces</button><button class="cp-action" type="button" data-cp-toggle-wishlist="'+esc(card.id)+'">'+(kyaraMarketWishlistIds.includes(String(card.id))?'Retirer de mes envies':'Ajouter à mes envies')+'</button></div></section>';
+};
+
+/* Card-back action: open the character dossier inside Kizuna. */
+const kzOriginalCardBackMarkup = backMarkup;
+backMarkup = function(card, info) {
+  const markup = kzOriginalCardBackMarkup(card, info);
+  return markup.replace(
+    /<a href="#character\/[^"]+" data-kz-open-profile="([^"]+)" aria-label="([^"]+)">Voir la fiche du perso<\/a>/,
+    '<button type="button" class="kz-card-profile-link" data-kz-open-profile="$1" aria-label="$2" aria-haspopup="dialog">Voir la fiche du perso <span aria-hidden="true">↗</span></button>'
+  );
 };
 
 
@@ -4031,10 +4096,10 @@ tickFree=function(){if(keBlocked())return;if(!keServer())return keLocalTick();co
 const keLocalOpen=openBoosterNow;
 openBoosterNow=async function(n){
  if(keBlocked()){toast('Attends la connexion de ton compte.');return;}
- if(!keServer()){if(state.selectedBooster==='nexus:weekly'){toast('Connecte-toi pour ouvrir ce coffret.');return;}return keLocalOpen(n);}
+ if(!keServer()){if(state.selectedBooster==='nexus:weekly'||window.KizunaV3?.event?.(state.selectedBooster)){toast('Connecte-toi pour ouvrir ce coffret.');return;}return keLocalOpen(n);}
  if(state.opening)return;const user=keAccount().user.id,token=state.packToken,counts=ownCounts();state.opening=true;
  try{
-  const data=await window.KizunaAccount.economyRequest('open',{count:Number(n),booster:state.selectedBooster});
+  const data=await window.KizunaAccount.economyRequest('open',{count:Number(n),booster:state.selectedBooster,...(window.KizunaV3?.quoteStamp?.(state.selectedBooster)||{})});
   if(keAccount()?.user?.id!==user||state.packToken!==token)return;
   const cards=data.result.cards.map((copy,index)=>{const c=LOCAL_CARDS.find(c=>String(c.id)===copy.id);return c?{...c,kzResonance:(data.result.resonance||[]).find(r=>Number(r.index)===index),kzNexusResonance:data.result.nexus?.bonuses?.resonanceAnimation===true}:null;});
   if(cards.some(c=>!c)){toast('Les cartes ont été ajoutées. Recharge le catalogue pour les afficher.');return;}
@@ -4090,6 +4155,43 @@ kaSettleExpiredSales=function(){if(!keProtected())return keOldSales();};
 kyaraMarketClaimPending=function(){if(!keProtected())return keOldCredits();};
 const keOldMarketRender=renderKyaraMarket;
 renderKyaraMarket=function(){if(keServer()){window.KizunaExchange?.show?.();return;}return keOldMarketRender();};
+
+
+/* Optional online odds. The base engine remains unchanged while V3 is disabled. */
+const kv3Available=kzAvailablePacks;
+kzAvailablePacks=function(){return window.KizunaV3?.available?.(state.selectedBooster,{chakra,stock})??kv3Available();};
+const kv3CostLabel=packCostLabel;
+packCostLabel=function(n){const e=window.KizunaV3?.event?.(state.selectedBooster);return e?.source==='chakra'?fmt(Number(e.price)*n)+' Chakra':e?.source==='nexus'?n+' coffret(s) Nexus':kv3CostLabel(n);};
+const kv3RenderPack=renderKyaraPackSelection;
+const kv3Online=()=>window.KIZUNA_CONFIG?.v3Economy===true&&!!window.KizunaAccount?.getSnapshot?.().user;
+let kv3ReadyToken=-1;
+function kv3GateOpening(){if(kv3Online()&&kv3ReadyToken!==state.packToken)$('kyaraRevealRoot')?.querySelectorAll('[data-kr-action="open-pack"],[data-kr-action="drag-pack"]').forEach(b=>b.disabled=true);}
+const kv3Quantity=updateKyaraQuantity;
+updateKyaraQuantity=function(n){kv3Quantity(n);kv3GateOpening();};
+const kv3Start=startKyaraOpening;
+startKyaraOpening=async function(){if(kv3Online()&&kv3ReadyToken!==state.packToken){toast('Attends la vérification des probabilités avant d’ouvrir.');return;}return kv3Start();};
+const kv3Panel=renderPanel;
+renderPanel=function(){kv3Panel();if(kv3Online()){$('kBars').innerHTML='<p>Les taux personnels et les garanties seront vérifiés avant de confirmer l’ouverture.</p>';const edition=window.KizunaV3?.event?.(state.selectedBooster);if(edition)$('kOpenSub').textContent=kzAvailablePacks()>0?edition.source==='chakra'?fmt(edition.price)+' Chakra par paquet':edition.source==='nexus'?'Réserve de coffrets Nexus':'Réserve de boosters':'Édition indisponible ou réserve insuffisante';}};
+renderKyaraPackSelection=function(n){
+ kv3ReadyToken=-1;
+ kv3RenderPack(n);
+ const root=$('kyaraRevealRoot'),buttons=[...root.querySelectorAll('[data-kr-action="open-pack"],[data-kr-action="drag-pack"]')];
+ if(!kv3Online())return;
+ const booster=state.selectedBooster,token=state.packToken;
+ buttons.forEach(b=>b.disabled=true);
+ const box=document.createElement('details');box.className='kv3-opening-odds';box.open=true;box.innerHTML='<summary>Probabilités de la prochaine ouverture</summary><p role="status">Vérification des taux et des garanties…</p>';
+ root.querySelector('.kr-pack-controls').prepend(box);
+ window.KizunaV3.getQuote(booster).then(q=>{
+  if(token!==state.packToken||!box.isConnected)return;
+  const odds=Object.fromEntries(rarityData.map(r=>[r.name,1-q.slots.reduce((p,s)=>p*(1-(s[r.name]||0)),1)]));
+  const bonus=(value,model)=>esc(value)+(model==='points'?' point(s) de pourcentage':' % relatif');
+  box.innerHTML='<summary>Probabilités du prochain paquet</summary><p>Au moins une carte de chaque rareté, garanties incluses. En ouverture multiple, les compteurs et les taux évoluent après chaque paquet.</p><ul>'+rarityData.map(r=>'<li>'+esc(r.name)+' : <b>'+formatBoosterChance(100*odds[r.name])+'</b></li>').join('')+'</ul><p>Base mythique, carte sans garantie : 0,1 %. Bonus du booster : '+bonus(q.boosterBonus,q.boosterModel)+'. Fortune : '+(q.fortuneEnabled?'palier '+q.fortuneTier+', +'+bonus(q.fortuneBonus,q.fortuneModel):'aucun supplément appliqué')+'.</p><p>Rare ou mieux garantie · Légendaire au plus tard dans '+q.legendaryRemaining+' paquets · Mythique au plus tard dans '+q.mythicRemaining+' paquets.</p>';
+  kv3ReadyToken=token;
+  box.insertAdjacentHTML('beforeend','<p>Garanties par emplacement : '+q.minimumLevels.map(level=>esc(rarityData.find(r=>r.level===level)?.name||level)+' ou mieux').join(' · ')+'.</p>');
+  buttons.forEach(b=>b.disabled=kzAvailablePacks()<state.requestedBoosters);
+ }).catch(error=>{if(token===state.packToken&&box.isConnected)box.innerHTML='<summary>Probabilités indisponibles</summary><p>'+esc(error.message)+'. Ferme cet aperçu puis réessaie.</p>';});
+};
+window.addEventListener('kizuna:v3-change',()=>{if(!state.opening){renderPanel();renderPacks();}});
 /* KIZUNA_FEATURE_VIEWS_END */
 /* KIZUNA_GAME_BRIDGE_BEGIN */
 /* Injected at the end of the game IIFE, after catalogue and market definitions. */
@@ -4210,7 +4312,8 @@ function kgbMarket(input,byId){
 }
 function kgbCloseActiveViews(){
   state.packToken++;state.revealToken++;state.revealAnimating=false;state.opening=false;state.pendingReveal=null;state.revealNew=[];state.revealIndex=0;
-  if(typeof cpCloseProfile==='function'&&$('kyaraProfileOverlay')?.classList.contains('open'))cpCloseProfile();
+  // Loading a snapshot must not navigate away from a character deep link.
+  if(typeof cpHideProfile==='function'&&$('kyaraProfileOverlay')?.classList.contains('open'))cpHideProfile();
   if(typeof closeBackdrop==='function'){closeBackdrop('revealBackdrop');closeBackdrop('detailBackdrop');}
   if(typeof kyaraMarketCloseSellPanel==='function')kyaraMarketCloseSellPanel();
   $('kyaraAuctionBackdrop')?.classList.remove('open');
@@ -4258,6 +4361,7 @@ function kgbApplySnapshot(snapshot,options={}){
     window.KizunaWiki?.reset?.({render:false});}
     saveStore();saveStock();saveChakra();kyaraMarketSave();kaWishlistSave();kgbPersistExtras();kgbRefresh();
   }finally{gameApplying=wasApplying;}
+  if(!options.preserveViews&&typeof cpRestoreProfileRoute==='function')cpRestoreProfileRoute();
   if(options.silent===false&&!gameApplying)notifyGameChange();
   return kgbSnapshot();
 }
@@ -4415,29 +4519,31 @@ if(kgbInitialRoutes[location.hash])showTab(kgbInitialRoutes[location.hash]);
 <script src="kizuna-config.js" defer></script>
 <script src="vendor/supabase.js" defer></script>
 <script src="kizuna-backend.js" defer></script>
-<script src="kizuna-account.js" defer></script>
+<script src="kizuna-account.js?v=3.3" defer></script>
 <script src="kizuna-profile.js" defer></script>
 <script src="kizuna-albums.js" defer></script>
 <script src="kizuna-catalogue.js" defer></script>
 <script src="kizuna-staff.js" defer></script>
-<script src="kizuna-home.js" defer></script>
-<script src="kizuna-shell.js" defer></script>
+<script src="kizuna-home.js?v=3.3" defer></script>
+<script src="kizuna-shell.js?v=3.3" defer></script>
 <script src="kizuna-adventure-data.js" defer></script>
 <script src="kizuna-adventure-rules.js" defer></script>
 <script src="kizuna-mythic-art.js" defer></script>
 <script src="kizuna-mythic.js" defer></script>
-<script src="kizuna-anomalies.js" defer></script>
+<script src="kizuna-anomalies.js?v=3.3" defer></script>
 <script src="kizuna-anomalies-admin.js" defer></script>
 <script src="kizuna-studio.js" defer></script>
-<script src="kizuna-adventure.js" defer></script>
+<script src="kizuna-adventure.js?v=3.3" defer></script>
 <script src="kizuna-adventure-admin.js" defer></script>
 <script src="kizuna-exchange.js" defer></script>
 <script src="kizuna-market-inbox.js" defer></script>
 <script src="kizuna-studio-admin.js" defer></script>
 <script src="kizuna-play.js" defer></script>
-<script src="kizuna-nexus.js" defer></script>
-<script src="kizuna-nexus-admin.js" defer></script>
-<script src="kizuna-art.js" defer></script>
-<script src="kizuna-ui.js" defer></script>
+<script src="kizuna-nexus.js?v=3.3" defer></script>
+<script src="kizuna-nexus-admin.js?v=3.3" defer></script>
+<script src="kizuna-art.js?v=3.3" defer></script>
+<script src="kizuna-ui.js?v=3.3" defer></script>
+<script src="kizuna-navigation.js?v=3.3" defer></script>
+<script src="kizuna-v3-economy.js?v=3.3" defer></script>
 </body>
 </html>

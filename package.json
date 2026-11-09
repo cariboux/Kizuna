@@ -6,9 +6,13 @@
   "description": "Migration Netlify : site conserve, medias regroupes, bibliotheques deja compilees.",
   "scripts": {
     "build": "python3 scripts/build-netlify.py",
-    "test:startup": "node --test scripts/test-startup.cjs"
+    "test:startup": "node --test scripts/test-startup.cjs",
+    "test:v3": "node --test scripts/test-startup.cjs scripts/test-v3-navigation.cjs && node scripts/test-v3-economy.mjs && node scripts/test-v3-engine.mjs"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.14"
   }
 }

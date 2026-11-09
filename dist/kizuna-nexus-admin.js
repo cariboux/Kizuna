@@ -4,7 +4,7 @@
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=v=>JSON.parse(JSON.stringify(v));
  const $=id=>document.getElementById(id);
- const branches=[['invocation','Invocation','#edc47b'],['destin','Destin','#c2a2ff'],['resonance','Résonance','#f49bc2'],['collection','Collection','#89e4c3'],['prestige','Prestige','#a3cfff']];
+ const branches=[['invocation','Invocation','#edc47b'],['destin','Destin','#c2a2ff'],['resonance','Éveil','#f49bc2'],['collection','Collection','#89e4c3'],['prestige','Trésors','#a3cfff']];
  const rarities=['Commun','Peu commune','Rare','Épique','Légendaire','Mythique'];
  const sections=[['overview','Pilotage'],['nodes','Améliorations'],['economy','Bonus & limites'],['weekly','Coffret hebdomadaire'],['rewards','Albums & auras'],['history','Versions']];
  const scalarFields=[

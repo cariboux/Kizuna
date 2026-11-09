@@ -86,5 +86,5 @@
  document.addEventListener('change',e=>{if(e.target.id==='kanMotion'){motion=e.target.checked;document.documentElement.dataset.kanMotion=motion?'on':'off';try{localStorage.setItem('kizuna_anomaly_motion',motion?'on':'off');}catch{}}if(e.target.matches('[data-kan-equip]'))request('equip',{kind:e.target.dataset.kanEquip,key:e.target.value});});document.addEventListener('kizuna:account-change',sync);window.addEventListener('kizuna:economy-change',()=>refresh(true));window.addEventListener('focus',()=>{if(!loading)refresh();});
  new MutationObserver(schedule).observe(document.querySelector('main'),{childList:true,subtree:true});setInterval(()=>{if(!document.hidden)tick();},1000);
  window.KizunaAnomalies={renderInto,refresh,getSnapshot:()=>({events:clone(events),rewards:clone(rewards),selection:clone(selection),loading,owner}),preview:config=>eventMarkup({id:'preview',config},true),open:()=>window.KizunaAdventure?.navigate('events')};
- const route=()=>{if(location.hash==='#anomalies')window.KizunaAdventure?.navigate('events');};window.addEventListener('hashchange',route);document.addEventListener('DOMContentLoaded',route);sync();schedule();
+ sync();schedule();
 })();

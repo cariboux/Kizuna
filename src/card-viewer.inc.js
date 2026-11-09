@@ -5,7 +5,7 @@ function kzViewerUpdate(){
   const viewer=$('cardViewer'),flip=$('kzViewerFlip'),zoom=$('kzViewerZoom');if(!viewer)return;
   viewer.classList.toggle('kz-zoomed',kzViewerZoom);viewer.querySelector('.fcard')?.classList.toggle('flipped',kzViewerBack);
   viewer.querySelector('.ff')?.setAttribute('aria-hidden',String(kzViewerBack));viewer.querySelector('.fb')?.setAttribute('aria-hidden',String(!kzViewerBack));
-  viewer.querySelectorAll('.fb a').forEach(link=>link.tabIndex=kzViewerBack?0:-1);
+  viewer.querySelectorAll('.fb a,.fb button').forEach(link=>link.tabIndex=kzViewerBack?0:-1);
   if(flip){flip.textContent=kzViewerBack?'Voir le recto':'Voir le verso';flip.setAttribute('aria-pressed',String(kzViewerBack));}
   if(zoom){zoom.textContent='Illustration entière';zoom.removeAttribute('aria-pressed');}
   if($('kzViewerStatus'))$('kzViewerStatus').textContent=(kzViewerBack?'Verso':'Recto')+' · '+(kzViewerZoom?'Agrandissement activé':'Taille normale');
@@ -14,7 +14,23 @@ function kzViewerUpdate(){
 const kzInteractiveCardOpen = openDetail;
 function openCardViewer(card){
   if(!card)return;
+  kzViewerReturn=document.activeElement;kzViewerBack=false;kzViewerZoom=false;
   kzInteractiveCardOpen(card);
+  const root=$('detailBackdrop'),content=$('detailContent'),viewer=$('cardViewer');if(!root||!content||!viewer)return;
+  root.classList.add('kz-card-viewer');root.setAttribute('aria-label','Carte de '+card.name);
+  const head=document.createElement('div');head.className='kz-viewer-head';
+  head.innerHTML='<div><small>'+esc(card.rarity)+'</small><h2>'+esc(card.name)+'</h2><p>'+esc(card.series)+'</p></div>';
+  head.append($('viewerClose'));content.prepend(head);
+  const stage=document.createElement('div');stage.className='kz-viewer-stage';viewer.before(stage);stage.append(viewer);
+  content.querySelector('.detail-hint')?.remove();
+  const controls=document.createElement('div');controls.className='kz-viewer-controls';
+  controls.innerHTML='<button type="button" id="kzViewerFlip">Voir le verso</button><button type="button" id="kzViewerZoom">Illustration entière</button>';
+  content.append(controls);
+  const status=document.createElement('p');status.id='kzViewerStatus';status.className='kz-viewer-caption';status.setAttribute('aria-live','polite');content.append(status);
+  $('kzViewerFlip').addEventListener('click',()=>{kzViewerBack=!kzViewerBack;kzViewerUpdate();});
+  $('kzViewerZoom').addEventListener('click',event=>kzOpenArtwork(card,event.currentTarget));
+  viewer.addEventListener('click',()=>{kzViewerBack=viewer.querySelector('.fcard').classList.contains('flipped');kzViewerUpdate();});
+  kzViewerUpdate();$('viewerClose').focus({preventScroll:true});
 }
 
 document.addEventListener('click',event=>{
@@ -47,7 +63,7 @@ document.addEventListener('error',event=>{
 const kzViewerPriorClose=closeBackdrop;
 closeBackdrop=function(id){const restore=id==='detailBackdrop'&&$('detailBackdrop')?.classList.contains('open');kzViewerPriorClose(id);if($('kyaraProfileOverlay')?.classList.contains('open'))document.body.style.overflow='hidden';if(restore&&kzViewerReturn?.isConnected){kzViewerReturn.focus({preventScroll:true});kzViewerReturn=null;}};
 document.addEventListener('keydown',event=>{
-  if($('kdArtwork')?.open){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').close();$('kzViewerZoom')?.focus({preventScroll:true});}else if(event.key==='Tab'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').querySelector('button').focus();}return;}
+  if($('kdArtwork')?.open){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').close();}else if(event.key==='Tab'){event.preventDefault();event.stopImmediatePropagation();$('kdArtwork').querySelector('button').focus();}return;}
   const root=$('detailBackdrop');if(!root?.classList.contains('open')||!root.classList.contains('kz-card-viewer'))return;
   if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();closeBackdrop('detailBackdrop');return;}
   if(event.key==='Tab'){const nodes=kzViewerFocusable($('detailContent'));if(!nodes.length)return;const first=nodes[0],last=nodes.at(-1);if(event.shiftKey&&(document.activeElement===first||!nodes.includes(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!nodes.includes(document.activeElement))){event.preventDefault();first.focus();}}
@@ -59,13 +75,33 @@ openCharacterProfile=function(card,source='wiki',options={}){
   if(!$('kyaraProfileOverlay')?.classList.contains('open'))kzProfileReturn=document.activeElement;
   kzOriginalProfileOpen(card,source,options);
   const root=$('kyaraProfileOverlay');if(!root)return;
+  if($('cpKicker'))$('cpKicker').textContent='KIZUNA · FICHE PERSONNAGE';
   root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Fiche de '+card.name);
 };
+
+// Catalogue artwork is public, even before ownership. Inventory and biography
+// unlocks are distinct; this view never fabricates an owned copy.
+if(typeof cpLockedMarkup==='function')cpLockedMarkup=function(card,source,info,r){
+ const back=cpReturnLabel(source);
+ return `<div class="cp-main"><section class="cp-panel"><div class="cp-section-id">01 · CATALOGUE</div><h2 class="cp-section-title">À la rencontre de ${esc(card.name)}</h2><div class="cp-copy"><p>${esc(card.name)} appartient à l’univers <strong>${esc(card.series)}</strong>.</p><p>Cette carte ne fait pas encore partie de ta collection. Tu peux découvrir son illustration, sa rareté et ses liens.</p></div><div class="cp-actions"><button class="cp-action primary" type="button" data-cp-action="boosters">Voir les boosters</button><button class="cp-action" type="button" data-cp-action="return">${esc(back)}</button></div></section>${cpRelatedMarkup(card,r)}${kaMarketProfilePanel(card,r)}</div><aside class="cp-side"><div class="cp-side-inner"><div class="cp-card-art"><img src="${esc(kzPortraitForCard(card))}" alt="Illustration de ${esc(card.name)}" data-kz-fallback="${esc(card.imageFallback||'')}" decoding="async"><span class="cp-card-name">${esc(card.name)}</span><span class="cp-card-rarity">${esc(LET[card.rarity]||'C')}</span></div><div class="cp-tags"><span class="cp-tag">${esc(r.name)}</span><span class="cp-tag">Non obtenue</span></div><div class="cp-actions"><button class="cp-action" type="button" data-kv3-art="${esc(card.id)}">Illustration entière</button>${card.rarity==='Mythique'?'<button class="cp-action" type="button" data-km-open="'+esc(card.id)+'">Découvrir ses Éveils</button>':''}</div></div></aside>`;
+};
+// The original implementation already includes the market panel. An older wrapper
+// added it a second time to owned dossiers.
+if(typeof kaBaseOwnedMarkup==='function')cpOwnedMarkup=kaBaseOwnedMarkup;
+function kzOpenArtwork(card,button){
+ const dialog=document.createElement('dialog');dialog.id='kdArtwork';dialog.className='kv3-artwork-dialog';dialog.setAttribute('aria-label','Illustration de '+card.name);
+ dialog.innerHTML='<button type="button" aria-label="Fermer l’illustration">×</button><img src="'+esc(kzPortraitForCard(card))+'" alt="'+esc(card.name)+'">';document.body.append(dialog);
+ dialog.querySelector('button').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{dialog.remove();button.focus();},{once:true});dialog.showModal();
+}
+document.addEventListener('click',event=>{
+ const button=event.target.closest('[data-kv3-art]');if(!button)return;
+ const card=LOCAL_CARDS.find(c=>String(c.id)===button.dataset.kv3Art);if(card)kzOpenArtwork(card,button);
+});
 const kzOriginalProfileHide=cpHideProfile;
 cpHideProfile=function(){const open=$('kyaraProfileOverlay')?.classList.contains('open');kzOriginalProfileHide();if(open&&kzProfileReturn?.isConnected){kzProfileReturn.focus({preventScroll:true});kzProfileReturn=null;}};
 document.addEventListener('click',event=>{const button=event.target.closest('[data-kz-profile-inspect]');if(!button)return;const card=LOCAL_CARDS.find(row=>String(row.id)===button.dataset.kzProfileInspect);if(card)openCardViewer(card);});
 document.addEventListener('keydown',event=>{
-  const root=$('kyaraProfileOverlay');if(!root?.classList.contains('open')||$('detailBackdrop')?.classList.contains('open'))return;
+  const root=$('kyaraProfileOverlay');if($('kdArtwork')?.open||!root?.classList.contains('open')||$('detailBackdrop')?.classList.contains('open'))return;
   if(event.key==='Tab'){const nodes=kzViewerFocusable(root),first=nodes[0],last=nodes.at(-1);if(!first)return;if(event.shiftKey&&(document.activeElement===first||!root.contains(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!root.contains(document.activeElement))){event.preventDefault();first.focus();}}
 },true);
 

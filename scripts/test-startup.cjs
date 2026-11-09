@@ -19,6 +19,7 @@ test('card viewer initializes inside the strict game scope and preserves card in
   const viewer = vm.runInContext(`(() => {
     'use strict';
     function openDetail(card) { inspect(card); }
+    function $() { return null; }
     function closeBackdrop() {}
     function openCharacterProfile() {}
     function cpHideProfile() {}

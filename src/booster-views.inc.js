@@ -181,7 +181,7 @@ document.addEventListener('keydown',event=>{
 // Display actual eligible characters; this selection never calls the draw engine.
 function kgBoosterCards(booster){const rows=booster.custom?LOCAL_CARDS.filter(c=>booster.cardIds.has(String(c.id))):LOCAL_CARDS.filter(c=>!booster.f||booster.f(c));return rows.slice().sort((a,b)=>(b.fav||0)-(a.fav||0)||a.rank-b.rank);}
 function kgBoosterArt(card){return card?(window.KizunaMythicArt?.get(card.id)?.levels[1]?.illustration?.image||card.image):'';}
-function kgPackImage(booster){const card=kgBoosterCards(booster)[0];return card?'<img class="kg-pack-image" src="'+esc(kgBoosterArt(card))+'" alt="" width="210" height="295" loading="lazy" decoding="async">':'';}
+function kgPackImage(booster){const edition=window.KizunaV3?.event?.(booster.id);if(edition?.image&&(/^(https:\/\/|assets\/)/.test(edition.image)))return '<img class="kg-pack-image" src="'+esc(edition.image)+'" alt="" width="500" height="750" decoding="async">';if(['shonen','seinen','isekai','shojo','sport','mecha'].includes(booster.id))return '<img class="kg-pack-image" src="assets/boosters-v3/'+booster.id+'.svg" alt="" width="500" height="750" decoding="async">';const card=kgBoosterCards(booster)[0];return card?'<img class="kg-pack-image" src="'+esc(kgBoosterArt(card))+'" alt="" width="210" height="295" loading="lazy" decoding="async">':'';}
 renderPacks=function(){
  const root=$('kGrid');if(!root)return;const left=root.scrollLeft,focused=document.activeElement?.closest('#kGrid .kpack')?.dataset.id;
  root.setAttribute('role','group');root.setAttribute('aria-label','Choisir un booster : parcours les paquets avec les flèches ou Tab');
