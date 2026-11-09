@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Migration Netlify : site conserve, medias regroupes, bibliotheques deja compilees.",
   "scripts": {
-    "build": "python3 scripts/build-netlify.py"
+    "build": "python3 scripts/build-netlify.py",
+    "test:startup": "node --test scripts/test-startup.cjs"
   },
   "engines": {
     "node": ">=22"

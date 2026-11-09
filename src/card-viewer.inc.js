@@ -12,10 +12,10 @@ function kzViewerUpdate(){
 }
 // Keep the original drag / tilt / flip viewer for direct card clicks.
 const kzInteractiveCardOpen = openDetail;
-openCardViewer=function(card){
+function openCardViewer(card){
   if(!card)return;
   kzInteractiveCardOpen(card);
-};
+}
 
 document.addEventListener('click',event=>{
   const link=event.target.closest('[data-kz-open-profile]');
