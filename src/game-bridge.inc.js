@@ -116,7 +116,8 @@ function kgbMarket(input,byId){
 }
 function kgbCloseActiveViews(){
   state.packToken++;state.revealToken++;state.revealAnimating=false;state.opening=false;state.pendingReveal=null;state.revealNew=[];state.revealIndex=0;
-  if(typeof cpCloseProfile==='function'&&$('kyaraProfileOverlay')?.classList.contains('open'))cpCloseProfile();
+  // Loading a snapshot must not navigate away from a character deep link.
+  if(typeof cpHideProfile==='function'&&$('kyaraProfileOverlay')?.classList.contains('open'))cpHideProfile();
   if(typeof closeBackdrop==='function'){closeBackdrop('revealBackdrop');closeBackdrop('detailBackdrop');}
   if(typeof kyaraMarketCloseSellPanel==='function')kyaraMarketCloseSellPanel();
   $('kyaraAuctionBackdrop')?.classList.remove('open');
@@ -164,6 +165,7 @@ function kgbApplySnapshot(snapshot,options={}){
     window.KizunaWiki?.reset?.({render:false});}
     saveStore();saveStock();saveChakra();kyaraMarketSave();kaWishlistSave();kgbPersistExtras();kgbRefresh();
   }finally{gameApplying=wasApplying;}
+  if(!options.preserveViews&&typeof cpRestoreProfileRoute==='function')cpRestoreProfileRoute();
   if(options.silent===false&&!gameApplying)notifyGameChange();
   return kgbSnapshot();
 }

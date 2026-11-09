@@ -9,10 +9,10 @@ tickFree=function(){if(keBlocked())return;if(!keServer())return keLocalTick();co
 const keLocalOpen=openBoosterNow;
 openBoosterNow=async function(n){
  if(keBlocked()){toast('Attends la connexion de ton compte.');return;}
- if(!keServer()){if(state.selectedBooster==='nexus:weekly'){toast('Connecte-toi pour ouvrir ce coffret.');return;}return keLocalOpen(n);}
+ if(!keServer()){if(state.selectedBooster==='nexus:weekly'||window.KizunaV3?.event?.(state.selectedBooster)){toast('Connecte-toi pour ouvrir ce coffret.');return;}return keLocalOpen(n);}
  if(state.opening)return;const user=keAccount().user.id,token=state.packToken,counts=ownCounts();state.opening=true;
  try{
-  const data=await window.KizunaAccount.economyRequest('open',{count:Number(n),booster:state.selectedBooster});
+  const data=await window.KizunaAccount.economyRequest('open',{count:Number(n),booster:state.selectedBooster,...(window.KizunaV3?.quoteStamp?.(state.selectedBooster)||{})});
   if(keAccount()?.user?.id!==user||state.packToken!==token)return;
   const cards=data.result.cards.map((copy,index)=>{const c=LOCAL_CARDS.find(c=>String(c.id)===copy.id);return c?{...c,kzResonance:(data.result.resonance||[]).find(r=>Number(r.index)===index),kzNexusResonance:data.result.nexus?.bonuses?.resonanceAnimation===true}:null;});
   if(cards.some(c=>!c)){toast('Les cartes ont été ajoutées. Recharge le catalogue pour les afficher.');return;}

@@ -5,6 +5,7 @@
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let pending=false,albumSignature='',dialog,lastFocus;
   const format=n=>Number(n||0).toLocaleString('fr-FR');
+  const rarityFor=card=>({level:['Commun','Commune','Peu commune','Rare','Épique','Légendaire','Mythique'].indexOf(card.rarity),color:({'Commun':'#aabac9','Commune':'#aabac9','Peu commune':'#6bd2a5','Rare':'#70b9ff','Épique':'#bc95ff','Légendaire':'#ffcf63','Mythique':'#ff7185'})[card.rarity]||'#aabac9'});
   function routeHash(){const tab=routes[location.hash.slice(1)];if(tab&&tab!==document.body.dataset.tab)window.KizunaGame?.showTab(tab);}
   function navigation(){
     const active={wiki:'universes',rank:'community',adventure:'universes'}[document.body.dataset.tab]||document.body.dataset.tab;
@@ -58,9 +59,9 @@
   $('kzNotifications')?.addEventListener('click',openNotifications);
   $('kzUniverseSearch')?.addEventListener('input',renderUniverses);
   $('kzUniverseGrid')?.addEventListener('click',event=>{const tile=event.target.closest('[data-kz-album]');if(tile)window.KizunaGame?.openAlbumKey(tile.dataset.kzAlbum);});
-  window.addEventListener('hashchange',routeHash);window.addEventListener('kizuna:tab-change',navigation);
+  window.addEventListener('kizuna:tab-change',navigation);
   for(const type of ['kizuna:game-change','kizuna:albums-change','kizuna:ready'])window.addEventListener(type,schedule);
   document.addEventListener('kizuna:account-change',schedule);
   window.KizunaShell=Object.freeze({navigate:tab=>window.KizunaGame?.showTab(tab),refresh:schedule});
-  routeHash();navigation();
+  navigation();
 })();

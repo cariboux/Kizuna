@@ -9,7 +9,7 @@ const replaceBlock=(begin,end,source,oldBegin,oldEnd)=>{
   html=html.slice(0,start)+begin+'\n'+source.trim()+'\n'+end+'\n'+html.slice(finish).replace(/^(?:\r?\n)+/,'');
 };
 replaceBlock('/* KIZUNA_COLLECTION_VIEW_BEGIN */','/* KIZUNA_COLLECTION_VIEW_END */',await read('collection-view.inc.js'),'function collectionAlbumEntries(){','function showTab(t){');
-const late=(await Promise.all(['booster-views.inc.js','wiki-view.inc.js','card-viewer.inc.js','market-presentation.inc.js','ranking-view.inc.js','economy-bridge.inc.js'].map(read))).join('\n\n');
+const late=(await Promise.all(['booster-views.inc.js','wiki-view.inc.js','card-viewer.inc.js','market-presentation.inc.js','ranking-view.inc.js','economy-bridge.inc.js','v3-views.inc.js'].map(read))).join('\n\n');
 const begin='/* KIZUNA_FEATURE_VIEWS_BEGIN */',end='/* KIZUNA_FEATURE_VIEWS_END */';
 if(html.includes(begin))replaceBlock(begin,end,late);
 else{const point=html.indexOf('/* KIZUNA_GAME_BRIDGE_BEGIN */');if(point<0)throw Error('Game bridge missing');html=html.slice(0,point)+begin+'\n'+late.trim()+'\n'+end+'\n\n'+html.slice(point);}

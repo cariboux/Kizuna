@@ -1,0 +1,147 @@
+/* KIZUNA 3.0. Final, scoped presentation layer; game values remain authoritative. */
+body.kz-v3:not([data-tab="adventure"]) #kzAdventurePage{display:none!important}
+body.kz-v3[data-tab="adventure"] #kzAdventurePage{display:block!important}
+body.kz-v3 .ka-lobby-scene{height:auto;min-height:560px;max-height:none;grid-template-rows:1fr;padding:42px 5% 32px;border-radius:0 0 28px 28px}
+body.kz-v3 .ka-lobby-intro{align-self:center}
+body.kz-v3 .ka-lobby-companion{align-self:center;margin-bottom:0}
+body.kz-v3 .ka-lobby-invocation{padding-top:0}
+body.kz-v3 .kv3-other-packs{display:block;margin-top:14px;color:#eff7ff;font-size:12px;text-decoration:underline;text-underline-offset:5px}
+body.kz-v3 #kzFeaturedCost,body.kz-v3 .kv3-other-packs{width:fit-content;max-width:100%;margin-inline:auto;padding:6px 10px;border-radius:8px;background:#071323c9;color:#f1f4f9;text-shadow:0 1px 2px #000}
+.kv3-primary-grid,.kv3-secondary-grid{display:grid;gap:14px}
+.kv3-primary-grid{grid-template-columns:repeat(4,minmax(0,1fr));padding:24px 0}
+.kv3-secondary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.kv3-primary-grid,.kv3-activities,.kv3-community-links{width:min(1240px,90%);margin:auto;box-sizing:border-box}
+.kv3-activities{padding:16px 0 28px}
+.kv3-activities header{margin-bottom:18px}
+.kv3-activities header>span{font-size:10px;letter-spacing:.18em;color:#8fd9db}
+.kv3-activities h2{font:700 30px Rajdhani,sans-serif;margin:7px 0;color:#fff2dc}
+body.kz-v3 .kv3-tile{position:relative;isolation:isolate;min-height:154px;overflow:hidden;display:flex;align-items:flex-end;gap:10px;padding:20px;border:1px solid #e4c48a40;border-radius:16px;background:#172b41;color:#fff;text-decoration:none;text-align:left;box-shadow:0 5px 0 #071221,0 12px 24px #050c1933;transition:transform .18s,border-color .18s}
+.kv3-tile::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#071321fa 2%,#091726a0 50%,#101d3520)}
+.kv3-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .3s}
+.kv3-tile strong{display:block;font:700 24px Rajdhani,sans-serif;line-height:1.1;text-shadow:0 2px 5px #000}
+.kv3-tile small{display:block;font-size:11px;color:#d6e7f4;line-height:1.5;margin-top:7px}
+.kv3-tile>b{font-family:system-ui,sans-serif;margin-left:auto;font-size:20px;color:#f9d691}
+.kv3-tile:hover{transform:translateY(-3px);border-color:#ffe5a0}
+.kv3-tile:hover img{transform:scale(1.04)}
+.kv3-tile:focus-visible,.kv3-community-links a:focus-visible{outline:3px solid #79e8eb;outline-offset:4px}
+.kv3-secondary-grid .kv3-tile{min-height:118px;padding:17px}
+.kv3-secondary-grid .kv3-tile strong{font-size:21px}
+.kv3-community-links{display:flex;flex-wrap:wrap;gap:12px 28px;padding-bottom:30px}
+.kv3-community-links a{color:#c3d9ea;font-size:12px;text-underline-offset:5px}
+body.kz-v3 .kzw-tools{display:block}
+body.kz-v3 .ka-constellation-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+body.kz-v3 .ka-detail-heading{flex-wrap:wrap;gap:12px}
+body.kz-v3 .ka-constellation-switcher{flex:1;min-width:210px}
+body.kz-v3 .ka-constellation-tile{border-radius:20px;overflow:hidden}
+/* A stable tree and a selected sequence replace the free-moving canvas. */
+body.kz-v3 .knx-viewport{height:auto;aspect-ratio:10/6;touch-action:auto;cursor:default;background:radial-gradient(ellipse at 50% 50%,#304f5240,transparent 65%),#0c1728}
+body.kz-v3 .knx-world{height:600px}
+body.kz-v3 .knx-orbit{display:none}
+body.kz-v3 .knx-links path{stroke-width:7;stroke-opacity:1;opacity:1;stroke:var(--knx-color,#aac3b0)}
+body.kz-v3 #knxWorld [data-dimmed="true"]{opacity:.65;filter:none}
+body.kz-v3 .knx-tree-trunk{fill:none;stroke:#b7c3a5;stroke-width:30;stroke-linecap:round;filter:drop-shadow(0 0 12px #baf4d15e)}
+body.kz-v3 .knx-list{display:block;max-height:none;overflow:visible;padding:20px}
+body.kz-v3 .knx-list>section[hidden]{display:none}
+body.kz-v3 .knx-list>section{margin:0}
+body.kz-v3 .knx-list>section>button{position:relative;min-height:70px;border-radius:12px;margin-top:12px;border-left:3px solid var(--knx-color)}
+body.kz-v3 .knx-list>section>button+button::before{content:'';position:absolute;top:-14px;left:26px;width:3px;height:13px;background:var(--knx-color)}
+body.kz-v3 .knx-atlas-footer p{display:none}
+body.kz-v3 .knx-branch-progress{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));overflow:visible;gap:8px}
+body.kz-v3 .knx-branch-progress>button{min-width:0;padding:12px 10px;flex-basis:auto}
+body.kz-v3 .knx-branch-progress>button>span:first-child{font-size:23px}
+body.kz-v3 .knx-branch-progress strong{font-size:15px}
+body.kz-v3 .kv3-fortune-info{padding:20px;border:1px solid #ccb8f744;border-radius:12px;background:#271f3b}
+body.kz-v3 .kv3-fortune-info h2{font-size:23px}
+body.kz-v3 .kv3-fortune-info li{margin:12px 0;color:#d6cde7}
+body.kz-v3 .tcard,body.kz-v3 .fcard{border-radius:18px;box-shadow:0 5px 0 #060e19,0 14px 30px #050b1c66}
+body.kz-v3 .tcard img,body.kz-v3 .fcard img,body.kz-v3 .kzw-card img{object-fit:contain!important;object-position:center!important}
+body.kz-v3 .rb-stage-pack{width:245px;height:354px;border-radius:12px}
+body.kz-v3 .rb-stage-pack strong{font-size:27px;line-height:1.1;text-align:center}
+@media(max-width:1000px){.kv3-secondary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}body.kz-v3 .knx-branch-progress{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){body.theme-kizuna.kz-game.kz-v3 .nav.kz-shell-nav{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;overflow:visible!important}body.theme-kizuna.kz-game.kz-v3 .nav.kz-shell-nav a{min-width:0!important;padding:6px 2px!important;font-size:10px!important}body.kz-v3 .ka-constellation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kv3-primary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ body.kz-v3 .ka-lobby-scene{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto;padding:24px 5%;gap:22px;min-height:0}
+ body.kz-v3 .ka-lobby-intro{grid-area:auto;text-align:center;padding:0;margin:0}
+ body.kz-v3 .ka-lobby-intro h1{font-size:39px!important;line-height:.95!important}
+ body.kz-v3 .rb-welcome{font-size:12px;margin-top:12px}
+ body.kz-v3 .ka-lobby-invocation{grid-area:auto;order:1;width:100%;margin:0}
+ body.kz-v3 .ka-lobby-companion{grid-area:auto;order:2;max-width:none;width:100%;margin:0;padding:12px;border:1px solid #b7e8e72e;border-radius:14px;background:#0a172bba}
+ body.kz-v3 .ka-companion-empty{padding:10px;min-height:0;text-align:center}
+ body.kz-v3 .ka-companion-empty .ka-companion-crest,body.kz-v3 .ka-companion-empty>strong,body.kz-v3 .ka-companion-empty>p{display:none}
+ body.kz-v3 .ka-companion-card{max-width:150px;margin:auto}
+ body.kz-v3 .ka-lobby-invocation .kg-pack-stage{height:280px}
+ body.kz-v3 .ka-lobby-invocation .kg-hero-pack{width:176px;height:254px}
+ .kv3-secondary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .kv3-primary-grid,.kv3-secondary-grid{gap:12px}
+ body.kz-v3 .kv3-tile{min-height:138px;padding:14px}
+ body.kz-v3 .kv3-secondary-grid .kv3-tile{min-height:116px;padding:12px}
+ .kv3-tile strong{font-size:22px}.kv3-secondary-grid .kv3-tile strong{font-size:19px}
+ .kv3-tile small{font-size:10px}.kv3-tile>b{display:none}
+ body.kz-v3 .ka-constellation-grid{grid-template-columns:1fr}
+ body.kz-v3 .knx-layout{display:flex;flex-direction:column}
+ body.kz-v3 .knx-detail{position:static}
+ body.kz-v3 .knx-viewport{display:none}
+ body.kz-v3 .knx-branch-progress>button{padding:10px 6px;gap:6px}
+ body.kz-v3 .knx-branch-progress>button>span:first-child{display:none}
+ body.kz-v3 .knx-list{padding:12px}
+ body.kz-v3 .knx-list-state{font-size:10px}
+}
+body.kz-art.kz-v3 #kzNexusPage .knx-branch-progress{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));overflow:visible}
+body.kz-art.kz-v3 #kzNexusPage .knx-world{height:600px;background:url('assets/nexus-tree-v3.svg') top left/1000px 600px no-repeat}
+body.kz-art.kz-v3 #kzNexusPage .knx-tree-trunk{display:none}
+body.kz-art.kz-v3 #kzNexusPage .knx-viewport{height:auto;aspect-ratio:10/6;touch-action:auto;cursor:default;background:#0c1728!important}
+body.kz-art.kz-v3 #kzNexusPage #knxLines path{stroke:var(--knx-color);stroke-width:7;stroke-opacity:1;opacity:1;stroke-dasharray:none}
+body.kz-art.kz-v3 #kzNexusPage #knxWorld [data-dimmed="true"]{opacity:1;filter:none}
+body.kz-art.kz-v3 #kzNexusPage .knx-node{opacity:1;background:#142c3b;border:2px solid var(--knx-color);color:#f1e9da}
+body.kz-art.kz-v3 #kzNexusPage .knx-node[data-state="owned"]{background:linear-gradient(135deg,#e7ffed,var(--knx-color));color:#0c2732}
+body.kz-art.kz-v3 #kzNexusPage .knx-node[data-state="future"]{border-style:dashed;background:#142332;color:#a9bbc8}
+body.kz-art.kz-v3 #kzNexusPage .knx-list{display:block;max-height:none;overflow:visible}
+body.kz-art.kz-v3 #kzNexusPage .knx-list[hidden]{display:none}
+.kv3-admin-box{padding:22px;margin:20px 0;background:#13243a;border:1px solid #bbd4e333;border-radius:16px}
+.kv3-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.kv3-fields label,.kv3-levels label{display:grid;gap:8px;font-size:12px;line-height:1.5}
+.kv3-fields input,.kv3-fields select,.kv3-levels input{width:100%;box-sizing:border-box;min-height:44px;padding:10px;border:1px solid #66828f;border-radius:8px;background:#0a1628;color:#f3f5f9}
+.kv3-fields input[type=checkbox],.kv3-pool input{width:auto;min-height:20px}
+.kv3-levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin:20px 0}
+.kv3-levels fieldset{min-width:0;border:1px solid #c7a3fb55;border-radius:12px;padding:14px;display:grid;gap:12px}
+.kv3-admin-actions{display:flex;gap:12px;flex-wrap:wrap}
+.kv3-pool{max-height:330px;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px;margin-top:12px}
+.kv3-pool label{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid #66828f55;border-radius:8px}
+.kv3-pool small{display:block;font-size:10px;color:#b8c7d4}
+.kv3-opening-odds{padding:10px 14px;border:1px solid #b9d6d655;border-radius:12px;font-size:11px;max-width:440px;margin:0 auto 14px;text-align:left;max-height:190px;overflow:auto}
+.kv3-opening-odds ul{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;padding-left:15px}
+.kv3-opening-odds p{font-size:10px;line-height:1.5}
+body.kz-v3 .cp-card-art img{object-fit:contain!important;filter:none!important;transform:none!important}
+.kv3-artwork-dialog{width:min(680px,90vw);max-height:92svh;border:1px solid #d4dbe788;border-radius:18px;padding:16px;background:#091426;color:#fff}
+.kv3-artwork-dialog img{display:block;width:100%;height:80svh;object-fit:contain}
+.kv3-artwork-dialog>button{position:absolute;right:15px;top:15px;width:44px;height:44px;font-size:24px}
+.kv3-artwork-dialog::backdrop{background:#020714de}
+/* Keep inspection above the dossier, and give both columns a readable width. */
+body.kz-v3 #detailBackdrop.kz-card-viewer{z-index:560!important}
+body.kz-art.kz-v3 #detailBackdrop.kz-card-viewer>.modal{width:min(560px,100%)!important;max-width:560px!important;max-height:calc(100svh - 32px)!important;overflow:auto!important;padding:20px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay.open{display:block!important;overflow-y:auto!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-layout{grid-template-columns:300px minmax(0,1fr)!important;width:min(1180px,calc(100% - 40px))!important;height:auto!important;overflow:visible!important;align-items:start!important;gap:24px!important;margin:24px auto!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-side{grid-column:1;grid-row:1;height:auto;overflow:visible;padding:16px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-side-inner{display:flex!important;flex-direction:column;gap:12px}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-card-art{width:min(250px,100%);height:auto;max-height:none;aspect-ratio:7/10;border-radius:16px!important;margin:0 auto;grid-row:auto}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-main{grid-column:2;grid-row:1;display:flex!important;flex-direction:column;height:auto;overflow:visible;gap:16px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-main>.cp-panel{padding:20px!important;overflow:visible;border-radius:12px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-section-title{font-size:22px!important;line-height:1.3}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-section-id{font-size:10px!important;margin-bottom:8px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-copy{font-size:14px!important;line-height:1.7!important;max-height:none;overflow:visible;overflow-wrap:anywhere}
+body.kz-art.kz-v3 #kyaraProfileOverlay :is(.cp-table,.cp-note,.cp-related-name){font-size:13px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay :is(.cp-table th,.cp-related-rarity,.cp-market-foot){font-size:11px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-related-grid{max-height:none;gap:10px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-related-card{padding:10px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-related-card img{width:40px!important;height:56px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-market-stats span{font-size:11px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-market-stats b{font-size:17px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-action{font-size:13px!important;min-height:44px!important}
+body.kz-art.kz-v3 #kyaraProfileOverlay .cp-meta-list :is(dt,dd){font-size:11px!important;line-height:1.5}
+@media(max-width:800px){body.kz-art.kz-v3 #kyaraProfileOverlay .cp-layout{display:flex!important;flex-direction:column;width:calc(100% - 24px)!important;gap:16px!important}body.kz-art.kz-v3 #kyaraProfileOverlay .cp-side{order:-1;width:100%;box-sizing:border-box}body.kz-art.kz-v3 #kyaraProfileOverlay .cp-main{width:100%}body.kz-art.kz-v3 #kyaraProfileOverlay .cp-related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1000px){body.kz-art.kz-v3 #kzNexusPage .knx-branch-progress{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){body.kz-art.kz-v3 #kzNexusPage .knx-viewport{display:none}body.kz-art.kz-v3 #kzNexusPage .knx-layout{display:flex;flex-direction:column}body.kz-art.kz-v3 #kzNexusPage .knx-atlas,body.kz-art.kz-v3 #kzNexusPage .knx-detail{width:100%;box-sizing:border-box}}
+@media(prefers-reduced-motion:reduce){.kv3-tile,.kv3-tile img{transition:none}}
+body.kz-art.kz-v3 #kyaraRevealRoot.ksm-scene .kr-card-stack{width:min(330px,43svh)!important;max-width:76vw!important}
+body.kz-art.kz-v3 #kyaraRevealRoot.ksm-scene .kr-current-card,body.kz-art.kz-v3 #kyaraRevealRoot.ksm-scene .kar-card-back{border-radius:18px!important}
+@media(max-width:700px){body.kz-art.kz-v3 #kyaraRevealRoot.ksm-scene .kr-card-stack{width:min(270px,34svh)!important;max-width:76vw!important}}
