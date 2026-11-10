@@ -25,6 +25,10 @@ for(const constraint of schema.constraints.filter(c=>c.definition.startsWith('CH
 for(const definition of schema.functions)await db.exec(definition);
 for(const definition of schema.triggers)await db.exec(definition);
 const oldCards=await q('select * from public.kizuna_cards order by id'),oldForms=await q('select * from public.kizuna_mythic_forms order by card_id');
+await db.exec(await read('../supabase/migrations/20261110060517_kizuna_anime_release_backup.sql'));
+const backup=(await q("select snapshot from private.kizuna_anime_release_backup where release_id='anime-expansion-v1'"))[0].snapshot;
+assert.equal(backup.cards.length,oldCards.length);assert.equal(backup.forms.length,oldForms.length);checks++;
+assert.equal((await q("select has_table_privilege('anon','private.kizuna_anime_release_backup','SELECT') allowed"))[0].allowed,false);checks++;
 const players=await q('select * from public.kizuna_player_states'),receipts=await q('select * from public.expansion_test_receipts');
 await assert.rejects(db.exec(sql),/KIZUNA_EXPANSION_REVIEW_REQUIRED/);await db.exec('rollback');checks++;
 await db.exec("set kizuna.expansion_approved='yes'");
