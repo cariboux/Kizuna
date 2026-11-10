@@ -1,0 +1,13 @@
+{
+  "checks": 1717,
+  "importMs": 7276,
+  "newCards": 272,
+  "albums": 12,
+  "mythics": 9,
+  "awakenings": 18,
+  "oldCardsPreserved": 1124,
+  "oldFormsPreserved": 197,
+  "idempotent": true,
+  "playerStateUnchanged": true,
+  "productionTouched": false
+}

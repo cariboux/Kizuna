@@ -123,7 +123,7 @@ function renderCollection(){
   }else{$('colAlbumTitle').textContent='';$('colAlbumProgress').textContent='';}
   if(albumList){
     const query=collectionQuery($('colSearch').value);
-    const visible=albums.filter(album=>!query||collectionQuery(album.name).includes(query)||album.cards.some(card=>collectionQuery(card.name).includes(query)));
+    const visible=albums.filter(album=>!query||collectionQuery(album.name).includes(query)||album.cards.some(card=>collectionQuery(card.name+' '+(window.KizunaExpansion?.aliasesFor(card)||'')).includes(query)));
     $('colAlbums').innerHTML=visible.map(album=>{
       const count=album.cards.filter(card=>m[card.id]).length,total=album.cards.length,percent=total?Math.round(count/total*100):0,number=albums.indexOf(album)+1;
       // Covers use actual catalogue portraits. Cover art does not imply ownership.
@@ -138,7 +138,7 @@ function renderCollection(){
     const count=m[card.id]||0,reserved=status.reserved[card.id]||0;
     return ownership==='own'?count>0:ownership==='miss'?count===0&&reserved===0:ownership==='dup'?count>1:ownership==='wanted'?status.wanted.has(String(card.id)):ownership==='reserved'?reserved>0:true;
   };
-  const rows=pool.filter(card=>(COL.rar==='all'||card.rarity===COL.rar)&&(detail||universe==='all'||card.series===universe)&&(!query||collectionQuery(card.name+' '+card.series+' '+(card.native||'')).includes(query))&&ownershipMatches(card)&&(window.KizunaMythic?.matches(card)??true));
+  const rows=pool.filter(card=>(COL.rar==='all'||card.rarity===COL.rar)&&(detail||universe==='all'||card.series===universe)&&(!query||collectionQuery(card.name+' '+card.series+' '+(card.native||'')+' '+(window.KizunaExpansion?.aliasesFor(card)||'')).includes(query))&&ownershipMatches(card)&&(window.KizunaMythic?.matches(card)??true));
   rows.sort((left,right)=>sort==='name'?left.name.localeCompare(right.name,'fr',{sensitivity:'base',numeric:true})||left.rank-right.rank:sort==='recent'?(status.latest[right.id]||0)-(status.latest[left.id]||0)||left.rank-right.rank:sort==='num'?left.rank-right.rank:sort==='pow'?right.pow-left.pow||left.rank-right.rank:rarityFor(right).level-rarityFor(left).level||left.rank-right.rank);
   const book=detail&&kgBinder.mode==='book',signature=JSON.stringify([COL.albumKey,query,ownership,sort,COL.rar,rows.map(card=>card.id)]);
   if(signature!==kgBinder.signature){kgBinder.signature=signature;kgBinder.page=0;}

@@ -1793,12 +1793,14 @@ body[data-tab="market"] #marketPage .wrap{width:min(1180px,calc(100% - 36px))}
 <p id="openingStageText">Le paquet se prépare…</p><button class="primary-btn" id="startRevealAnimation">Lancer l’ouverture ✦</button>
 </div><div class="reveal-grid hidden" id="revealGrid"></div><div class="modal-foot"><span id="revealFoot">Le paquet contient cinq cartes.</span><div class="reveal-actions"><button class="soft-btn hidden" id="revealAll" type="button">Tout révéler</button><button class="primary-btn hidden" id="revealDone" type="button">Continuer</button></div></div><div id="kyaraRevealRoot" class="hidden" aria-live="polite"></div></div></div>
 <script src="kizuna-rarity.js"></script>
+<script src="kizuna-expansion-data.js"></script>
+<script src="kizuna-expansion.js"></script>
 <script>
 (()=>{
 'use strict';
 const LOCAL_CARDS=[];
 const CHARACTER_ART=window.IKKAKU_ARTWORK||{};
-function classifyCatalogue(){const policy=window.KizunaRarity,ranking=policy.rankAlbumMythics(LOCAL_CARDS,sharedAlbumDefinitions);let changed=false;for(const card of LOCAL_CARDS){const rarity=policy.rarityFromPopularity(card.fav,card.sourceId,ranking),tier=TIER[rarity],fingerprint=hash(card.id),pow=tier[0]+fingerprint%tier[1],aura=pow-tier[2]+(fingerprint>>3)%3;if(card.rarity!==rarity||card.pow!==pow||card.aura!==aura)changed=true;card.rarity=rarity;card.pow=pow;card.aura=aura;}return changed;}
+function classifyCatalogue(){const policy=window.KizunaRarity,ranking=policy.rankAlbumMythics(LOCAL_CARDS,sharedAlbumDefinitions);let changed=false;for(const card of LOCAL_CARDS){const rarity=window.KizunaExpansion?.rarityFor(card)||policy.rarityFromPopularity(card.fav,card.sourceId,ranking),tier=TIER[rarity],fingerprint=hash(card.id),pow=tier[0]+fingerprint%tier[1],aura=pow-tier[2]+(fingerprint>>3)%3;if(card.rarity!==rarity||card.pow!==pow||card.aura!==aura)changed=true;card.rarity=rarity;card.pow=pow;card.aura=aura;}return changed;}
 let kzPortraitManifestRef=null;
 let kzPortraitIndex=new Map();
 function kzPortraitForCard(card,data){
@@ -2157,6 +2159,7 @@ function bootCatalogue(){
   if(!restored){LOCAL_CARDS.length=0;addCards(BUILTIN_ROWS);try{localStorage.setItem(ANI_KEY,JSON.stringify({t:Date.now(),rows:BUILTIN_ROWS,version:2,source:'builtin'}))}catch(e){}}
   addCards((window.KizunaRarity.retainedExtraCards||[]).map(card=>[String(card.sourceId),card.name,card.series,card.image,card.fav,card.native||'',card.g||'',(card.cats||[]).join(',')]));
   for(const extra of window.KizunaRarity.retainedExtraCards||[]){const existing=LOCAL_CARDS.find(card=>card.id===extra.id);if(existing)existing.rank=extra.rank;}
+  addCards((window.KizunaExpansion?.previewCards()||[]).map(card=>[card.sourceId,card.name,card.series,card.image,card.fav,card.native,card.g,card.cats.join(',')]));
   cardsLoading=false;cardsReady();setStatus((restored?'Catalogue local sauvegardé':'Base intégrée prête')+' · '+fmt(LOCAL_CARDS.length)+' cartes','ok');
   const status=$('localStatus');if(status){status.title='Le site utilise sa base locale sans téléchargement au démarrage. Clique ici pour tenter une synchronisation en ligne.';status.style.cursor='pointer';status.setAttribute('role','button');status.setAttribute('tabindex','0');}
 }
@@ -2299,7 +2302,7 @@ function renderCollection(){
   }else{$('colAlbumTitle').textContent='';$('colAlbumProgress').textContent='';}
   if(albumList){
     const query=collectionQuery($('colSearch').value);
-    const visible=albums.filter(album=>!query||collectionQuery(album.name).includes(query)||album.cards.some(card=>collectionQuery(card.name).includes(query)));
+    const visible=albums.filter(album=>!query||collectionQuery(album.name).includes(query)||album.cards.some(card=>collectionQuery(card.name+' '+(window.KizunaExpansion?.aliasesFor(card)||'')).includes(query)));
     $('colAlbums').innerHTML=visible.map(album=>{
       const count=album.cards.filter(card=>m[card.id]).length,total=album.cards.length,percent=total?Math.round(count/total*100):0,number=albums.indexOf(album)+1;
       // Covers use actual catalogue portraits. Cover art does not imply ownership.
@@ -2314,7 +2317,7 @@ function renderCollection(){
     const count=m[card.id]||0,reserved=status.reserved[card.id]||0;
     return ownership==='own'?count>0:ownership==='miss'?count===0&&reserved===0:ownership==='dup'?count>1:ownership==='wanted'?status.wanted.has(String(card.id)):ownership==='reserved'?reserved>0:true;
   };
-  const rows=pool.filter(card=>(COL.rar==='all'||card.rarity===COL.rar)&&(detail||universe==='all'||card.series===universe)&&(!query||collectionQuery(card.name+' '+card.series+' '+(card.native||'')).includes(query))&&ownershipMatches(card)&&(window.KizunaMythic?.matches(card)??true));
+  const rows=pool.filter(card=>(COL.rar==='all'||card.rarity===COL.rar)&&(detail||universe==='all'||card.series===universe)&&(!query||collectionQuery(card.name+' '+card.series+' '+(card.native||'')+' '+(window.KizunaExpansion?.aliasesFor(card)||'')).includes(query))&&ownershipMatches(card)&&(window.KizunaMythic?.matches(card)??true));
   rows.sort((left,right)=>sort==='name'?left.name.localeCompare(right.name,'fr',{sensitivity:'base',numeric:true})||left.rank-right.rank:sort==='recent'?(status.latest[right.id]||0)-(status.latest[left.id]||0)||left.rank-right.rank:sort==='num'?left.rank-right.rank:sort==='pow'?right.pow-left.pow||left.rank-right.rank:rarityFor(right).level-rarityFor(left).level||left.rank-right.rank);
   const book=detail&&kgBinder.mode==='book',signature=JSON.stringify([COL.albumKey,query,ownership,sort,COL.rar,rows.map(card=>card.id)]);
   if(signature!==kgBinder.signature){kgBinder.signature=signature;kgBinder.page=0;}
@@ -3902,7 +3905,7 @@ renderWiki=function(query=''){
   document.querySelectorAll('#v8WikiFilter [data-v8-wiki-filter]').forEach(button=>{const selected=button.dataset.v8WikiFilter===kzwState.ownership;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));button.disabled=loading&&button.dataset.v8WikiFilter!=='all';});
   const rows=LOCAL_CARDS.filter(card=>{
     const count=Number(counts[card.id]||0),matchOwnership=kzwState.ownership==='all'||(!loading&&(kzwState.ownership==='own'?count>0:kzwState.ownership==='missing'?count===0:kzwState.ownership==='duplicates'?count>1:wishes.has(String(card.id))));
-    return matchOwnership&&(kzwState.universe==='all'||card.series===kzwState.universe)&&(kzwState.rarity==='all'||card.rarity===kzwState.rarity)&&(!q||kzwFold(card.name+' '+card.series+' '+(card.native||'')).includes(q));
+    return matchOwnership&&(kzwState.universe==='all'||card.series===kzwState.universe)&&(kzwState.rarity==='all'||card.rarity===kzwState.rarity)&&(!q||kzwFold(card.name+' '+card.series+' '+(card.native||'')+' '+(window.KizunaExpansion?.aliasesFor(card)||'')).includes(q));
   });
   rows.sort((a,b)=>(kzwState.sort==='popularity'?(Number(b.fav)||0)-(Number(a.fav)||0):kzwState.sort==='rarity'?rarityFor(b).level-rarityFor(a).level:0)||kzwCollator.compare(a.name,b.name)||kzwCollator.compare(String(a.id),String(b.id)));
   const visible=rows.slice(0,kzwState.limit),personalLoading=loading&&kzwState.ownership!=='all';
@@ -4228,19 +4231,20 @@ function kgbNormalizeCard(input,canonical=false){
   const fav=policy.favouriteCount(canonical&&input.fav!=null?input.fav:Object.hasOwn(policy.retainedPopularity,sourceId)?policy.retainedPopularity[sourceId]:input.fav??input.favourites);
   const gender=kgbString(input.g??input.gender,12).toLowerCase();
   const g=gender==='m'||gender==='male'?'M':gender==='f'||gender==='female'?'F':'';
-  const rarity=kgbImportedTier(fav,sourceId);
+  const catalogueRarity=canonical&&Object.hasOwn(TIER,input.rarity)?input.rarity:null;
+  const rarity=catalogueRarity||window.KizunaExpansion?.rarityFor({id:rawId,sourceId})||kgbImportedTier(fav,sourceId);
   const id=seedId||'c'+sourceId,rank=seedId?kgbInteger(input.rank,1,2000000000,existingSeed?.rank||LOCAL_CARDS.length+1):1000000+Number(sourceId);
   const stats=TIER[rarity],fingerprint=hash(id),pow=stats[0]+fingerprint%stats[1];
-  return {id,sourceId,name,native:kgbString(input.native??input.name?.native,160),series,image,fav,g,cats:kgbCategoriesOf(input.cats),rank,rarity,tag:'',pow,aura:pow-stats[2]+(fingerprint>>3)%3};
+  return {id,sourceId,name,native:kgbString(input.native??input.name?.native,160),series,image,fav,g,cats:kgbCategoriesOf(input.cats),rank,rarity,catalogueRarity,tag:'',pow,aura:pow-stats[2]+(fingerprint>>3)%3};
 }
 function kgbExisting(card){return LOCAL_CARDS.find(row=>String(row.id)===card.id||(card.sourceId&&String(row.sourceId||'')===card.sourceId))||LOCAL_CARDS.find(row=>row.name.toLocaleLowerCase()===card.name.toLocaleLowerCase()&&row.series.toLocaleLowerCase()===card.series.toLocaleLowerCase());}
 function kgbAdd(input,canonical=false){
   const card=kgbNormalizeCard(input,canonical);if(!card)return null;
   const existing=kgbExisting(card);
   if(existing){
-    // Canonical identities stay stable while their popularity classification updates.
+    // Refresh popularity while keeping the canonical catalogue's rarity decision.
     if(!existing.sourceId&&card.sourceId)existing.sourceId=card.sourceId;
-    if(canonical){kgbBaseIds.add(String(existing.id));kgbExtras.delete(String(existing.id));for(const key of ['fav','rarity','pow','aura'])existing[key]=card[key];}
+    if(canonical){kgbBaseIds.add(String(existing.id));kgbExtras.delete(String(existing.id));for(const key of ['fav','rarity','catalogueRarity','pow','aura'])existing[key]=card[key];}
     else if(kgbExtras.has(String(existing.id)))kgbExtras.set(String(existing.id),kgbCompact(existing));
     return existing;
   }

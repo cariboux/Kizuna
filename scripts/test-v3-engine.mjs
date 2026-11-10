@@ -28,6 +28,12 @@ create function kizuna_private.econ_random(n integer) returns integer language p
 await db.exec(await read('./fixtures/economy-20261109.sql'));
 const q=async(s,p=[]) => (await db.query(s,p)).rows;
 for(const [i,rarity] of ['Commun','Peu commune','Rare','Épique','Légendaire','Mythique'].entries())await q('insert into public.kizuna_cards values($1,$2)',[String(i+1),JSON.stringify({rarity,name:'Fixture '+i,series:'Test',cats:['shonen'],g:'F'})]);
+const expansionMode=process.argv.includes('--expansion');let expansionCards=[];
+if(expansionMode){
+ const base=JSON.parse(await read('../catalogue/anime-expansion/baseline.json'));
+ expansionCards=JSON.parse(await read('../catalogue/anime-expansion/proposal.json')).franchises.flatMap(f=>f.cards.map(r=>r.card));
+ await q('insert into public.kizuna_cards select id,card from jsonb_to_recordset($1) as t(id text,card jsonb)',[JSON.stringify([...base.cards,...expansionCards.map(card=>({id:card.id,card}))])]);
+}
 const initial={owned:[],pulls:[],chakra:1000,stock:{free:3,inv:2,pm:0,pl:0,nexusWeekly:2}};
 await q('insert into public.kizuna_player_states values($1,$2,0)',[user,JSON.stringify(initial)]);
 const open=async(payload,request=crypto.randomUUID())=>(await q("select kizuna_private.kizuna_economy('open',$1::jsonb,$2::uuid) result",[JSON.stringify(payload),request]))[0].result;
@@ -69,5 +75,22 @@ quote=(await q("select public.kizuna_v3_read('quote',$1) r",[JSON.stringify({boo
 const weeklyEdition=await open({booster:'staff:'+event.id,count:1,quoteVersion:quote.version,expectedPity:quote.pity});
 assert.equal(weeklyEdition.snapshot.chakra,800);assert.equal(weeklyEdition.snapshot.stock.nexusWeekly,1);assert.equal(weeklyEdition.snapshot.stock.free,1);
 config.events[0].minLevels=[1,1,1,1,1];await assert.rejects(admin('save',{revision:saved.revision,config}),/V3_INVALID_POOL_OR_GUARANTEE/);
+if(expansionMode){
+ const ids=expansionCards.map(c=>c.id),seen=new Set();
+ const expandedQuote=(await q("select public.kizuna_v3_read('quote','{\"booster\":\"mix\"}') r"))[0].r;
+ await q('delete from public.kizuna_cards where id=any($1)',[ids]);
+ const originalQuote=(await q("select public.kizuna_v3_read('quote','{\"booster\":\"mix\"}') r"))[0].r;
+ assert.deepEqual(expandedQuote.slots,originalQuote.slots,'Catalogue size must not change rarity probabilities');
+ await q('insert into public.kizuna_cards select id,card from jsonb_to_recordset($1) as t(id text,card jsonb)',[JSON.stringify(expansionCards.map(card=>({id:card.id,card})))]);
+ await q("update public.kizuna_player_states set snapshot=jsonb_set(snapshot,'{stock,free}','30')");
+ for(let i=0;i<30;i++){
+  const offer=(await q("select public.kizuna_v3_read('quote','{\"booster\":\"mix\"}') r"))[0].r;
+  const opened=await open({booster:'mix',count:1,quoteVersion:offer.version,expectedPity:offer.pity});
+  assert.equal(opened.result.cards.length,5);assert.ok(opened.result.cards[4].level>=3);assert.equal(opened.snapshot.stock.free,29-i);
+  opened.result.cards.forEach(c=>{if(ids.includes(c.id))seen.add(c.id);});
+ }
+ assert.ok(seen.size>0,'Actual engine must select new catalogue cards');
+ console.log(`PASS: expanded catalogue, unchanged slot probabilities, 30 actual boosters, ${seen.size} distinct new cards drawn, guarantees and stock preserved.`);
+}
 await assert.rejects(db.exec(await read('../supabase/proposals/20261109_kizuna_v3_engine.sql')),/V3_ENGINE_CHANGED_REAUDIT_REQUIRED/);await db.exec('rollback');
 await db.close();console.log('PASS: actual observed draw engine, inactive equivalence, replay protection, Fortune purchase, stale quote refusal, pity and event payment; zero remote writes.');

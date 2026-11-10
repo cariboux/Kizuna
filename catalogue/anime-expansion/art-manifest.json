@@ -1,0 +1,236 @@
+[
+  {
+    "id": "c6356",
+    "level": 1,
+    "name": "Hamon — Clackers",
+    "asset": "assets/awakening-illustrations/c6356-1-expansion.webp",
+    "bytes": 440610,
+    "sha256": "cb6510179199a9b7ca7650775540229405ba06f74e74acdeb2c4005e9a5f48a5",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c6356",
+    "level": 2,
+    "name": "Hermit Purple",
+    "asset": "assets/awakening-illustrations/c6356-2-expansion.webp",
+    "bytes": 391548,
+    "sha256": "2cad2a9691132b41707eb5f3b1519342bf747ddc770c55d0ac6499002bf7324c",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c77605",
+    "level": 1,
+    "name": "Le Renard de l’Avarice",
+    "asset": "assets/awakening-illustrations/c77605-1-expansion.webp",
+    "bytes": 367542,
+    "sha256": "480f212f4444438021d493c50a325b375502b9eebb4a9ff04a03eb25c674b5fa",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c77605",
+    "level": 2,
+    "name": "Snatch — chasse du renard",
+    "asset": "assets/awakening-illustrations/c77605-2-expansion.webp",
+    "bytes": 452578,
+    "sha256": "a3b31436d518bdedb07fc40dec9df7bf246f082ccd9051964cd414baecfe10c8",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c124382",
+    "level": 1,
+    "name": "Squad 13 — Code 015",
+    "asset": "assets/awakening-illustrations/c124382-1-expansion.webp",
+    "bytes": 241682,
+    "sha256": "14131954e7c4d59554d4d38d7496d504a8bf506dde9ac8aaf2747fee93968277",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c124382",
+    "level": 2,
+    "name": "Delphinium — synchronisation",
+    "asset": "assets/awakening-illustrations/c124382-2-expansion.webp",
+    "bytes": 247836,
+    "sha256": "df11fcae59a72695e6b2dcd033c648bc25ad397a3deed110f496a36b69203d8e",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c121889",
+    "level": 1,
+    "name": "L’invitation au jeu",
+    "asset": "assets/awakening-illustrations/c121889-1-expansion.webp",
+    "bytes": 318520,
+    "sha256": "fe673bbf50f5c62cf15738f45faddb54c6992a66ab8acc10dbe31682072b4fea",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c121889",
+    "level": 2,
+    "name": "Le pari décisif",
+    "asset": "assets/awakening-illustrations/c121889-2-expansion.webp",
+    "bytes": 283430,
+    "sha256": "a208292eccb2f31edbdf6d04c44183a2502b18e6c55eec9a6b9aa1cedf7a3ef9",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c24482",
+    "level": 1,
+    "name": "Kurikara dégainé",
+    "asset": "assets/awakening-illustrations/c24482-1-expansion.webp",
+    "bytes": 271872,
+    "sha256": "19118f8e5e1662c0ec8d8ab491a0fc0b8e014f267f9bb9fc8a10f234132d1138",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c24482",
+    "level": 2,
+    "name": "Flammes bleues",
+    "asset": "assets/awakening-illustrations/c24482-2-expansion.webp",
+    "bytes": 382454,
+    "sha256": "a752dc9a5de83eb8cea919f4c18645d6dc8f29c554d889b7cf15dbcd2d835a86",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c122445",
+    "level": 1,
+    "name": "Le refuge de Nanachi",
+    "asset": "assets/awakening-illustrations/c122445-1-expansion.webp",
+    "bytes": 448774,
+    "sha256": "5840cfd14aa7fd5a628cd017fe41956f7dc49e3ab07ad0ac7449778713d2974d",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c122445",
+    "level": 2,
+    "name": "Guide de l’Abysse",
+    "asset": "assets/awakening-illustrations/c122445-2-expansion.webp",
+    "bytes": 455832,
+    "sha256": "a222a3406fbb22f60a7e35d56f13684f3589ffa90a4790c4408e5d4b49932485",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c719",
+    "level": 1,
+    "name": "Le sourire de Johan",
+    "asset": "assets/awakening-illustrations/c719-1-expansion.webp",
+    "bytes": 268782,
+    "sha256": "6dbcb3e2e71b1495cb4fa24eda98bb7bcaed48415a1fa8c8ccd570e6de1c7f86",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c719",
+    "level": 2,
+    "name": "L’ombre de Ruhenheim",
+    "asset": "assets/awakening-illustrations/c719-2-expansion.webp",
+    "bytes": 205734,
+    "sha256": "de0ce10d9e0849d35ae947b859e48d4309cc5927494a08c809186e3b4b8aed3b",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c121724",
+    "level": 1,
+    "name": "Le stratège de Grace Field",
+    "asset": "assets/awakening-illustrations/c121724-1-expansion.webp",
+    "bytes": 294484,
+    "sha256": "1ddabf4dcf6f8a1735e79e52f6ea76ba92eebaa2cb1515bbe852a02d937cfb36",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c121724",
+    "level": 2,
+    "name": "Au-delà du mur",
+    "asset": "assets/awakening-illustrations/c121724-2-expansion.webp",
+    "bytes": 442064,
+    "sha256": "54844fdc4c1fef8553993a4c8f3e8b999d94132f994bb60a8963bf02252f67ff",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c145341",
+    "level": 1,
+    "name": "Le chef de Toman",
+    "asset": "assets/awakening-illustrations/c145341-1-expansion.webp",
+    "bytes": 399554,
+    "sha256": "3c8d659955bc24caa92fdcab385fb9abdac41adf828cdaba37f9d265420f63de",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  },
+  {
+    "id": "c145341",
+    "level": 2,
+    "name": "Le coup de pied invincible",
+    "asset": "assets/awakening-illustrations/c145341-2-expansion.webp",
+    "bytes": 302052,
+    "sha256": "467e7dab1658c53cb36f13c2dad22ebc0cbd95a7a004df015c0a3902b30f45e9",
+    "size": [
+      1024,
+      1536
+    ],
+    "review": "Visual inspection passed; awaiting owner approval."
+  }
+]

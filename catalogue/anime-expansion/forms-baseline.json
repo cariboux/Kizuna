@@ -1,0 +1,1038 @@
+{
+  "forms": [
+    {
+      "levels": 3,
+      "card_id": "c3",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c4",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c16",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c367",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c369",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c454",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c463",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c600",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c2654",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c2677",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c9719",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0001",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0002",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0003",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c10138",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c13021",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c17440",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c18516",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0191",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0192",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0193",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0194",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0195",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0196",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0198",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0200",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0201",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0202",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0203",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0204",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0205",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c124790",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0004",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0007",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0013",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0014",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0016",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0017",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0018",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0021",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0028",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0029",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0031",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0032",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0034",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0040",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0042",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0043",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0044",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0045",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0046",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0054",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0055",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0056",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0057",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0059",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0066",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0067",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0068",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0069",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0071",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0077",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0078",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0079",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0081",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0082",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0089",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0090",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0091",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0092",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0093",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0098",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0099",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0104",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0105",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0106",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0108",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0109",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0110",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0112",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0113",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0116",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0117",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0118",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0119",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0120",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0122",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0123",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0124",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0125",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0127",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0128",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0129",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0130",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0131",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0132",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0133",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0134",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0135",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0136",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0140",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0141",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0142",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0143",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0146",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0148",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0149",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0150",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0151",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0152",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0154",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0155",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0156",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0157",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0160",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0161",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0162",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0164",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0165",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0166",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0167",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0168",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0169",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0171",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0172",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0173",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0174",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0175",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0176",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0177",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0178",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0179",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0180",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0181",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0182",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0183",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0185",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0186",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0187",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0188",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0189",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0190",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0206",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0207",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0208",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0209",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0210",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0211",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0212",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0213",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0215",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0216",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0217",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0218",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0219",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0220",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0221",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0223",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0224",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0225",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0226",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0227",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0229",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0230",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0231",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0232",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0234",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0235",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "cseed-0236",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c2653",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c65445",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c64109",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c65443",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c66701",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c88421",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c89125",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c89155",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c120652",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c121102",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c121104",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c124145",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c124162",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c124787",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c124788",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c124799",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c125886",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c128033",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c128034",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c130716",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c131033",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c133677",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c136074",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c207937",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c260977",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c261674",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c266041",
+      "art_version": "resonance-v1"
+    },
+    {
+      "levels": 3,
+      "card_id": "c291639",
+      "art_version": "resonance-v1"
+    }
+  ],
+  "rules": [
+    {
+      "id": true,
+      "revision": 1,
+      "thresholds": [
+        1,
+        3,
+        6
+      ],
+      "activated_at": "2026-11-04T09:25:58.573256+00:00"
+    }
+  ],
+  "columns": [
+    {
+      "type": "text",
+      "table": "kizuna_mythic_forms",
+      "column": "card_id"
+    },
+    {
+      "type": "integer",
+      "table": "kizuna_mythic_forms",
+      "column": "levels"
+    },
+    {
+      "type": "text",
+      "table": "kizuna_mythic_forms",
+      "column": "art_version"
+    },
+    {
+      "type": "boolean",
+      "table": "kizuna_mythic_rules",
+      "column": "id"
+    },
+    {
+      "type": "ARRAY",
+      "table": "kizuna_mythic_rules",
+      "column": "thresholds"
+    },
+    {
+      "type": "bigint",
+      "table": "kizuna_mythic_rules",
+      "column": "revision"
+    },
+    {
+      "type": "timestamp with time zone",
+      "table": "kizuna_mythic_rules",
+      "column": "activated_at"
+    }
+  ]
+}

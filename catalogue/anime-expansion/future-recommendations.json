@@ -1,0 +1,387 @@
+[
+  {
+    "name": "Frieren",
+    "anilistId": 154587,
+    "source": "https://anilist.co/anime/154587",
+    "checkedAt": "2026-11-10T01:44:43.436808+00:00",
+    "animePopularity": 497760,
+    "animeFavourites": 57047,
+    "characters": [
+      {
+        "id": 176754,
+        "name": {
+          "full": "Frieren"
+        },
+        "favourites": 22692
+      },
+      {
+        "id": 183965,
+        "name": {
+          "full": "Fern"
+        },
+        "favourites": 8767
+      },
+      {
+        "id": 184313,
+        "name": {
+          "full": "Stark"
+        },
+        "favourites": 6051
+      }
+    ],
+    "status": "Déjà présent · 30",
+    "priority": "Conserver",
+    "recommendation": "Album déjà au plafond. Toute évolution doit être une révision séparée, sans remplacement silencieux.",
+    "imported": false
+  },
+  {
+    "name": "DANDADAN",
+    "anilistId": 171018,
+    "source": "https://anilist.co/anime/171018",
+    "checkedAt": "2026-11-10T01:44:45.756874+00:00",
+    "animePopularity": 398316,
+    "animeFavourites": 19540,
+    "characters": [
+      {
+        "id": 222594,
+        "name": {
+          "full": "Momo Ayase"
+        },
+        "favourites": 7354
+      },
+      {
+        "id": 245466,
+        "name": {
+          "full": "Aira Shiratori"
+        },
+        "favourites": 6156
+      },
+      {
+        "id": 222593,
+        "name": {
+          "full": "Ken Takakura"
+        },
+        "favourites": 4707
+      }
+    ],
+    "status": "Déjà présent · 25",
+    "priority": "Audit complémentaire",
+    "recommendation": "Jusqu’à cinq places possibles après examen des personnages et des saisons ; aucune nouvelle carte ici.",
+    "imported": false
+  },
+  {
+    "name": "Oshi no Ko",
+    "anilistId": 150672,
+    "source": "https://anilist.co/anime/150672",
+    "checkedAt": "2026-11-10T01:44:48.296660+00:00",
+    "animePopularity": 337569,
+    "animeFavourites": 19014,
+    "characters": [
+      {
+        "id": 188783,
+        "name": {
+          "full": "Kana Arima"
+        },
+        "favourites": 11822
+      },
+      {
+        "id": 203384,
+        "name": {
+          "full": "Akane Kurokawa"
+        },
+        "favourites": 6467
+      },
+      {
+        "id": 172759,
+        "name": {
+          "full": "Ai Hoshino"
+        },
+        "favourites": 6444
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité haute",
+    "recommendation": "Distribution identifiable et scènes de scène/cinéma ; Éveils narratifs, sans pouvoirs ajoutés.",
+    "imported": false
+  },
+  {
+    "name": "Bungo Stray Dogs",
+    "anilistId": 21311,
+    "source": "https://anilist.co/anime/21311",
+    "checkedAt": "2026-11-10T01:44:50.637255+00:00",
+    "animePopularity": 427695,
+    "animeFavourites": 16480,
+    "characters": [
+      {
+        "id": 89198,
+        "name": {
+          "full": "Osamu Dazai"
+        },
+        "favourites": 16198
+      },
+      {
+        "id": 89201,
+        "name": {
+          "full": "Ranpo Edogawa"
+        },
+        "favourites": 7326
+      },
+      {
+        "id": 89853,
+        "name": {
+          "full": "Chuuya Nakahara"
+        },
+        "favourites": 6781
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité haute",
+    "recommendation": "Large distribution et capacités distinctes ; regrouper toutes les saisons et exclure les variantes doublons.",
+    "imported": false
+  },
+  {
+    "name": "Black Butler",
+    "anilistId": 4898,
+    "source": "https://anilist.co/anime/4898",
+    "checkedAt": "2026-11-10T01:44:52.976991+00:00",
+    "animePopularity": 264949,
+    "animeFavourites": 6502,
+    "characters": [
+      {
+        "id": 10863,
+        "name": {
+          "full": "Sebastian Michaelis"
+        },
+        "favourites": 5470
+      },
+      {
+        "id": 12531,
+        "name": {
+          "full": "Ciel Phantomhive"
+        },
+        "favourites": 3694
+      },
+      {
+        "id": 12960,
+        "name": {
+          "full": "Grell Sutcliff"
+        },
+        "favourites": 2360
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité moyenne",
+    "recommendation": "Identités fortes autour de Sebastian et Ciel ; costumes et manifestations canoniques à sourcer.",
+    "imported": false
+  },
+  {
+    "name": "Fire Force",
+    "anilistId": 105310,
+    "source": "https://anilist.co/anime/105310",
+    "checkedAt": "2026-11-10T01:44:55.757227+00:00",
+    "animePopularity": 493266,
+    "animeFavourites": 13013,
+    "characters": [
+      {
+        "id": 130848,
+        "name": {
+          "full": "Benimaru Shinmon"
+        },
+        "favourites": 6703
+      },
+      {
+        "id": 130716,
+        "name": {
+          "full": "Iris"
+        },
+        "favourites": 5930
+      },
+      {
+        "id": 120462,
+        "name": {
+          "full": "Shinra Kusakabe"
+        },
+        "favourites": 5798
+      }
+    ],
+    "status": "Déjà présent · 30",
+    "priority": "Conserver",
+    "recommendation": "Album déjà au plafond et Éveils existants ; aucune nouvelle rareté imposée par les chiffres actuels.",
+    "imported": false
+  },
+  {
+    "name": "Noragami",
+    "anilistId": 20447,
+    "source": "https://anilist.co/anime/20447",
+    "checkedAt": "2026-11-10T01:44:58.072631+00:00",
+    "animePopularity": 546710,
+    "animeFavourites": 17171,
+    "characters": [
+      {
+        "id": 84677,
+        "name": {
+          "full": "Yato"
+        },
+        "favourites": 12795
+      },
+      {
+        "id": 84679,
+        "name": {
+          "full": "Hiyori Iki"
+        },
+        "favourites": 3297
+      },
+      {
+        "id": 84681,
+        "name": {
+          "full": "Yukine"
+        },
+        "favourites": 3055
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité haute",
+    "recommendation": "Yato très identifié ; un album resserré vaut mieux que trente figurants.",
+    "imported": false
+  },
+  {
+    "name": "Magi",
+    "anilistId": 14513,
+    "source": "https://anilist.co/anime/14513",
+    "checkedAt": "2026-11-10T01:45:00.394152+00:00",
+    "animePopularity": 235938,
+    "animeFavourites": 5447,
+    "characters": [
+      {
+        "id": 42528,
+        "name": {
+          "full": "Sinbad"
+        },
+        "favourites": 4084
+      },
+      {
+        "id": 43121,
+        "name": {
+          "full": "Morgiana"
+        },
+        "favourites": 2684
+      },
+      {
+        "id": 42501,
+        "name": {
+          "full": "Alibaba Saluja"
+        },
+        "favourites": 1919
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité moyenne",
+    "recommendation": "Potentiel visuel des Djinn Equip ; vérifier chaque forme. Ne pas confondre avec Madoka Magica, renvoyé par la recherche « Magi ».",
+    "imported": false
+  },
+  {
+    "name": "Assassination Classroom",
+    "anilistId": 20755,
+    "source": "https://anilist.co/anime/20755",
+    "checkedAt": "2026-11-10T01:45:02.711066+00:00",
+    "animePopularity": 638769,
+    "animeFavourites": 21144,
+    "characters": [
+      {
+        "id": 71933,
+        "name": {
+          "full": "Karma Akabane"
+        },
+        "favourites": 10567
+      },
+      {
+        "id": 65643,
+        "name": {
+          "full": "Koro-sensei"
+        },
+        "favourites": 9716
+      },
+      {
+        "id": 65645,
+        "name": {
+          "full": "Nagisa Shiota"
+        },
+        "favourites": 6861
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité haute",
+    "recommendation": "Ensemble scolaire riche, forte popularité. Exclure les caméos comme Saiki ; ne pas transformer tout le casting en combattants surnaturels.",
+    "imported": false
+  },
+  {
+    "name": "Seraph of the End",
+    "anilistId": 20829,
+    "source": "https://anilist.co/anime/20829",
+    "checkedAt": "2026-11-10T01:45:05.256775+00:00",
+    "animePopularity": 334765,
+    "animeFavourites": 8249,
+    "characters": [
+      {
+        "id": 83017,
+        "name": {
+          "full": "Shinoa Hiiragi"
+        },
+        "favourites": 5164
+      },
+      {
+        "id": 87287,
+        "name": {
+          "full": "Mikaela Hyakuya"
+        },
+        "favourites": 4875
+      },
+      {
+        "id": 88993,
+        "name": {
+          "full": "Guren Ichinose"
+        },
+        "favourites": 3016
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité moyenne",
+    "recommendation": "Designs reconnaissables, armes et formes à vérifier. Aucune attribution mythique automatique au héros.",
+    "imported": false
+  },
+  {
+    "name": "Classroom of the Elite",
+    "anilistId": 98659,
+    "source": "https://anilist.co/anime/98659",
+    "checkedAt": "2026-11-10T01:45:07.582975+00:00",
+    "animePopularity": 457185,
+    "animeFavourites": 15560,
+    "characters": [
+      {
+        "id": 123212,
+        "name": {
+          "full": "Kiyotaka Ayanokouji"
+        },
+        "favourites": 15587
+      },
+      {
+        "id": 123213,
+        "name": {
+          "full": "Suzune Horikita"
+        },
+        "favourites": 4496
+      },
+      {
+        "id": 141122,
+        "name": {
+          "full": "Kei Karuizawa"
+        },
+        "favourites": 3010
+      }
+    ],
+    "status": "Absent",
+    "priority": "Priorité haute",
+    "recommendation": "Fort intérêt pour Ayanokouji ; étapes de stratégie et de mise en scène, sans aura magique inventée.",
+    "imported": false
+  }
+]

@@ -7,7 +7,8 @@
   "scripts": {
     "build": "python3 scripts/build-netlify.py",
     "test:startup": "node --test scripts/test-startup.cjs",
-    "test:v3": "node --test scripts/test-startup.cjs scripts/test-v3-navigation.cjs && node scripts/test-v3-economy.mjs && node scripts/test-v3-engine.mjs"
+    "test:v3": "node --test scripts/test-startup.cjs scripts/test-v3-navigation.cjs && node scripts/test-v3-economy.mjs && node scripts/test-v3-engine.mjs",
+    "test:expansion": "node scripts/test-anime-expansion.mjs && node scripts/test-expansion-resonance.mjs && node scripts/test-v3-engine.mjs --expansion"
   },
   "engines": {
     "node": ">=22"
