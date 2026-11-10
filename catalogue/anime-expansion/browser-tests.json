@@ -1,0 +1,414 @@
+{
+  "catalogue": 1396,
+  "universes": 50,
+  "albums": 50,
+  "albumDuplicates": 0,
+  "mythics": 206,
+  "aliases": {
+    "Mikey": "Manjirou Sano"
+  },
+  "mobile": {
+    "requestedWidth": 390,
+    "contentWidth": 375,
+    "scrollWidth": 375
+  },
+  "artChecks": [
+    {
+      "name": "Joseph Joestar",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c6356-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c6356-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c6356-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Joseph Joestar",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c6356-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c6356-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c6356-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Ban",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c77605-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c77605-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c77605-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Ban",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c77605-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c77605-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c77605-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Ichigo",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c124382-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c124382-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c124382-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Ichigo",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c124382-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c124382-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c124382-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Yumeko Jabami",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121889-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121889-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121889-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Yumeko Jabami",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121889-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121889-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121889-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Rin Okumura",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c24482-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c24482-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c24482-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Rin Okumura",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c24482-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c24482-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c24482-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Nanachi",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c122445-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c122445-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c122445-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Nanachi",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c122445-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c122445-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c122445-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Johan Liebert",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c719-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c719-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c719-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Johan Liebert",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c719-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c719-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c719-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Ray",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121724-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121724-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121724-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Ray",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121724-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121724-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c121724-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Manjirou Sano",
+      "stage": "Aperçu Révélation · 1 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c145341-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c145341-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c145341-2-expansion.webp"
+        }
+      ]
+    },
+    {
+      "name": "Manjirou Sano",
+      "stage": "Aperçu Ascension · 3 Résonances nécessaires",
+      "images": [
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c145341-2-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c145341-1-expansion.webp"
+        },
+        {
+          "fit": "contain",
+          "loaded": true,
+          "src": "assets/awakening-illustrations/c145341-2-expansion.webp"
+        }
+      ]
+    }
+  ],
+  "retained": [
+    {
+      "name": "Naruto Uzumaki",
+      "thirdStage": true
+    },
+    {
+      "name": "Monkey D. Luffy",
+      "thirdStage": true
+    },
+    {
+      "name": "Mereoleona Vermillion",
+      "thirdStage": true
+    },
+    {
+      "name": "Yuno",
+      "thirdStage": true
+    }
+  ],
+  "remoteWrites": false
+}

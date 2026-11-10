@@ -1,0 +1,90 @@
+{
+  "triggers": [
+    "CREATE TRIGGER kizuna_album_members_mythic_lock BEFORE INSERT OR DELETE OR UPDATE ON public.kizuna_album_cards FOR EACH STATEMENT EXECUTE FUNCTION private.kizuna_catalogue_rank_lock()",
+    "CREATE TRIGGER kizuna_album_members_mythic_rebalance AFTER INSERT OR DELETE OR UPDATE ON public.kizuna_album_cards FOR EACH STATEMENT EXECUTE FUNCTION private.kizuna_catalogue_rank_after()",
+    "CREATE CONSTRAINT TRIGGER kizuna_album_minimum_members AFTER INSERT OR DELETE OR UPDATE ON public.kizuna_album_cards DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION private.kizuna_album_minimum_constraint()",
+    "CREATE CONSTRAINT TRIGGER kizuna_album_minimum_created AFTER INSERT ON public.kizuna_albums DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION private.kizuna_album_minimum_constraint()",
+    "CREATE TRIGGER kizuna_albums_mythic_lock BEFORE INSERT OR DELETE OR UPDATE ON public.kizuna_albums FOR EACH STATEMENT EXECUTE FUNCTION private.kizuna_catalogue_rank_lock()",
+    "CREATE TRIGGER kizuna_albums_mythic_rebalance AFTER INSERT OR DELETE OR UPDATE ON public.kizuna_albums FOR EACH STATEMENT EXECUTE FUNCTION private.kizuna_catalogue_rank_after()",
+    "CREATE CONSTRAINT TRIGGER kizuna_album_minimum_sources AFTER UPDATE ON public.kizuna_cards DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION private.kizuna_album_minimum_constraint()",
+    "CREATE TRIGGER kizuna_cards_mythic_lock BEFORE INSERT OR DELETE OR UPDATE ON public.kizuna_cards FOR EACH STATEMENT EXECUTE FUNCTION private.kizuna_catalogue_rank_lock()",
+    "CREATE TRIGGER kizuna_cards_mythic_rebalance AFTER INSERT OR DELETE OR UPDATE ON public.kizuna_cards FOR EACH STATEMENT EXECUTE FUNCTION private.kizuna_catalogue_rank_after()"
+  ],
+  "functions": [
+    "CREATE OR REPLACE FUNCTION private.kizuna_album_minimum_constraint()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare album_uuid uuid;\nbegin\n  if TG_TABLE_NAME='kizuna_albums' then\n    perform private.kizuna_assert_album_minimum(new.id);\n  elsif TG_TABLE_NAME='kizuna_album_cards' then\n    if TG_OP<>'INSERT' then perform private.kizuna_assert_album_minimum(old.album_id); end if;\n    if TG_OP<>'DELETE' then perform private.kizuna_assert_album_minimum(new.album_id); end if;\n  elsif private.kizuna_card_source(old.source_id,old.card) is distinct from private.kizuna_card_source(new.source_id,new.card) then\n    for album_uuid in select album_id from public.kizuna_album_cards where card_id=new.id loop\n      perform private.kizuna_assert_album_minimum(album_uuid);\n    end loop;\n  end if;\n  return null;\nend;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_assert_album_minimum(p_album uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n  if exists(select 1 from public.kizuna_albums where id=p_album) and (\n    select count(distinct private.kizuna_card_source(c.source_id,c.card))\n    from public.kizuna_album_cards m join public.kizuna_cards c on c.id=m.card_id where m.album_id=p_album\n  )<2 then raise exception 'ALBUM_MINIMUM_CHARACTERS' using errcode='23514'; end if;\nend;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_card_favourites(p_card jsonb)\n RETURNS bigint\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO ''\nAS $function$\ndeclare value double precision;\nbegin\n  if jsonb_typeof(p_card->'fav') not in ('number','string') then return 0; end if;\n  value:=(p_card->>'fav')::double precision;\n  if value is null or value::text in ('NaN','Infinity','-Infinity') then return 0; end if;\n  return greatest(0,least(1000000000,floor(value)))::bigint;\nexception when invalid_text_representation or numeric_value_out_of_range then return 0;\nend;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_card_source(p_source bigint, p_card jsonb)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE\n SET search_path TO ''\nAS $function$\n  select case\n    when p_source between 1 and 9999999999 then p_source::text\n    when coalesce(p_card->>'sourceId','') ~ '^[0-9]{1,10}$' then\n      case when (p_card->>'sourceId')::bigint>0 then ((p_card->>'sourceId')::bigint)::text else null end\n    else null end;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_catalogue_rank_after()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\nbegin\n  if pg_trigger_depth()<=1 then perform private.kizuna_rebalance_album_mythics(); end if;\n  return null;\nend;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_catalogue_rank_lock()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\nbegin\n  -- Serialize BEFORE rows are locked, preventing opposite-order card updates\n  -- from deadlocking while the AFTER trigger reclassifies the shared catalogue.\n  perform pg_catalog.pg_advisory_xact_lock(17493,500);\n  return null;\nend;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_rarity_stats(p_id text, p_rarity text)\n RETURNS jsonb\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO ''\nAS $function$\ndeclare h bigint:=7;signed_h bigint;i integer;minimum integer;spread integer;offset_value integer;power integer;\nbegin\n  for i in 1..char_length(p_id) loop h:=(h*31+ascii(substr(p_id,i,1)))%4294967296; end loop;\n  case p_rarity\n    when 'Mythique' then minimum:=96;spread:=4;offset_value:=25;\n    when 'Légendaire' then minimum:=90;spread:=7;offset_value:=30;\n    when 'Épique' then minimum:=84;spread:=10;offset_value:=30;\n    when 'Rare' then minimum:=72;spread:=9;offset_value:=26;\n    when 'Peu commune' then minimum:=58;spread:=8;offset_value:=16;\n    else minimum:=48;spread:=8;offset_value:=14;\n  end case;\n  signed_h:=case when h>=2147483648 then h-4294967296 else h end;\n  power:=minimum+(h%spread)::integer;\n  return jsonb_build_object('rarity',p_rarity,'pow',power,'aura',power-offset_value+((signed_h>>3)%3)::integer,'rarity_policy','album-ranks-v2');\nend;\n$function$\n",
+    "CREATE OR REPLACE FUNCTION private.kizuna_rebalance_album_mythics()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare changed integer;\nbegin\n  perform pg_catalog.pg_advisory_xact_lock(17493,500);\n  with known as (\n    select c.id,c.card,private.kizuna_card_source(c.source_id,c.card) as source,\n      private.kizuna_card_favourites(c.card) as fav,lower(btrim(coalesce(c.card->>'series',''))) as series\n    from public.kizuna_cards c\n  ), memberships as (\n    select 'album:'||a.id::text as album_key,k.id,k.source,k.fav\n    from public.kizuna_albums a join public.kizuna_album_cards m on m.album_id=a.id join known k on k.id=m.card_id\n    union all\n    select 'series:'||k.series,k.id,k.source,k.fav from known k\n    where k.series<>'' and not exists(select 1 from public.kizuna_albums a where lower(btrim(a.name))=k.series)\n  ), characters as (\n    select album_key,source,max(fav) as fav from memberships where source is not null group by album_key,source\n  ), ranked as (\n    select source,row_number() over(partition by album_key order by fav desc,source::bigint asc) as place from characters\n  ), priorities as (\n    select source,min(case when place<=5 then 1 when place<=10 then 2 else 3 end) as priority\n    from ranked where place<=15 group by source\n  ), desired as (\n    select k.id,case\n      when k.source='53901' or p.priority=1 then 'Mythique'\n      when p.priority=2 then 'Légendaire'\n      when p.priority=3 then 'Épique'\n      when k.fav>=2500 then 'Rare'\n      when k.fav>=1000 then 'Peu commune'\n      else 'Commun' end as rarity\n    from known k left join priorities p on p.source=k.source\n  ), values_to_write as (\n    select d.id,private.kizuna_rarity_stats(d.id,d.rarity) as rarity_values from desired d\n  )\n  update public.kizuna_cards c set card=c.card||v.rarity_values from values_to_write v\n    where c.id=v.id and c.card is distinct from c.card||v.rarity_values;\n  get diagnostics changed=row_count;\n  return jsonb_build_object('updated',changed);\nend;\n$function$\n"
+  ],
+  "constraints": [
+    {
+      "name": "kizuna_album_cards_album_id_fkey",
+      "table": "kizuna_album_cards",
+      "definition": "FOREIGN KEY (album_id) REFERENCES kizuna_albums(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "kizuna_album_cards_card_id_fkey",
+      "table": "kizuna_album_cards",
+      "definition": "FOREIGN KEY (card_id) REFERENCES kizuna_cards(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "kizuna_album_cards_pkey",
+      "table": "kizuna_album_cards",
+      "definition": "PRIMARY KEY (album_id, card_id)"
+    },
+    {
+      "name": "kizuna_album_minimum_members",
+      "table": "kizuna_album_cards",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "name": "kizuna_album_minimum_created",
+      "table": "kizuna_albums",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "name": "kizuna_albums_anime_id_check",
+      "table": "kizuna_albums",
+      "definition": "CHECK ((anime_id > 0))"
+    },
+    {
+      "name": "kizuna_albums_anime_id_key",
+      "table": "kizuna_albums",
+      "definition": "UNIQUE (anime_id)"
+    },
+    {
+      "name": "kizuna_albums_cover_image_check",
+      "table": "kizuna_albums",
+      "definition": "CHECK (((char_length(cover_image) <= 1500) AND ((cover_image = ''::text) OR (cover_image ~ '^https://([A-Za-z0-9-]+\\.)*anilist\\.co(/[^[:cntrl:]]*)?$'::text))))"
+    },
+    {
+      "name": "kizuna_albums_name_check",
+      "table": "kizuna_albums",
+      "definition": "CHECK (((name = btrim(name)) AND ((char_length(name) >= 2) AND (char_length(name) <= 120)) AND (name !~ '[[:cntrl:]]'::text)))"
+    },
+    {
+      "name": "kizuna_albums_pkey",
+      "table": "kizuna_albums",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "kizuna_album_minimum_sources",
+      "table": "kizuna_cards",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "name": "kizuna_card_object",
+      "table": "kizuna_cards",
+      "definition": "CHECK (((jsonb_typeof(card) = 'object'::text) AND ((card ->> 'id'::text) = id)))"
+    },
+    {
+      "name": "kizuna_cards_pkey",
+      "table": "kizuna_cards",
+      "definition": "PRIMARY KEY (id)"
+    }
+  ]
+}

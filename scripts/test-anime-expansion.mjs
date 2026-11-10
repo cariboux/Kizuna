@@ -1,0 +1,68 @@
+import {PGlite} from '@electric-sql/pglite';
+import {readFile,readdir,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+const read=p=>readFile(new URL(p,import.meta.url),'utf8');
+const json=async p=>JSON.parse(await read('../catalogue/anime-expansion/'+p));
+const baseline=await json('baseline.json'),proposal=await json('proposal.json'),schema=await json('schema-fixture.json');
+const forms=await json('forms-baseline.json');
+const entries=proposal.franchises.flatMap(f=>f.cards),cards=entries.map(r=>r.card);
+const migration=(await readdir(new URL('../supabase/migrations/',import.meta.url))).find(p=>p.endsWith('_kizuna_anime_expansion.sql'));
+const sql=await read('../supabase/migrations/'+migration);
+const db=new PGlite();let checks=0;const q=async(s,p=[]) => (await db.query(s,p)).rows;
+await db.exec(`create role anon;create role authenticated;create schema private;
+create table public.kizuna_cards(id text primary key,source_id bigint,card jsonb not null,created_at timestamptz default now());
+create table public.kizuna_albums(id uuid primary key default gen_random_uuid(),name text not null,anime_id integer unique,cover_image text not null,created_at timestamptz default now());
+create table public.kizuna_album_cards(album_id uuid references public.kizuna_albums,card_id text references public.kizuna_cards,created_at timestamptz default now(),primary key(album_id,card_id));
+create table public.kizuna_mythic_forms(card_id text primary key references public.kizuna_cards,levels integer check(levels between 2 and 3),art_version text);
+create table public.kizuna_player_states(user_id uuid primary key,snapshot jsonb,revision bigint);
+create table public.expansion_test_receipts(id text primary key,payload jsonb);
+insert into public.kizuna_player_states values('10000000-0000-4000-8000-000000000001','{"owned":[{"id":"cseed-0013","at":1}],"chakra":8765,"stock":{"mix":7},"pityM":499,"pityL":49,"resonance":6,"nexus":["kept"]}',11);
+insert into public.expansion_test_receipts values('existing','{"paid":100,"request":"retained"}');`);
+await q(`insert into public.kizuna_cards(id,source_id,card,created_at) select id,source_id,card,created_at from jsonb_to_recordset($1) as t(id text,source_id bigint,card jsonb,created_at timestamptz)`,[JSON.stringify(baseline.cards)]);
+await q(`insert into public.kizuna_mythic_forms select card_id,levels,art_version from jsonb_to_recordset($1) as t(card_id text,levels integer,art_version text)`,[JSON.stringify(forms.forms)]);
+for(const constraint of schema.constraints.filter(c=>c.definition.startsWith('CHECK')))await db.exec(`alter table public.${constraint.table} add constraint ${constraint.name} ${constraint.definition};`);
+for(const definition of schema.functions)await db.exec(definition);
+for(const definition of schema.triggers)await db.exec(definition);
+const oldCards=await q('select * from public.kizuna_cards order by id'),oldForms=await q('select * from public.kizuna_mythic_forms order by card_id');
+const players=await q('select * from public.kizuna_player_states'),receipts=await q('select * from public.expansion_test_receipts');
+await assert.rejects(db.exec(sql),/KIZUNA_EXPANSION_REVIEW_REQUIRED/);await db.exec('rollback');checks++;
+await db.exec("set kizuna.expansion_approved='yes'");
+const started=performance.now();await db.exec(sql);const importMs=Math.round(performance.now()-started);
+assert.equal((await q('select count(*)::integer n from public.kizuna_cards'))[0].n,baseline.cards.length+cards.length);checks++;
+assert.deepEqual(await q('select * from public.kizuna_cards where id=any($1) order by id',[oldCards.map(c=>c.id)]),oldCards);checks++;
+assert.deepEqual(await q('select * from public.kizuna_mythic_forms where card_id=any($1) order by card_id',[oldForms.map(c=>c.card_id)]),oldForms);checks++;
+for(const f of proposal.franchises){
+ const rows=await q('select card_id from public.kizuna_album_cards where album_id=$1 order by card_id',[f.album.id]);
+ assert.deepEqual(rows.map(r=>r.card_id),f.album.card_ids.slice().sort());assert.ok(rows.length<=30);checks++;
+}
+assert.equal((await q('select count(*)::integer n from public.kizuna_albums'))[0].n,12);checks++;
+for(const c of cards){const row=(await q('select card from public.kizuna_cards where id=$1',[c.id]))[0];assert.deepEqual(row.card,c);checks++;}
+assert.equal(new Set(cards.map(c=>c.sourceId)).size,cards.length);
+assert.ok(cards.every(c=>!baseline.cards.some(b=>String(b.source_id)===c.sourceId)));checks++;
+const beforeSecond=await q('select * from public.kizuna_cards order by id'),albums=await q('select * from public.kizuna_albums order by id'),members=await q('select * from public.kizuna_album_cards order by album_id,card_id');
+await db.exec(sql);
+assert.deepEqual(await q('select * from public.kizuna_cards order by id'),beforeSecond);assert.deepEqual(await q('select * from public.kizuna_albums order by id'),albums);assert.deepEqual(await q('select * from public.kizuna_album_cards order by album_id,card_id'),members);checks++;
+const test=cards.find(c=>c.rarity==='Commun');
+await q("update public.kizuna_cards set card=card||'{\"fav\":999999999,\"rarity\":\"Mythique\",\"pow\":99}'::jsonb where id=$1",[test.id]);
+assert.equal((await q('select card from public.kizuna_cards where id=$1',[test.id]))[0].card.rarity,test.rarity);checks++;
+await q('update public.kizuna_cards set card=$2 where id=$1',[test.id,JSON.stringify(test)]);
+await q('select private.kizuna_rebalance_album_mythics()');
+assert.deepEqual(await q('select * from public.kizuna_cards order by id'),beforeSecond);checks++;
+assert.deepEqual(await q('select * from public.kizuna_player_states'),players);assert.deepEqual(await q('select * from public.expansion_test_receipts'),receipts);checks++;
+assert.equal((await q("select has_table_privilege('anon','private.kizuna_rarity_decisions','SELECT') allowed"))[0].allowed,false);checks++;
+const newForms=await q('select * from public.kizuna_mythic_forms where card_id=any($1)',[cards.map(c=>c.id)]);
+assert.equal(newForms.length,9);assert.ok(newForms.every(f=>f.levels===2&&cards.find(c=>c.id===f.card_id)?.rarity==='Mythique'));checks++;
+const scope={window:{},location:{hostname:'localhost'}};vm.createContext(scope);
+vm.runInContext(await read('../dist/kizuna-expansion-data.js'),scope);vm.runInContext(await read('../dist/kizuna-expansion.js'),scope);
+assert.equal(scope.window.KizunaExpansion.previewCards().length,0);checks++;
+scope.window.KIZUNA_EXPANSION_PREVIEW=true;vm.runInContext(await read('../dist/kizuna-expansion.js'),scope);
+assert.equal(scope.window.KizunaExpansion.previewCards().length,cards.length);checks++;
+scope.location.hostname='kizunamanga.netlify.app';vm.runInContext(await read('../dist/kizuna-expansion.js'),scope);assert.equal(scope.window.KizunaExpansion.previewCards().length,0);checks++;
+for(const c of [...baseline.cards.map(r=>r.card),...cards]){assert.equal(scope.window.KizunaExpansion.rarityFor({...c,fav:0}),c.rarity);checks++;}
+assert.equal(scope.window.KizunaExpansion.rarityFor({...cards[0],catalogueRarity:'Rare'}),'Rare');checks++;
+const artScope={window:{},document:{addEventListener(){}}};vm.createContext(artScope);vm.runInContext(await read('../dist/kizuna-mythic-art.js'),artScope);
+for(const c of cards){const e=artScope.window.KizunaMythicArt.get(c.id);if(c.rarity==='Mythique'){assert.equal(e.levels.length,2);for(const l of e.levels){await readFile(new URL('../dist/'+l.illustration.image,import.meta.url));await read('../dist/'+l.asset);checks++;}}else assert.equal(e,null);}
+assert.equal(artScope.window.KizunaMythicArt.manifest.length,206);checks++;
+const summary={checks,importMs,newCards:cards.length,albums:12,mythics:9,awakenings:18,oldCardsPreserved:oldCards.length,oldFormsPreserved:oldForms.length,idempotent:true,playerStateUnchanged:true,productionTouched:false};
+await writeFile(new URL('../catalogue/anime-expansion/test-results.json',import.meta.url),JSON.stringify(summary,null,2)+'\n');console.log(summary);await db.close();

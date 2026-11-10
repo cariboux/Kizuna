@@ -58,7 +58,7 @@ renderWiki=function(query=''){
   document.querySelectorAll('#v8WikiFilter [data-v8-wiki-filter]').forEach(button=>{const selected=button.dataset.v8WikiFilter===kzwState.ownership;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));button.disabled=loading&&button.dataset.v8WikiFilter!=='all';});
   const rows=LOCAL_CARDS.filter(card=>{
     const count=Number(counts[card.id]||0),matchOwnership=kzwState.ownership==='all'||(!loading&&(kzwState.ownership==='own'?count>0:kzwState.ownership==='missing'?count===0:kzwState.ownership==='duplicates'?count>1:wishes.has(String(card.id))));
-    return matchOwnership&&(kzwState.universe==='all'||card.series===kzwState.universe)&&(kzwState.rarity==='all'||card.rarity===kzwState.rarity)&&(!q||kzwFold(card.name+' '+card.series+' '+(card.native||'')).includes(q));
+    return matchOwnership&&(kzwState.universe==='all'||card.series===kzwState.universe)&&(kzwState.rarity==='all'||card.rarity===kzwState.rarity)&&(!q||kzwFold(card.name+' '+card.series+' '+(card.native||'')+' '+(window.KizunaExpansion?.aliasesFor(card)||'')).includes(q));
   });
   rows.sort((a,b)=>(kzwState.sort==='popularity'?(Number(b.fav)||0)-(Number(a.fav)||0):kzwState.sort==='rarity'?rarityFor(b).level-rarityFor(a).level:0)||kzwCollator.compare(a.name,b.name)||kzwCollator.compare(String(a.id),String(b.id)));
   const visible=rows.slice(0,kzwState.limit),personalLoading=loading&&kzwState.ownership!=='all';

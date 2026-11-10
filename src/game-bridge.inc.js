@@ -32,19 +32,20 @@ function kgbNormalizeCard(input,canonical=false){
   const fav=policy.favouriteCount(canonical&&input.fav!=null?input.fav:Object.hasOwn(policy.retainedPopularity,sourceId)?policy.retainedPopularity[sourceId]:input.fav??input.favourites);
   const gender=kgbString(input.g??input.gender,12).toLowerCase();
   const g=gender==='m'||gender==='male'?'M':gender==='f'||gender==='female'?'F':'';
-  const rarity=kgbImportedTier(fav,sourceId);
+  const catalogueRarity=canonical&&Object.hasOwn(TIER,input.rarity)?input.rarity:null;
+  const rarity=catalogueRarity||window.KizunaExpansion?.rarityFor({id:rawId,sourceId})||kgbImportedTier(fav,sourceId);
   const id=seedId||'c'+sourceId,rank=seedId?kgbInteger(input.rank,1,2000000000,existingSeed?.rank||LOCAL_CARDS.length+1):1000000+Number(sourceId);
   const stats=TIER[rarity],fingerprint=hash(id),pow=stats[0]+fingerprint%stats[1];
-  return {id,sourceId,name,native:kgbString(input.native??input.name?.native,160),series,image,fav,g,cats:kgbCategoriesOf(input.cats),rank,rarity,tag:'',pow,aura:pow-stats[2]+(fingerprint>>3)%3};
+  return {id,sourceId,name,native:kgbString(input.native??input.name?.native,160),series,image,fav,g,cats:kgbCategoriesOf(input.cats),rank,rarity,catalogueRarity,tag:'',pow,aura:pow-stats[2]+(fingerprint>>3)%3};
 }
 function kgbExisting(card){return LOCAL_CARDS.find(row=>String(row.id)===card.id||(card.sourceId&&String(row.sourceId||'')===card.sourceId))||LOCAL_CARDS.find(row=>row.name.toLocaleLowerCase()===card.name.toLocaleLowerCase()&&row.series.toLocaleLowerCase()===card.series.toLocaleLowerCase());}
 function kgbAdd(input,canonical=false){
   const card=kgbNormalizeCard(input,canonical);if(!card)return null;
   const existing=kgbExisting(card);
   if(existing){
-    // Canonical identities stay stable while their popularity classification updates.
+    // Refresh popularity while keeping the canonical catalogue's rarity decision.
     if(!existing.sourceId&&card.sourceId)existing.sourceId=card.sourceId;
-    if(canonical){kgbBaseIds.add(String(existing.id));kgbExtras.delete(String(existing.id));for(const key of ['fav','rarity','pow','aura'])existing[key]=card[key];}
+    if(canonical){kgbBaseIds.add(String(existing.id));kgbExtras.delete(String(existing.id));for(const key of ['fav','rarity','catalogueRarity','pow','aura'])existing[key]=card[key];}
     else if(kgbExtras.has(String(existing.id)))kgbExtras.set(String(existing.id),kgbCompact(existing));
     return existing;
   }

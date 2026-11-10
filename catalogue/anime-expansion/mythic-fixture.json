@@ -1,0 +1,87 @@
+{
+  "tables": [
+    {
+      "type": "boolean",
+      "table": "kizuna_mythic_release_backup",
+      "column": "id"
+    },
+    {
+      "type": "timestamp with time zone",
+      "table": "kizuna_mythic_release_backup",
+      "column": "captured_at"
+    },
+    {
+      "type": "jsonb",
+      "table": "kizuna_mythic_release_backup",
+      "column": "states"
+    },
+    {
+      "type": "jsonb",
+      "table": "kizuna_mythic_release_backup",
+      "column": "adventure"
+    },
+    {
+      "type": "jsonb",
+      "table": "kizuna_mythic_release_backup",
+      "column": "studio"
+    },
+    {
+      "type": "uuid",
+      "table": "kizuna_mythic_progress",
+      "column": "user_id"
+    },
+    {
+      "type": "text",
+      "table": "kizuna_mythic_progress",
+      "column": "card_id"
+    },
+    {
+      "type": "bigint",
+      "table": "kizuna_mythic_progress",
+      "column": "resonance"
+    },
+    {
+      "type": "integer",
+      "table": "kizuna_mythic_progress",
+      "column": "unlocked"
+    },
+    {
+      "type": "integer",
+      "table": "kizuna_mythic_progress",
+      "column": "selected"
+    },
+    {
+      "type": "boolean",
+      "table": "kizuna_mythic_progress",
+      "column": "legacy"
+    },
+    {
+      "type": "timestamp with time zone",
+      "table": "kizuna_mythic_progress",
+      "column": "updated_at"
+    },
+    {
+      "type": "uuid",
+      "table": "kizuna_mythic_unlocks",
+      "column": "user_id"
+    },
+    {
+      "type": "text",
+      "table": "kizuna_mythic_unlocks",
+      "column": "card_id"
+    },
+    {
+      "type": "integer",
+      "table": "kizuna_mythic_unlocks",
+      "column": "level"
+    },
+    {
+      "type": "timestamp with time zone",
+      "table": "kizuna_mythic_unlocks",
+      "column": "unlocked_at"
+    }
+  ],
+  "functions": [
+    "CREATE OR REPLACE FUNCTION kizuna_private.mythic_record_open(u uuid, request uuid, before_snapshot jsonb, picked jsonb, packs integer)\n RETURNS jsonb\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\ndeclare x record;c jsonb;seen text[];dup boolean;delta integer;p kizuna_private.kizuna_mythic_progress;previous integer;target integer;thresholds integer[];maxlevel integer;lvl integer;awards jsonb:='[]';\nbegin\n if jsonb_typeof(picked)<>'array' or jsonb_array_length(picked)<>packs*5 then raise exception 'INVALID_SERVER_DRAW';end if;\n insert into kizuna_private.kizuna_booster_journal(user_id,request_id,packs) values(u,request,packs);\n select coalesce(array_agg(distinct id),'{}') into seen from (\n select o->>'id' id from jsonb_array_elements(before_snapshot->'owned') o\n union all select l.card_id from kizuna_private.kizuna_market_listings l where l.seller_id=u and l.status='active') s;\n select r.thresholds into thresholds from public.kizuna_mythic_rules r where id;\n for x in select value copy,ordinality pos from jsonb_array_elements(picked) with ordinality loop\n  select card into strict c from public.kizuna_cards where id=x.copy->>'id';dup:=(x.copy->>'id')=any(seen);seen:=array_append(seen,x.copy->>'id');delta:=0;previous:=0;target:=0;\n  if c->>'rarity'='Mythique' then\n   insert into kizuna_private.kizuna_mythic_progress(user_id,card_id) values(u,x.copy->>'id') on conflict do nothing;\n   select * into strict p from kizuna_private.kizuna_mythic_progress where user_id=u and card_id=x.copy->>'id' for update;\n   previous:=p.unlocked;delta:=case when dup then 1 else 0 end;\n   select f.levels into maxlevel from public.kizuna_mythic_forms f where f.card_id=x.copy->>'id';\n   select count(*) into target from unnest(thresholds) with ordinality t(n,i) where n<=p.resonance+delta and i<=coalesce(maxlevel,0);\n   target:=greatest(previous,target);\n   update kizuna_private.kizuna_mythic_progress set resonance=resonance+delta,unlocked=target,updated_at=now() where user_id=u and card_id=x.copy->>'id';\n   if target>previous then for lvl in previous+1..target loop insert into kizuna_private.kizuna_mythic_unlocks(user_id,card_id,level,unlocked_at) values(u,x.copy->>'id',lvl,now()) on conflict do nothing;end loop;end if;\n   awards:=awards||jsonb_build_array(jsonb_build_object('index',x.pos-1,'id',x.copy->>'id','delta',delta,'resonance',p.resonance+delta,'from',previous,'unlocked',target));\n  end if;\n  insert into kizuna_private.kizuna_draw_journal(user_id,request_id,ordinal,card_id,universe,rarity,duplicate,resonance) values(u,request,x.pos,x.copy->>'id',c->>'series',c->>'rarity',dup,delta);\n end loop;\n perform kizuna_private.mythic_sync_adventure(u);\n perform kizuna_private.anomaly_enrol(u);\n return awards;\nend; $function$\n"
+  ]
+}

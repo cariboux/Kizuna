@@ -1,7 +1,7 @@
 /* Shared album definitions; completion is always computed from the current player. */
 (() => {
   'use strict';
-  let albums=[],flight=null,toolbar;
+  let albums=window.KizunaExpansion?.previewAlbums()||[],flight=null,toolbar;
   async function read(path){
     const config=window.KIZUNA_CONFIG||{},url=new URL('/rest/v1/'+path,config.supabaseUrl);
     if(url.protocol!=='https:'||url.username||url.password)throw new Error('Le service des albums est indisponible.');
@@ -11,7 +11,7 @@
   }
   async function refresh(force=true){
     const config=window.KIZUNA_CONFIG||{};
-    if(!config.supabaseUrl||!config.supabaseKey)return getAlbums();
+    if(!config.supabaseUrl||!config.supabaseKey){window.KizunaGame?.setAlbumDefinitions?.(albums);return getAlbums();}
     if(flight)return flight;
     flight=(async()=>{
       await window.KizunaBackend?.ensureCatalogue?.(force);
